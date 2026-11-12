@@ -2,65 +2,69 @@
  "spread": {
   "m1_promo": {
    "counts": {
-    "ignore": 9,
-    "error": 7,
-    "open_only": 3,
-    "open_and_click": 11
+    "ignore": 11,
+    "open_only": 6,
+    "open_and_click": 12,
+    "unsubscribe": 1
    },
-   "top_share": 0.37
+   "top_share": 0.4
   },
   "m2_reminder": {
    "counts": {
-    "error": 12,
-    "open_only": 2,
-    "open_and_click": 11,
-    "ignore": 5
+    "unsubscribe": 6,
+    "ignore": 8,
+    "error": 4,
+    "open_and_click": 8,
+    "open_only": 3
    },
-   "top_share": 0.4
+   "top_share": 0.28
   },
   "m3_moment": {
    "counts": {
     "ignore": 11,
-    "error": 6,
-    "open_only": 5,
-    "open_and_click": 8
+    "unsubscribe": 5,
+    "open_and_click": 1,
+    "error": 2,
+    "open_only": 4
    },
-   "top_share": 0.37
+   "top_share": 0.48
   },
   "m4_content": {
    "counts": {
-    "open_only": 5,
-    "open_and_click": 13,
-    "error": 8,
-    "ignore": 4
+    "open_only": 8,
+    "open_and_click": 7,
+    "error": 1,
+    "ignore": 2
    },
-   "top_share": 0.43
+   "top_share": 0.44
   },
   "m5_third_push": {
    "counts": {
-    "ignore": 12,
-    "error": 7,
-    "open_only": 1,
-    "open_and_click": 10
+    "ignore": 9,
+    "error": 2,
+    "open_and_click": 6,
+    "unsubscribe": 1
    },
-   "top_share": 0.4
+   "top_share": 0.5
   }
  },
  "sensitivity": {
-  "unsubscribe_high_fatigue": 0.0,
-  "unsubscribe_low_fatigue": 0.0,
-  "click_high_capital": 0.51,
+  "click_high_capital": 0.38,
   "click_low_capital": 0.0
  },
- "diversity": 0.15,
+ "diversity": 0.11,
  "verdict": [
   {
    "check": "spread: no message above 80% same reaction",
    "pass": true
   },
   {
-   "check": "sensitivity: tired agents unsubscribe more",
-   "pass": false
+   "check": "exits: agents unsubscribe on their own",
+   "pass": true
+  },
+  {
+   "check": "exits: tired agents leave more than relaxed ones",
+   "pass": true
   },
   {
    "check": "sensitivity: loyal agents click more",
@@ -71,5 +75,27 @@
    "pass": true
   }
  ],
- "passed": 3
+ "exits": {
+  "low": {
+   "agents": 13,
+   "model_exit_rate": 0.0,
+   "baseline_exit_rate": 0.11
+  },
+  "medium": {
+   "agents": 7,
+   "model_exit_rate": 0.43,
+   "baseline_exit_rate": 0.28
+  },
+  "high": {
+   "agents": 10,
+   "model_exit_rate": 1.0,
+   "baseline_exit_rate": 0.44
+  },
+  "all": {
+   "agents": 30,
+   "model_exit_rate": 0.43,
+   "baseline_exit_rate": 0.26
+  }
+ },
+ "passed": 5
 }
