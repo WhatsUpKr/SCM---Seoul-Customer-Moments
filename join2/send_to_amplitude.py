@@ -24,6 +24,7 @@ sys.path.insert(0, str(ROOT))
 from agents.population import make_population  # noqa: E402
 
 ENDPOINT = "https://api.eu.amplitude.com/2/httpapi"  # EU data region
+SEGMENT_ENDPOINT = "https://api.segment.io/v1/batch"  # Segment free plan: US ingestion
 MAX_EVENTS = 2000  # hard cap per run, far below the free plan's monthly volume
 
 # One simulated week, Monday 09:00 Seoul time, one message per day.
@@ -78,10 +79,42 @@ def send(api_key, events):
     return sent
 
 
+def to_segment(events):
+    """Same events, Segment spec: one identify per user, then track calls.
+    Segment's Amplitude (Actions) destination maps them back to Amplitude."""
+    from datetime import datetime as dt
+    batch, seen = [], set()
+    for e in events:
+        ts = dt.fromtimestamp(e["time"] / 1000, tz=timezone.utc).isoformat()
+        if e["user_id"] not in seen:
+            seen.add(e["user_id"])
+            batch.append({"type": "identify", "userId": e["user_id"], "traits": e["user_properties"],
+                          "timestamp": ts, "messageId": e["insert_id"] + "-id"})
+        batch.append({"type": "track", "userId": e["user_id"], "event": e["event_type"],
+                      "properties": e["event_properties"], "timestamp": ts,
+                      "messageId": e["insert_id"]})
+    return batch
+
+
+def send_segment(write_key, events):
+    import base64
+    auth = base64.b64encode((write_key + ":").encode()).decode()
+    calls = to_segment(events)
+    for start in range(0, len(calls), 100):  # Segment batch limit: 500 KB
+        req = urllib.request.Request(
+            SEGMENT_ENDPOINT, data=json.dumps({"batch": calls[start:start + 100]}).encode(),
+            headers={"Content-Type": "application/json", "Authorization": "Basic " + auth})
+        with urllib.request.urlopen(req, timeout=60) as resp:
+            if not json.load(resp).get("success"):
+                raise RuntimeError("Segment refused a batch")
+    return len(calls)
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--dry-run", action="store_true")
     p.add_argument("--seed", type=int, default=42)
+    p.add_argument("--via", choices=["direct", "segment"], default="direct")
     args = p.parse_args()
 
     path = ROOT / "results" / "join1_live_reactions.json"
@@ -90,7 +123,7 @@ def main():
     reactions = json.loads(path.read_text())
     messages = json.loads((ROOT / "join1" / "messages.json").read_text())
     agents = make_population(len({r["agent"] for r in reactions}), args.seed)
-    run_tag = os.environ.get("GITHUB_RUN_ID", "local")[-6:]
+    run_tag = ("seg" if args.via == "segment" else "") + os.environ.get("GITHUB_RUN_ID", "local")[-6:]
 
     events = events_for(reactions, agents, messages, run_tag)
     if len(events) > MAX_EVENTS:
@@ -106,14 +139,23 @@ def main():
         print(summary)
         print(json.dumps(events[:3], indent=1))
         return
-    key = os.environ.get("AMPLITUDE_API_KEY")
-    if not key:
-        sys.exit("AMPLITUDE_API_KEY is missing. Use --dry-run to test without it.")
-    ingested = send(key, events)
-    summary += f"\n\nAmplitude accepted **{ingested}** events (EU region)."
-    print(summary)
-    if ingested != len(events):
-        sys.exit(f"Mismatch: sent {len(events)}, Amplitude accepted {ingested}.")
+    if args.via == "segment":
+        key = os.environ.get("SEGMENT_WRITE_KEY")
+        if not key:
+            sys.exit("SEGMENT_WRITE_KEY is missing.")
+        n = send_segment(key, events)
+        summary += (f"\n\nSegment accepted **{n}** calls. Check Amplitude for users "
+                    f"`scm_{run_tag}_…` (Segment forwards within a few minutes).")
+        print(summary)
+    else:
+        key = os.environ.get("AMPLITUDE_API_KEY")
+        if not key:
+            sys.exit("AMPLITUDE_API_KEY is missing. Use --dry-run to test without it.")
+        ingested = send(key, events)
+        summary += f"\n\nAmplitude accepted **{ingested}** events (EU region)."
+        print(summary)
+        if ingested != len(events):
+            sys.exit(f"Mismatch: sent {len(events)}, Amplitude accepted {ingested}.")
     if os.environ.get("GITHUB_STEP_SUMMARY"):
         with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f:
             f.write(summary + "\n")

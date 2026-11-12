@@ -7,6 +7,11 @@ on:
         description: "Dry run (print events, send nothing)"
         type: boolean
         default: true
+      via:
+        description: "Route"
+        type: choice
+        options: [direct, segment]
+        default: segment
 
 permissions:
   contents: read
@@ -23,9 +28,10 @@ jobs:
           python-version: "3.12"
       - name: Dry run
         if: ${{ inputs.dry_run }}
-        run: python join2/send_to_amplitude.py --dry-run
+        run: python join2/send_to_amplitude.py --dry-run --via ${{ inputs.via }}
       - name: Send to Amplitude
         if: ${{ !inputs.dry_run }}
         env:
           AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
-        run: python join2/send_to_amplitude.py
+          SEGMENT_WRITE_KEY: ${{ secrets.SEGMENT_WRITE_KEY }}
+        run: python join2/send_to_amplitude.py --via ${{ inputs.via }}
