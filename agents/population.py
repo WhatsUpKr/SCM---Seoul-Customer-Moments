@@ -43,11 +43,18 @@ class Agent:
         """Persona text given to the model. Numbers become plain words."""
         def level(x):
             return "low" if x < 0.34 else "medium" if x < 0.67 else "high"
+        if self.message_fatigue > 0.66:
+            tolerance = ("very low: your phone is flooded with brand notifications, and you "
+                         "routinely unsubscribe from or mute brands that contact you too often")
+        elif self.message_fatigue > 0.33:
+            tolerance = "medium: a few messages are fine, repeated pushes annoy you"
+        else:
+            tolerance = "high: you don't mind brand messages"
         return (
             f"You are a fictional resident of {self.district}, Seoul, in your {self.age_band}, "
             f"{self.household}. Price sensitivity: {level(self.price_sensitivity)}. "
             f"Trust in the brand 'Haneul Market': {level(self.relationship_capital)}. "
-            f"Tolerance for marketing messages: {level(1 - self.message_fatigue)}. "
+            f"Tolerance for marketing messages: {tolerance}. "
             f"You {'were already planning' if self.would_buy_anyway else 'had no plan'} "
             f"to shop at Haneul Market this week. This week: {self.life_moment}."
         )

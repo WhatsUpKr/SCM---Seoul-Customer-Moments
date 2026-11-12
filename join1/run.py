@@ -29,6 +29,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 from agents.population import make_population  # noqa: E402
+from agents.fatigue import expected_exit  # noqa: E402
 
 MODEL = "claude-haiku-5-5"
 MAX_CALLS = 160
@@ -37,21 +38,27 @@ ACTIONS = ["open_and_click", "open_only", "ignore", "unsubscribe"]
 
 SYSTEM = (
     "You play one fictional customer in a closed simulation. Stay in character. "
-    "React to the marketing message like this real person would, including ignoring it. "
+    "React to the marketing message like this real person would. Real people mostly "
+    "ignore brand messages, and they unsubscribe without a second thought when a brand "
+    "feels pushy or irrelevant: it takes one tap and costs nothing. Do not be polite to "
+    "the brand. Unsubscribing stops all messages from this brand. "
     "Answer with JSON only: "
-    '{"action": one of ' + json.dumps(ACTIONS) + ', '
+    '{"annoyance": integer 0-10, "action": one of ' + json.dumps(ACTIONS) + ', '
     '"diary": "one short sentence in English, first person, what you thought"}'
 )
 
 
-def call_model(client, persona: str, message: dict) -> dict:
+def call_model(client, persona: str, message: dict, history: list) -> dict:
+    past = "".join(f"- {h['channel']}: {h['en']} -> you chose {h['action']}\n" for h in history)
+    context = (f"Messages Haneul Market already sent you this week:\n{past}\n" if past
+               else "This is the first message from Haneul Market this week.\n\n")
     resp = client.messages.create(
         model=MODEL,
         max_tokens=MAX_TOKENS,
         system=SYSTEM + "\n\nYour persona: " + persona,
         messages=[{"role": "user", "content":
-                   f"You receive this {message['channel']} message:\n{message['text']}\n"
-                   f"(English: {message['en']})"}],
+                   context + f"Now you receive this {message['channel']} message:\n"
+                   f"{message['text']}\n(English: {message['en']})"}],
     )
     text = next(b.text for b in resp.content if b.type == "text")
     start, end = text.find("{"), text.rfind("}") + 1
@@ -89,7 +96,8 @@ def analyse(agents, messages, reactions) -> dict:
     report = {"spread": {}, "sensitivity": {}, "diversity": None, "verdict": []}
 
     for m in messages:
-        counts = Counter(r["action"] for r in reactions if r["message"] == m["id"])
+        counts = Counter(r["action"] for r in reactions
+                         if r["message"] == m["id"] and r["action"] != "not_sent")
         top_share = max(counts.values()) / sum(counts.values())
         report["spread"][m["id"]] = {"counts": dict(counts), "top_share": round(top_share, 2)}
 
@@ -97,9 +105,26 @@ def analyse(agents, messages, reactions) -> dict:
         sub = [r for r in reactions if pred(by_id[r["agent"]])]
         return round(sum(r["action"] == action for r in sub) / max(len(sub), 1), 2)
 
+    exited = {r["agent"] for r in reactions if r["action"] == "unsubscribe"}
+    bands = {"low": lambda a: a.message_fatigue < 0.33,
+             "medium": lambda a: 0.33 <= a.message_fatigue <= 0.66,
+             "high": lambda a: a.message_fatigue > 0.66}
+    report["exits"] = {}
+    for name, pred in bands.items():
+        group = [a for a in agents if pred(a)]
+        n = max(len(group), 1)
+        report["exits"][name] = {
+            "agents": len(group),
+            "model_exit_rate": round(sum(a.id in exited for a in group) / n, 2),
+            "baseline_exit_rate": round(sum(expected_exit(a, messages) for a in group) / n, 2),
+        }
+    report["exits"]["all"] = {
+        "agents": len(agents),
+        "model_exit_rate": round(len(exited) / len(agents), 2),
+        "baseline_exit_rate": round(sum(expected_exit(a, messages) for a in agents) / len(agents), 2),
+    }
+
     report["sensitivity"] = {
-        "unsubscribe_high_fatigue": rate(lambda a: a.message_fatigue > 0.66, "unsubscribe"),
-        "unsubscribe_low_fatigue": rate(lambda a: a.message_fatigue < 0.33, "unsubscribe"),
         "click_high_capital": rate(lambda a: a.relationship_capital > 0.66, "open_and_click"),
         "click_low_capital": rate(lambda a: a.relationship_capital < 0.33, "open_and_click"),
     }
@@ -112,12 +137,14 @@ def analyse(agents, messages, reactions) -> dict:
                 sims.append(len(x & y) / len(x | y))
     report["diversity"] = round(sum(sims) / max(len(sims), 1), 2)
 
-    s = report["sensitivity"]
+    s, e = report["sensitivity"], report["exits"]
     checks = {
         "spread: no message above 80% same reaction":
             all(v["top_share"] <= 0.8 for v in report["spread"].values()),
-        "sensitivity: tired agents unsubscribe more":
-            s["unsubscribe_high_fatigue"] > s["unsubscribe_low_fatigue"],
+        "exits: agents unsubscribe on their own":
+            e["all"]["model_exit_rate"] > 0,
+        "exits: tired agents leave more than relaxed ones":
+            e["high"]["model_exit_rate"] > e["low"]["model_exit_rate"],
         "sensitivity: loyal agents click more":
             s["click_high_capital"] > s["click_low_capital"],
         "diversity: average diary overlap below 0.35":
@@ -154,20 +181,26 @@ def main():
         if client and time.time() - last_refresh > 120:
             refresh_github_token()
             last_refresh = time.time()
+        history = []
         for m in messages:
+            if any(h["action"] == "unsubscribe" for h in history):
+                reactions.append({"agent": a.id, "message": m["id"], "action": "not_sent",
+                                  "diary": ""})
+                continue
             try:
                 if args.dry_run:
                     out = fake_reaction(rng, a, m)
                 else:
                     try:
-                        out = call_model(client, a.brief(), m)
+                        out = call_model(client, a.brief(), m, history)
                     except json.JSONDecodeError:  # malformed answer: one retry
-                        out = call_model(client, a.brief(), m)
+                        out = call_model(client, a.brief(), m, history)
             except Exception as e:  # one failed call must not kill the run
                 if "401" in str(e) or "authentication" in str(e).lower():
                     sys.exit(f"Authentication refused, run stopped: {str(e)[:200]}")
                 out = {"action": "error", "diary": str(e)[:120]}
             reactions.append({"agent": a.id, "message": m["id"], **out})
+            history.append({"channel": m["channel"], "en": m["en"], "action": out["action"]})
 
     report = analyse(agents, messages, reactions)
     out_dir = ROOT / "results"
@@ -176,10 +209,13 @@ def main():
     (out_dir / f"join1_{tag}_reactions.json").write_text(json.dumps(reactions, indent=1, ensure_ascii=False))
     (out_dir / f"join1_{tag}_report.json").write_text(json.dumps(report, indent=1))
 
-    lines = [f"## Join 1 ({tag}): {report['passed']}/4 checks passed", ""]
+    lines = [f"## Join 1 ({tag}): {report['passed']}/{len(report['verdict'])} checks passed", ""]
     lines += [f"- {'✅' if v['pass'] else '❌'} {v['check']}" for v in report["verdict"]]
     lines += ["", "| Message | Top reaction share | Counts |", "|---|---|---|"]
     lines += [f"| {k} | {v['top_share']} | {v['counts']} |" for k, v in report["spread"].items()]
+    lines += ["", "| Fatigue | Agents | Model exit rate | Benchmark baseline |", "|---|---|---|---|"]
+    lines += [f"| {k} | {v['agents']} | {v['model_exit_rate']} | {v['baseline_exit_rate']} |"
+              for k, v in report["exits"].items()]
     lines += ["", f"Sensitivity: `{report['sensitivity']}`", f"Diary overlap: {report['diversity']}"]
     summary = "\n".join(lines)
     print(summary)
