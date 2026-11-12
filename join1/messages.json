@@ -1,0 +1,7 @@
+[
+  {"id": "m1_promo", "channel": "push", "text": "[Haneul Market] 오늘만! 전 품목 20% 할인 🔥 지금 바로 확인하세요", "en": "Today only! 20% off everything. Check now"},
+  {"id": "m2_reminder", "channel": "email", "text": "[Haneul Market] 장바구니에 담아두신 상품이 곧 품절될 수 있어요.", "en": "Items in your cart may sell out soon."},
+  {"id": "m3_moment", "channel": "kakao", "text": "[Haneul Market] 새 집 정리 중이신가요? 이사 필수템 모음을 준비했어요.", "en": "Settling into a new home? We put together moving essentials."},
+  {"id": "m4_content", "channel": "email", "text": "[Haneul Market] 이번 주 제철 채소로 만드는 15분 저녁 레시피 3가지", "en": "3 fifteen-minute dinner recipes with this week's seasonal vegetables"},
+  {"id": "m5_third_push", "channel": "push", "text": "[Haneul Market] 아직 안 보셨나요? 할인 마감 2시간 전!", "en": "Haven't looked yet? Sale ends in 2 hours!"}
+]

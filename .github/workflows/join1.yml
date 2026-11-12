@@ -1,0 +1,38 @@
+name: Join 1 - agent variety test
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run (no API call, no cost)"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run join 1
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            python join1/run.py --dry-run
+          else
+            python join1/run.py
+          fi
+      - name: Commit results
+        run: |
+          git config user.name "scm-bot"
+          git config user.email "scm-bot@users.noreply.github.com"
+          git add results/
+          git diff --cached --quiet || git commit -m "Join 1 results"
+          git push
