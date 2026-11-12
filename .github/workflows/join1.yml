@@ -22,10 +22,10 @@ jobs:
     env:
       # Identifiers only, not secrets: they are useless without a token
       # that GitHub signs for this exact repository and branch.
-      ANTHROPIC_FEDERATION_RULE_ID: TO_FILL
-      ANTHROPIC_ORGANIZATION_ID: TO_FILL
-      ANTHROPIC_SERVICE_ACCOUNT_ID: TO_FILL
-      ANTHROPIC_WORKSPACE_ID: TO_FILL
+      ANTHROPIC_FEDERATION_RULE_ID: fdrl_013hfvsL8VjoUeXgKajJ7AxY
+      ANTHROPIC_ORGANIZATION_ID: 5b9711b8-c1f4-4782-be06-7053cbe39056
+      ANTHROPIC_SERVICE_ACCOUNT_ID: svac_018ocqRUvU8M7yh6jMtWvvHx
+      ANTHROPIC_WORKSPACE_ID: wrkspc_01WH9RekNabRf4CZdnVmBUMq
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v5
