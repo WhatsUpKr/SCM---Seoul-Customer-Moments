@@ -29,7 +29,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 from agents.population import make_population  # noqa: E402
-from agents.fatigue import expected_exit  # noqa: E402
+from agents.fatigue import expected_exit, opt_out_probability  # noqa: E402
 
 MODEL = "claude-haiku-5-5"
 MAX_CALLS = 160
@@ -84,7 +84,8 @@ def refresh_github_token() -> None:
 
 
 def fake_reaction(rng: random.Random, agent, message) -> dict:
-    return {"action": rng.choice(ACTIONS), "diary": f"dry run {rng.randint(0, 9999)}"}
+    return {"annoyance": rng.randint(0, 10), "action": rng.choice(ACTIONS),
+            "diary": f"dry run {rng.randint(0, 9999)}"}
 
 
 def words(s: str) -> set:
@@ -106,6 +107,7 @@ def analyse(agents, messages, reactions) -> dict:
         return round(sum(r["action"] == action for r in sub) / max(len(sub), 1), 2)
 
     exited = {r["agent"] for r in reactions if r["action"] == "unsubscribe"}
+    world_exited = {r["agent"] for r in reactions if r.get("exited")}
     bands = {"low": lambda a: a.message_fatigue < 0.33,
              "medium": lambda a: 0.33 <= a.message_fatigue <= 0.66,
              "high": lambda a: a.message_fatigue > 0.66}
@@ -116,11 +118,13 @@ def analyse(agents, messages, reactions) -> dict:
         report["exits"][name] = {
             "agents": len(group),
             "model_exit_rate": round(sum(a.id in exited for a in group) / n, 2),
+            "hybrid_exit_rate": round(sum(a.id in world_exited for a in group) / n, 2),
             "baseline_exit_rate": round(sum(expected_exit(a, messages) for a in group) / n, 2),
         }
     report["exits"]["all"] = {
         "agents": len(agents),
         "model_exit_rate": round(len(exited) / len(agents), 2),
+        "hybrid_exit_rate": round(len(world_exited) / len(agents), 2),
         "baseline_exit_rate": round(sum(expected_exit(a, messages) for a in agents) / len(agents), 2),
     }
 
@@ -175,6 +179,7 @@ def main():
         client = anthropic.Anthropic()
 
     rng = random.Random(args.seed)
+    world_rng = random.Random(args.seed + 1)  # separate stream: the world's dice
     reactions = []
     last_refresh = 0.0
     for a in agents:
@@ -183,7 +188,7 @@ def main():
             last_refresh = time.time()
         history = []
         for m in messages:
-            if any(h["action"] == "unsubscribe" for h in history):
+            if any(h.get("exited") for h in history):
                 reactions.append({"agent": a.id, "message": m["id"], "action": "not_sent",
                                   "diary": ""})
                 continue
@@ -199,8 +204,19 @@ def main():
                 if "401" in str(e) or "authentication" in str(e).lower():
                     sys.exit(f"Authentication refused, run stopped: {str(e)[:200]}")
                 out = {"action": "error", "diary": str(e)[:120]}
-            reactions.append({"agent": a.id, "message": m["id"], **out})
-            history.append({"channel": m["channel"], "en": m["en"], "action": out["action"]})
+            # Hybrid rule: the model says who is annoyed and whether it WANTS to leave;
+            # the code decides who actually leaves, with a probability anchored on the
+            # market benchmark and scaled by the model's annoyance (0-10, mean ~5 -> 1x).
+            prior = sum(h["channel"] == m["channel"] for h in history)
+            annoyance = out.get("annoyance") if isinstance(out.get("annoyance"), (int, float)) else 5
+            p_exit = opt_out_probability(m["channel"], min(max(annoyance, 0), 10) / 10, prior)
+            exited = out["action"] not in ("error", "invalid") and world_rng.random() < p_exit
+            reactions.append({"agent": a.id, "message": m["id"], **out,
+                              "p_exit": round(p_exit, 4), "exited": exited})
+            shown = "unsubscribe (wanted to, but didn't get round to it)" \
+                if out["action"] == "unsubscribe" and not exited else out["action"]
+            history.append({"channel": m["channel"], "en": m["en"], "action": shown,
+                            "exited": exited})
 
     report = analyse(agents, messages, reactions)
     out_dir = ROOT / "results"
@@ -213,8 +229,9 @@ def main():
     lines += [f"- {'✅' if v['pass'] else '❌'} {v['check']}" for v in report["verdict"]]
     lines += ["", "| Message | Top reaction share | Counts |", "|---|---|---|"]
     lines += [f"| {k} | {v['top_share']} | {v['counts']} |" for k, v in report["spread"].items()]
-    lines += ["", "| Fatigue | Agents | Model exit rate | Benchmark baseline |", "|---|---|---|---|"]
-    lines += [f"| {k} | {v['agents']} | {v['model_exit_rate']} | {v['baseline_exit_rate']} |"
+    lines += ["", "| Fatigue | Agents | Model wants to leave | Hybrid (actually left) | Benchmark baseline |",
+              "|---|---|---|---|---|"]
+    lines += [f"| {k} | {v['agents']} | {v['model_exit_rate']} | {v['hybrid_exit_rate']} | {v['baseline_exit_rate']} |"
               for k, v in report["exits"].items()]
     lines += ["", f"Sensitivity: `{report['sensitivity']}`", f"Diary overlap: {report['diversity']}"]
     summary = "\n".join(lines)
