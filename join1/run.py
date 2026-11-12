@@ -32,7 +32,7 @@ from agents.population import make_population  # noqa: E402
 
 MODEL = "claude-haiku-5-5"
 MAX_CALLS = 160
-MAX_TOKENS = 220
+MAX_TOKENS = 300
 ACTIONS = ["open_and_click", "open_only", "ignore", "unsubscribe"]
 
 SYSTEM = (
@@ -156,7 +156,13 @@ def main():
             last_refresh = time.time()
         for m in messages:
             try:
-                out = fake_reaction(rng, a, m) if args.dry_run else call_model(client, a.brief(), m)
+                if args.dry_run:
+                    out = fake_reaction(rng, a, m)
+                else:
+                    try:
+                        out = call_model(client, a.brief(), m)
+                    except json.JSONDecodeError:  # malformed answer: one retry
+                        out = call_model(client, a.brief(), m)
             except Exception as e:  # one failed call must not kill the run
                 if "401" in str(e) or "authentication" in str(e).lower():
                     sys.exit(f"Authentication refused, run stopped: {str(e)[:200]}")
