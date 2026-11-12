@@ -1,0 +1,60 @@
+{
+ "spread": {
+  "m1_promo": {
+   "counts": {
+    "error": 30
+   },
+   "top_share": 1.0
+  },
+  "m2_reminder": {
+   "counts": {
+    "error": 30
+   },
+   "top_share": 1.0
+  },
+  "m3_moment": {
+   "counts": {
+    "error": 30
+   },
+   "top_share": 1.0
+  },
+  "m4_content": {
+   "counts": {
+    "error": 30
+   },
+   "top_share": 1.0
+  },
+  "m5_third_push": {
+   "counts": {
+    "error": 30
+   },
+   "top_share": 1.0
+  }
+ },
+ "sensitivity": {
+  "unsubscribe_high_fatigue": 0.0,
+  "unsubscribe_low_fatigue": 0.0,
+  "click_high_capital": 0.0,
+  "click_low_capital": 0.0
+ },
+ "diversity": 1.0,
+ "verdict": [
+  {
+   "check": "spread: no message above 80% same reaction",
+   "pass": false
+  },
+  {
+   "check": "sensitivity: tired agents unsubscribe more",
+   "pass": false
+  },
+  {
+   "check": "sensitivity: loyal agents click more",
+   "pass": false
+  },
+  {
+   "check": "diversity: average diary overlap below 0.35",
+   "pass": false
+  }
+ ],
+ "passed": 0
+}
