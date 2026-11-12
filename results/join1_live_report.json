@@ -2,57 +2,57 @@
  "spread": {
   "m1_promo": {
    "counts": {
-    "ignore": 11,
-    "open_only": 6,
-    "open_and_click": 12,
-    "unsubscribe": 1
+    "ignore": 10,
+    "open_only": 8,
+    "open_and_click": 12
    },
    "top_share": 0.4
   },
   "m2_reminder": {
    "counts": {
-    "unsubscribe": 6,
-    "ignore": 8,
-    "error": 4,
+    "ignore": 7,
     "open_and_click": 8,
+    "unsubscribe": 7,
+    "error": 1,
     "open_only": 3
    },
-   "top_share": 0.28
+   "top_share": 0.31
   },
   "m3_moment": {
    "counts": {
-    "ignore": 11,
-    "unsubscribe": 5,
-    "open_and_click": 1,
-    "error": 2,
-    "open_only": 4
+    "ignore": 8,
+    "unsubscribe": 10,
+    "open_and_click": 2,
+    "open_only": 4,
+    "error": 2
    },
-   "top_share": 0.48
+   "top_share": 0.38
   },
   "m4_content": {
    "counts": {
-    "open_only": 8,
-    "open_and_click": 7,
-    "error": 1,
-    "ignore": 2
+    "open_only": 10,
+    "unsubscribe": 9,
+    "ignore": 1,
+    "open_and_click": 6
    },
-   "top_share": 0.44
+   "top_share": 0.38
   },
   "m5_third_push": {
    "counts": {
-    "ignore": 9,
-    "error": 2,
-    "open_and_click": 6,
-    "unsubscribe": 1
+    "ignore": 5,
+    "unsubscribe": 10,
+    "error": 3,
+    "open_and_click": 7,
+    "open_only": 1
    },
-   "top_share": 0.5
+   "top_share": 0.38
   }
  },
  "sensitivity": {
   "click_high_capital": 0.38,
   "click_low_capital": 0.0
  },
- "diversity": 0.11,
+ "diversity": 0.14,
  "verdict": [
   {
    "check": "spread: no message above 80% same reaction",
@@ -79,21 +79,25 @@
   "low": {
    "agents": 13,
    "model_exit_rate": 0.0,
+   "hybrid_exit_rate": 0.15,
    "baseline_exit_rate": 0.11
   },
   "medium": {
    "agents": 7,
-   "model_exit_rate": 0.43,
+   "model_exit_rate": 0.29,
+   "hybrid_exit_rate": 0.57,
    "baseline_exit_rate": 0.28
   },
   "high": {
    "agents": 10,
-   "model_exit_rate": 1.0,
+   "model_exit_rate": 0.9,
+   "hybrid_exit_rate": 0.5,
    "baseline_exit_rate": 0.44
   },
   "all": {
    "agents": 30,
-   "model_exit_rate": 0.43,
+   "model_exit_rate": 0.37,
+   "hybrid_exit_rate": 0.37,
    "baseline_exit_rate": 0.26
   }
  },

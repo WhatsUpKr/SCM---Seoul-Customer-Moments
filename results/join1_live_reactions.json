@@ -4,14 +4,15 @@
   "message": "m1_promo",
   "annoyance": 3,
   "action": "ignore",
-  "diary": "Another 'today only' push, but it's the first one this week and I wasn't planning to shop, so I'll just swipe it away."
+  "diary": "Another store promo buzzing my phone, and I have no reason to shop for groceries today, so I'll swipe it away.",
+  "p_exit": 0.072,
+  "exited": true
  },
  {
   "agent": "a000",
   "message": "m2_reminder",
-  "annoyance": 8,
-  "action": "unsubscribe",
-  "diary": "I didn't put anything in a cart, and this is the second message from them this week, so I'm done with these emails."
+  "action": "not_sent",
+  "diary": ""
  },
  {
   "agent": "a000",
@@ -33,979 +34,1265 @@
  },
  {
   "agent": "a001",
-  "message": "m1_promo",
-  "annoyance": 3,
-  "action": "ignore",
-  "diary": "Haneul Market again with a 20% sale, and I have no plan to shop there this week, so I'll just leave it alone."
- },
- {
-  "agent": "a001",
-  "message": "m2_reminder",
-  "annoyance": 4,
-  "action": "ignore",
-  "diary": "I never put anything in a Haneul Market cart, so this 'sell out soon' warning is just noise, and I'm not going to rush over to shop for it."
- },
- {
-  "agent": "a001",
-  "message": "m3_moment",
-  "annoyance": 4,
-  "action": "ignore",
-  "diary": "I haven't moved house, so this doesn't apply to me, and I already ignored their last two messages, but it's harmless enough to leave alone."
- },
- {
-  "agent": "a001",
-  "message": "m4_content",
-  "annoyance": 3,
-  "action": "open_only",
-  "diary": "Another Haneul email this week, but recipes are harmless enough, so I'll glance at them and skip cooking anything."
- },
- {
-  "agent": "a001",
-  "message": "m5_third_push",
-  "annoyance": 4,
-  "action": "ignore",
-  "diary": "Another 'sale ends soon' push, and I already ignored the same kind of message earlier, so I'm not rushing to check this one either."
- },
- {
-  "agent": "a002",
   "message": "m1_promo",
   "annoyance": 2,
   "action": "ignore",
-  "diary": "Another 'today only' sale ping from Haneul Market, and I'm still recovering from this cold, so I'm not going shopping today."
+  "diary": "Another 20% off sale from Haneul Market, but I'm not planning to shop this week, so I'll skip it.",
+  "p_exit": 0.048,
+  "exited": false
+ },
+ {
+  "agent": "a001",
+  "message": "m2_reminder",
+  "annoyance": 4,
+  "action": "ignore",
+  "diary": "I don't have anything in my cart, so this is just Haneul Market pushing again, and I'm busy with my friend's wedding next weekend.",
+  "p_exit": 0.0016,
+  "exited": false
+ },
+ {
+  "agent": "a001",
+  "message": "m3_moment",
+  "annoyance": 4,
+  "action": "ignore",
+  "diary": "I'm not moving anywhere, so this moving-essentials message doesn't apply to me, and I've already ignored their last two messages.",
+  "p_exit": 0.0016,
+  "exited": false
+ },
+ {
+  "agent": "a001",
+  "message": "m4_content",
+  "annoyance": 2,
+  "action": "open_only",
+  "diary": "Recipes are harmless enough, and at least this one isn't shouting about a discount, but I still don't trust this shop and I'm not buying anything this week.",
+  "p_exit": 0.0012,
+  "exited": false
+ },
+ {
+  "agent": "a001",
+  "message": "m5_third_push",
+  "annoyance": 4,
+  "action": "ignore",
+  "diary": "Another 'sale ends soon' ping, and I already waved off the same kind of message this morning, so I'll let this one go.",
+  "p_exit": 0.144,
+  "exited": false
+ },
+ {
+  "agent": "a002",
+  "message": "m1_promo",
+  "annoyance": 3,
+  "action": "ignore",
+  "diary": "Another 20% off sale, and I'm still stuck in bed with this cold, so I'll probably just let it go.",
+  "p_exit": 0.072,
+  "exited": false
  },
  {
   "agent": "a002",
   "message": "m2_reminder",
   "annoyance": 4,
   "action": "ignore",
-  "diary": "I don't have anything in my cart, so this is probably a generic sell-out warning meant to rush me, and I'm too tired from this cold to care."
+  "diary": "I don't remember putting anything in a cart, and I'm still getting over this cold, so this can wait.",
+  "p_exit": 0.0016,
+  "exited": false
  },
  {
   "agent": "a002",
   "message": "m3_moment",
-  "annoyance": 3,
+  "annoyance": 4,
   "action": "ignore",
-  "diary": "I'm not moving house and I'm still getting over this cold, so this doesn't apply to me at all."
+  "diary": "I'm not moving anywhere, so this moving-essentials message doesn't apply to me, and I'm still too stuffed up from this cold to care.",
+  "p_exit": 0.0016,
+  "exited": false
  },
  {
   "agent": "a002",
   "message": "m4_content",
   "annoyance": 3,
   "action": "open_only",
-  "diary": "Recipes for dinner might be useful once I can cook again after this cold, but I still don't trust this shop, so I'll just glance at it."
+  "diary": "Recipes sound fine, but I'm still recovering from this cold and not planning to cook, so I'll glance and move on.",
+  "p_exit": 0.0018,
+  "exited": false
  },
  {
   "agent": "a002",
   "message": "m5_third_push",
-  "annoyance": 5,
+  "annoyance": 3,
   "action": "ignore",
-  "diary": "Another 'sale ends soon' ping while I'm still stuck in bed with this cold, and I have no plans to shop, so I'm skipping it."
+  "diary": "Another countdown alarm from Haneul Market, and I'm still too stuffed up with this cold to care about their sale.",
+  "p_exit": 0.108,
+  "exited": false
  },
  {
   "agent": "a003",
   "message": "m1_promo",
-  "annoyance": 3,
+  "annoyance": 2,
   "action": "open_only",
-  "diary": "Oh, a 20% sale today from Haneul Market, and I was planning to shop there this week anyway, so I'll glance at it but probably not click through."
+  "diary": "Oh, a 20% sale today, and I was going to shop at Haneul Market this week anyway, so I'll glance at it and see if it's worth going today.",
+  "p_exit": 0.048,
+  "exited": false
  },
  {
   "agent": "a003",
   "message": "m2_reminder",
-  "action": "error",
-  "diary": "Expecting value: line 1 column 1 (char 0)"
+  "annoyance": 5,
+  "action": "ignore",
+  "diary": "Another Haneul message already? I don't remember putting anything in my cart, and they're pinging me again after that sale push.",
+  "p_exit": 0.002,
+  "exited": false
  },
  {
   "agent": "a003",
   "message": "m3_moment",
   "annoyance": 7,
   "action": "unsubscribe",
-  "diary": "We aren't moving, so why is this brand sending me moving supplies now? That's the third message from them this week, so I'm done with them."
+  "diary": "I'm not moving, and this is already the third message from them this week, so I'm done getting these.",
+  "p_exit": 0.0028,
+  "exited": false
  },
  {
   "agent": "a003",
   "message": "m4_content",
-  "action": "not_sent",
-  "diary": ""
+  "annoyance": 7,
+  "action": "unsubscribe",
+  "diary": "Four messages from Haneul Market in one week is too many, so I'm finally unsubscribing, even though recipes would have been mildly nice.",
+  "p_exit": 0.0042,
+  "exited": false
  },
  {
   "agent": "a003",
   "message": "m5_third_push",
-  "action": "not_sent",
-  "diary": ""
- },
- {
-  "agent": "a004",
-  "message": "m1_promo",
-  "annoyance": 2,
-  "action": "open_only",
-  "diary": "Twenty percent off everything today, but I had no plan to shop this week, so I'll just glance at it and move on."
- },
- {
-  "agent": "a004",
-  "message": "m2_reminder",
-  "annoyance": 4,
-  "action": "ignore",
-  "diary": "I don't remember putting anything in a Haneul cart, so this feels like a generic nudge, and I'll skip it."
- },
- {
-  "agent": "a004",
-  "message": "m3_moment",
-  "annoyance": 3,
-  "action": "ignore",
-  "diary": "I'm not moving or setting up a new place, so this doesn't apply to me, but it's harmless and I'll just skip it."
- },
- {
-  "agent": "a004",
-  "message": "m4_content",
-  "annoyance": 2,
-  "action": "open_only",
-  "diary": "Quick 15-minute dinner ideas with seasonal vegetables are actually useful on a busy weeknight, so I'll glance at them, though I'm not buying anything from this."
- },
- {
-  "agent": "a004",
-  "message": "m5_third_push",
-  "annoyance": 4,
-  "action": "ignore",
-  "diary": "Another push about the same sale, and I already have no plans to shop there this week, so I'll let it go."
- },
- {
-  "agent": "a005",
-  "message": "m1_promo",
-  "annoyance": 3,
-  "action": "open_only",
-  "diary": "Haneul Market is having a sale today, and since it's the first message from them this week, I'll take a quick look without committing to anything."
- },
- {
-  "agent": "a005",
-  "message": "m2_reminder",
-  "annoyance": 5,
-  "action": "ignore",
-  "diary": "I don't remember putting anything in a cart, and this is the second push from them this week, so I'll just let it go."
- },
- {
-  "agent": "a005",
-  "message": "m3_moment",
-  "annoyance": 5,
-  "action": "ignore",
-  "diary": "Nobody's moving, so this doesn't apply to me, and it's the third message from them this week."
- },
- {
-  "agent": "a005",
-  "message": "m4_content",
-  "annoyance": 3,
-  "action": "open_only",
-  "diary": "Another email from Haneul Market, but at least it's recipes and not another discount, so I'll glance at it before I close it."
- },
- {
-  "agent": "a005",
-  "message": "m5_third_push",
-  "action": "error",
-  "diary": ""
- },
- {
-  "agent": "a006",
-  "message": "m1_promo",
-  "annoyance": 1,
-  "action": "open_and_click",
-  "diary": "Oh, I was already planning to buy groceries from Haneul Market this week, so a 20% sale today is good timing."
- },
- {
-  "agent": "a006",
-  "message": "m2_reminder",
-  "annoyance": 2,
-  "action": "open_and_click",
-  "diary": "Oh, I did leave a few things in my cart, so I'll check whether they're really running low before I buy."
- },
- {
-  "agent": "a006",
-  "message": "m3_moment",
-  "annoyance": 3,
-  "action": "open_and_click",
-  "diary": "Ugh, they've already messaged me twice this week, but I just moved and really do need moving stuff, so I'll take a look at the list."
- },
- {
-  "agent": "a006",
-  "message": "m4_content",
-  "annoyance": 3,
-  "action": "open_and_click",
-  "diary": "Four messages from them this week, but seasonal recipes are useful now that I'm cooking in a new kitchen, so I'll take a look."
- },
- {
-  "agent": "a006",
-  "message": "m5_third_push",
-  "annoyance": 3,
-  "action": "open_and_click",
-  "diary": "Another sale ping, and it's a bit pushy with the 'haven't looked yet?' tone, but I was going to shop this week anyway, so I'll take a quick look."
- },
- {
-  "agent": "a007",
-  "message": "m1_promo",
-  "annoyance": 2,
-  "action": "open_and_click",
-  "diary": "Twenty percent off today only, and I was already planning to shop there this week, so I'll take a look before I go."
- },
- {
-  "agent": "a007",
-  "message": "m2_reminder",
-  "annoyance": 3,
-  "action": "open_and_click",
-  "diary": "Another push, but I was already buying this week, so I'll check the cart and get it over with."
- },
- {
-  "agent": "a007",
-  "message": "m3_moment",
-  "action": "error",
-  "diary": "Expecting value: line 1 column 1 (char 0)"
- },
- {
-  "agent": "a007",
-  "message": "m4_content",
-  "annoyance": 3,
-  "action": "open_and_click",
-  "diary": "Three fifteen-minute dinners with seasonal vegetables sounds useful now that we're still settling into the new place, so I'll take a quick look."
- },
- {
-  "agent": "a007",
-  "message": "m5_third_push",
-  "action": "error",
-  "diary": ""
- },
- {
-  "agent": "a008",
-  "message": "m1_promo",
-  "annoyance": 1,
-  "action": "open_and_click",
-  "diary": "Twenty percent off everything today, and I was already planning to shop there this week, so I'll check it out right now."
- },
- {
-  "agent": "a008",
-  "message": "m2_reminder",
-  "annoyance": 2,
-  "action": "open_and_click",
-  "diary": "Oh, I did leave some things in my cart, so I'll open this and see if I can check out before they run out."
- },
- {
-  "agent": "a008",
-  "message": "m3_moment",
-  "annoyance": 2,
-  "action": "ignore",
-  "diary": "Haneul Market again, and I'm not moving, so this isn't for me, but whatever, I'll look at the cart later when I have time."
- },
- {
-  "agent": "a008",
-  "message": "m4_content",
-  "annoyance": 1,
-  "action": "open_and_click",
-  "diary": "Fifteen-minute dinners sound perfect this busy week, and I was already planning to buy vegetables from Haneul anyway, so I'll look at the recipes."
- },
- {
-  "agent": "a008",
-  "message": "m5_third_push",
-  "annoyance": 2,
-  "action": "open_and_click",
-  "diary": "Two hours left on the sale, and I was already planning to shop this week, so I'll check the cart before it closes."
- },
- {
-  "agent": "a009",
-  "message": "m1_promo",
-  "annoyance": 1,
-  "action": "open_and_click",
-  "diary": "Oh, 20% off today only, and I was already planning to stock up at Haneul Market this week, so I'll check it out now."
- },
- {
-  "agent": "a009",
-  "message": "m2_reminder",
-  "annoyance": 2,
-  "action": "open_and_click",
-  "diary": "Oh, I did leave some things in my cart, and I was going to order them this week anyway, so I'll go check them out now."
- },
- {
-  "agent": "a009",
-  "message": "m3_moment",
-  "annoyance": 3,
-  "action": "open_only",
-  "diary": "We haven't moved, so why are they assuming I'm settling into a new place? I'll glance at it, but I'm not clicking through just for that."
- },
- {
-  "agent": "a009",
-  "message": "m4_content",
-  "annoyance": 2,
-  "action": "open_and_click",
-  "diary": "Fifteen-minute dinners with seasonal vegetables are exactly what I need on a busy weeknight, so I'll check these out and see what I can add to this week's cart."
- },
- {
-  "agent": "a009",
-  "message": "m5_third_push",
-  "annoyance": 3,
-  "action": "open_and_click",
-  "diary": "Another deadline push, but I was already planning to shop this week and payday was yesterday, so I'll check the sale now."
- },
- {
-  "agent": "a010",
-  "message": "m1_promo",
-  "annoyance": 4,
-  "action": "ignore",
-  "diary": "Another 'today only' discount from a store I don't trust much, and I'm busy studying for my exam, so I'll skip it."
- },
- {
-  "agent": "a010",
-  "message": "m2_reminder",
-  "annoyance": 7,
-  "action": "unsubscribe",
-  "diary": "I never put anything in a cart, and this is the second pushy message from them this week, so I'm done with these."
- },
- {
-  "agent": "a010",
-  "message": "m3_moment",
-  "action": "not_sent",
-  "diary": ""
- },
- {
-  "agent": "a010",
-  "message": "m4_content",
-  "action": "not_sent",
-  "diary": ""
- },
- {
-  "agent": "a010",
-  "message": "m5_third_push",
-  "action": "not_sent",
-  "diary": ""
- },
- {
-  "agent": "a011",
-  "message": "m1_promo",
-  "annoyance": 3,
-  "action": "ignore",
-  "diary": "Another 'today only' 20% off blast from Haneul Market; I don't really trust their deals, and I have no reason to shop this week, so I'll just leave it."
- },
- {
-  "agent": "a011",
-  "message": "m2_reminder",
-  "annoyance": 5,
-  "action": "ignore",
-  "diary": "I don't have anything in my cart, so this is probably fake urgency, and I'm not going to fall for it."
- },
- {
-  "agent": "a011",
-  "message": "m3_moment",
-  "annoyance": 4,
-  "action": "ignore",
-  "diary": "We're not moving, so this doesn't apply to us, and I'm too busy with the wedding next weekend to think about it."
- },
- {
-  "agent": "a011",
-  "message": "m4_content",
-  "action": "error",
-  "diary": "Expecting value: line 1 column 1 (char 0)"
- },
- {
-  "agent": "a011",
-  "message": "m5_third_push",
-  "annoyance": 4,
-  "action": "ignore",
-  "diary": "Another 'sale ends soon' ping from Haneul Market, and I already ignored the same kind of message earlier, so I'm not going to open it."
- },
- {
-  "agent": "a012",
-  "message": "m1_promo",
-  "annoyance": 4,
-  "action": "ignore",
-  "diary": "Another 'today only' push, and I just moved, so I'm not even thinking about groceries right now."
- },
- {
-  "agent": "a012",
-  "message": "m2_reminder",
   "annoyance": 8,
   "action": "unsubscribe",
-  "diary": "I never put anything in a Haneul cart, and this is another pushy message after the last one I ignored, so I'm done with them."
+  "diary": "Another 'sale ends soon' push after the emails and KakaoTalk messages I already got this week, so I'm done with these alerts.",
+  "p_exit": 0.288,
+  "exited": true
  },
  {
-  "agent": "a012",
-  "message": "m3_moment",
-  "action": "not_sent",
-  "diary": ""
- },
- {
-  "agent": "a012",
-  "message": "m4_content",
-  "action": "not_sent",
-  "diary": ""
- },
- {
-  "agent": "a012",
-  "message": "m5_third_push",
-  "action": "not_sent",
-  "diary": ""
- },
- {
-  "agent": "a013",
-  "message": "m1_promo",
-  "annoyance": 3,
-  "action": "ignore",
-  "diary": "Another 'today only' push from a store I wasn't planning to buy from, but at least it's only the first one this week, so I'll just leave it."
- },
- {
-  "agent": "a013",
-  "message": "m2_reminder",
-  "annoyance": 8,
-  "action": "unsubscribe",
-  "diary": "I never put anything in a cart, and this is the second message from them this week after I ignored the last one, so they're just pushing now."
- },
- {
-  "agent": "a013",
-  "message": "m3_moment",
-  "action": "not_sent",
-  "diary": ""
- },
- {
-  "agent": "a013",
-  "message": "m4_content",
-  "action": "not_sent",
-  "diary": ""
- },
- {
-  "agent": "a013",
-  "message": "m5_third_push",
-  "action": "not_sent",
-  "diary": ""
- },
- {
-  "agent": "a014",
+  "agent": "a004",
   "message": "m1_promo",
   "annoyance": 3,
   "action": "open_only",
-  "diary": "Twenty percent off everything today only, and it's only the first message from them this week, so I'll glance at it, but I didn't plan to buy anything."
+  "diary": "Another 'today only' sale push, but it's fine, so I'll glance at it and move on since we don't need anything this week.",
+  "p_exit": 0.072,
+  "exited": false
  },
  {
-  "agent": "a014",
+  "agent": "a004",
   "message": "m2_reminder",
-  "action": "error",
-  "diary": ""
+  "annoyance": 3,
+  "action": "ignore",
+  "diary": "I don't have anything in my Haneul Market cart, so this seems like a mix-up, but I'm not bothered enough to do anything about it.",
+  "p_exit": 0.0012,
+  "exited": false
  },
  {
-  "agent": "a014",
+  "agent": "a004",
   "message": "m3_moment",
-  "annoyance": 7,
-  "action": "unsubscribe",
-  "diary": "I'm not moving, this is the third Haneul message this week, and I already ignored the last two, so I'm done with these."
+  "annoyance": 3,
+  "action": "ignore",
+  "diary": "I'm not moving, so this is irrelevant, but it's just one more message and not worth tapping on.",
+  "p_exit": 0.0012,
+  "exited": false
  },
  {
-  "agent": "a014",
+  "agent": "a004",
   "message": "m4_content",
-  "action": "not_sent",
-  "diary": ""
+  "annoyance": 2,
+  "action": "open_only",
+  "diary": "Quick weeknight dinner ideas are actually useful with the kids, so I'll glance at these later.",
+  "p_exit": 0.0012,
+  "exited": false
  },
  {
-  "agent": "a014",
+  "agent": "a004",
   "message": "m5_third_push",
-  "action": "not_sent",
-  "diary": ""
+  "annoyance": 4,
+  "action": "ignore",
+  "diary": "Ugh, another reminder from Haneul Market about the same sale, and I already saw the first one, so I'm just going to ignore it.",
+  "p_exit": 0.144,
+  "exited": false
  },
  {
-  "agent": "a015",
-  "message": "m1_promo",
-  "annoyance": 6,
-  "action": "unsubscribe",
-  "diary": "Another 'today only' push from a brand I barely trust, and I wasn't planning to shop anyway, so I'm done with these."
- },
- {
-  "agent": "a015",
-  "message": "m2_reminder",
-  "action": "not_sent",
-  "diary": ""
- },
- {
-  "agent": "a015",
-  "message": "m3_moment",
-  "action": "not_sent",
-  "diary": ""
- },
- {
-  "agent": "a015",
-  "message": "m4_content",
-  "action": "not_sent",
-  "diary": ""
- },
- {
-  "agent": "a015",
-  "message": "m5_third_push",
-  "action": "not_sent",
-  "diary": ""
- },
- {
-  "agent": "a016",
+  "agent": "a005",
   "message": "m1_promo",
   "annoyance": 2,
   "action": "open_only",
-  "diary": "Twenty percent off today only, but I'm still unpacking boxes and don't need anything yet, though Haneul is a store I trust, so I'll glance at it later."
+  "diary": "Twenty percent off everything today, and I just got paid, so I'll glance at it, though I wasn't planning to shop this week.",
+  "p_exit": 0.048,
+  "exited": false
  },
  {
-  "agent": "a016",
+  "agent": "a005",
   "message": "m2_reminder",
-  "annoyance": 5,
+  "annoyance": 4,
   "action": "ignore",
-  "diary": "I don't remember putting anything in a cart, and I'm busy unpacking boxes in my new place, so I'll skip this one."
+  "diary": "Another Haneul message already, and I don't remember putting anything in a cart, so I'll let this one go.",
+  "p_exit": 0.0016,
+  "exited": false
  },
  {
-  "agent": "a016",
+  "agent": "a005",
   "message": "m3_moment",
-  "annoyance": 4,
-  "action": "open_only",
-  "diary": "They're right that I just moved, and a moving essentials list might be handy, but this is the third message from them this week."
- },
- {
-  "agent": "a016",
-  "message": "m4_content",
-  "annoyance": 4,
-  "action": "open_only",
-  "diary": "This is the fourth message from them this week, but a quick seasonal dinner idea is at least something I might use while I'm cooking for one, so I'll glance at it and move on."
- },
- {
-  "agent": "a016",
-  "message": "m5_third_push",
   "annoyance": 6,
   "action": "ignore",
-  "diary": "Another push about a sale I already saw, and I'm not shopping this week, so I'll just ignore it and hope they stop sending so many messages."
+  "diary": "I'm not moving, so this is irrelevant, and it's the third message from them this week, which is getting to be too much.",
+  "p_exit": 0.0024,
+  "exited": false
  },
  {
-  "agent": "a017",
+  "agent": "a005",
+  "message": "m4_content",
+  "annoyance": 4,
+  "action": "ignore",
+  "diary": "That's their fourth message this week, and I'm not in the mood for recipes tonight, so I'll let it sit unread.",
+  "p_exit": 0.0024,
+  "exited": false
+ },
+ {
+  "agent": "a005",
+  "message": "m5_third_push",
+  "action": "error",
+  "diary": "",
+  "p_exit": 0.18,
+  "exited": false
+ },
+ {
+  "agent": "a006",
   "message": "m1_promo",
-  "annoyance": 2,
-  "action": "open_only",
-  "diary": "Twenty percent off everything today, but I'm still stuck in bed with this cold, so I'll glance at it and probably not buy anything."
+  "annoyance": 1,
+  "action": "open_and_click",
+  "diary": "Oh, 20% off today only, and I was already planning to buy groceries this week, so I'll check it out before I go.",
+  "p_exit": 0.024,
+  "exited": false
  },
  {
-  "agent": "a017",
+  "agent": "a006",
   "message": "m2_reminder",
-  "annoyance": 4,
-  "action": "ignore",
-  "diary": "I don't remember putting anything in a Haneul Market cart, and I'm not shopping this week anyway, so I'll just skip this."
+  "annoyance": 2,
+  "action": "open_and_click",
+  "diary": "Oh, I did leave some things in my cart, and I was going to buy them this week anyway, so I'll go check them out.",
+  "p_exit": 0.0008,
+  "exited": false
  },
  {
-  "agent": "a017",
+  "agent": "a006",
   "message": "m3_moment",
-  "annoyance": 4,
-  "action": "ignore",
-  "diary": "I haven't moved, so this moving-essentials pitch doesn't apply to me, and I'm too busy nursing this cold to care."
+  "annoyance": 2,
+  "action": "open_and_click",
+  "diary": "Ha, I did just move, and I was already going to buy some things this week, so this timing is actually useful.",
+  "p_exit": 0.0008,
+  "exited": false
  },
  {
-  "agent": "a017",
+  "agent": "a006",
   "message": "m4_content",
   "annoyance": 3,
-  "action": "ignore",
-  "diary": "Another Haneul email, and I'm too wiped out from this cold to cook anything, so I'll skip it."
+  "action": "open_and_click",
+  "diary": "Four messages from them this week, but seasonal recipes are useful now that I'm cooking in a new kitchen, so I'll take a look.",
+  "p_exit": 0.0018,
+  "exited": false
  },
  {
-  "agent": "a017",
+  "agent": "a006",
   "message": "m5_third_push",
   "annoyance": 4,
-  "action": "ignore",
-  "diary": "Another 'sale ends soon' ping while I'm stuck in bed with a cold, and I have no plans to shop this week, so I'll let it go."
+  "action": "open_and_click",
+  "diary": "Ugh, another push, but I was going to shop this week anyway, so I'll take a quick look before the sale ends.",
+  "p_exit": 0.144,
+  "exited": false
  },
  {
-  "agent": "a018",
+  "agent": "a007",
   "message": "m1_promo",
   "annoyance": 2,
   "action": "open_and_click",
-  "diary": "Only the first message from them this week, and 20% off is exactly what I was going to look for anyway, so I'll check it before it ends."
+  "diary": "Twenty percent off today only, and I was already planning to shop there this week, so I'll check the deals before the sale ends.",
+  "p_exit": 0.048,
+  "exited": false
  },
  {
-  "agent": "a018",
+  "agent": "a007",
   "message": "m2_reminder",
-  "action": "error",
-  "diary": "Expecting value: line 1 column 1 (char 0)"
+  "annoyance": 3,
+  "action": "open_and_click",
+  "diary": "Oh, I did leave some things in my cart while unpacking, so this is useful, and I'll check whether those items are really running low.",
+  "p_exit": 0.0012,
+  "exited": false
  },
  {
-  "agent": "a018",
+  "agent": "a007",
+  "message": "m3_moment",
+  "annoyance": 3,
+  "action": "open_and_click",
+  "diary": "Moving essentials are actually useful right now, though this is their third message this week, so I'll look quickly.",
+  "p_exit": 0.0012,
+  "exited": false
+ },
+ {
+  "agent": "a007",
+  "message": "m4_content",
+  "annoyance": 3,
+  "action": "open_and_click",
+  "diary": "Three messages from them this week is a lot, but seasonal vegetable dinner ideas are useful now that we're cooking in the new kitchen, so I'll take a look.",
+  "p_exit": 0.0018,
+  "exited": false
+ },
+ {
+  "agent": "a007",
+  "message": "m5_third_push",
+  "annoyance": 5,
+  "action": "open_only",
+  "diary": "Another countdown ping about the same 20% sale I already got today, so I'll glance at it when I actually shop this week rather than rush because of the timer.",
+  "p_exit": 0.18,
+  "exited": true
+ },
+ {
+  "agent": "a008",
+  "message": "m1_promo",
+  "annoyance": 1,
+  "action": "open_and_click",
+  "diary": "Twenty percent off everything today, and I was already planning to shop at Haneul Market this week, so I'll check the deals now before I forget.",
+  "p_exit": 0.024,
+  "exited": false
+ },
+ {
+  "agent": "a008",
+  "message": "m2_reminder",
+  "annoyance": 2,
+  "action": "open_and_click",
+  "diary": "Oh, I did leave a few things in my cart, so this is actually useful, and I'll check if there's a discount before they sell out.",
+  "p_exit": 0.0008,
+  "exited": false
+ },
+ {
+  "agent": "a008",
+  "message": "m3_moment",
+  "annoyance": 2,
+  "action": "open_only",
+  "diary": "I'm not moving, so this isn't for me, but it's from Haneul Market and I trust them, so I'll glance at it anyway.",
+  "p_exit": 0.0008,
+  "exited": false
+ },
+ {
+  "agent": "a008",
+  "message": "m4_content",
+  "annoyance": 2,
+  "action": "open_only",
+  "diary": "Fifteen-minute dinners sound perfect for this busy week, so I'll skim them tonight, though I might not have time to shop for the ingredients yet.",
+  "p_exit": 0.0012,
+  "exited": false
+ },
+ {
+  "agent": "a008",
+  "message": "m5_third_push",
+  "annoyance": 4,
+  "action": "open_and_click",
+  "diary": "Two hours left on the sale, and I was already planning to shop this week, so I'll check the cart before it ends.",
+  "p_exit": 0.144,
+  "exited": true
+ },
+ {
+  "agent": "a009",
+  "message": "m1_promo",
+  "annoyance": 2,
+  "action": "open_and_click",
+  "diary": "Oh, 20% off everything today, and I was already planning to stock up this week since payday was yesterday, so I'll check the deals now.",
+  "p_exit": 0.048,
+  "exited": false
+ },
+ {
+  "agent": "a009",
+  "message": "m2_reminder",
+  "annoyance": 2,
+  "action": "open_and_click",
+  "diary": "Oh, I did leave some things in my cart, so I'll go check them before they sell out.",
+  "p_exit": 0.0008,
+  "exited": false
+ },
+ {
+  "agent": "a009",
+  "message": "m3_moment",
+  "annoyance": 3,
+  "action": "open_only",
+  "diary": "I'm not moving, so this doesn't really apply to me, but it's harmless and I'll glance at it anyway.",
+  "p_exit": 0.0012,
+  "exited": false
+ },
+ {
+  "agent": "a009",
+  "message": "m4_content",
+  "annoyance": 2,
+  "action": "open_and_click",
+  "diary": "Quick weeknight recipes using seasonal veggies are handy, so I'll open it and see if I can pick up the ingredients for dinner this week.",
+  "p_exit": 0.0012,
+  "exited": false
+ },
+ {
+  "agent": "a009",
+  "message": "m5_third_push",
+  "annoyance": 3,
+  "action": "open_and_click",
+  "diary": "Another sale ping, but I was already planning to shop this week and payday was yesterday, so I'll check what's left in my cart before it's gone.",
+  "p_exit": 0.108,
+  "exited": false
+ },
+ {
+  "agent": "a010",
+  "message": "m1_promo",
+  "annoyance": 4,
+  "action": "ignore",
+  "diary": "Another 'today only' sale from a store I don't trust, and I'm busy studying for my exam, so I'll skip it.",
+  "p_exit": 0.096,
+  "exited": false
+ },
+ {
+  "agent": "a010",
+  "message": "m2_reminder",
+  "annoyance": 7,
+  "action": "unsubscribe",
+  "diary": "I never put anything in a cart, I'm busy studying for my exam, and this is the second pushy message from them, so I'm done with them.",
+  "p_exit": 0.0028,
+  "exited": false
+ },
+ {
+  "agent": "a010",
   "message": "m3_moment",
   "annoyance": 7,
   "action": "unsubscribe",
-  "diary": "I'm not moving, this is my third message from them this week, and I'm studying for an exam, so I'm done with these texts."
+  "diary": "I'm not moving house, and this is another irrelevant push from a brand I don't trust, so I'm finally unsubscribing.",
+  "p_exit": 0.0028,
+  "exited": false
  },
  {
-  "agent": "a018",
+  "agent": "a010",
   "message": "m4_content",
-  "action": "not_sent",
-  "diary": ""
+  "annoyance": 5,
+  "action": "unsubscribe",
+  "diary": "Another message from Haneul Market, and this is the fourth this week, so I'm done with them; I should have unsubscribed after the last one.",
+  "p_exit": 0.003,
+  "exited": false
  },
  {
-  "agent": "a018",
+  "agent": "a010",
   "message": "m5_third_push",
-  "action": "not_sent",
-  "diary": ""
+  "annoyance": 8,
+  "action": "unsubscribe",
+  "diary": "Another 'sale ends soon' push, and I've already ignored the same thing twice this week, so I'm done with these messages.",
+  "p_exit": 0.288,
+  "exited": true
  },
  {
-  "agent": "a019",
+  "agent": "a011",
   "message": "m1_promo",
   "annoyance": 3,
-  "action": "open_and_click",
-  "diary": "Another 'today only' push, but it's the first one this week and I was planning to shop at Haneul anyway, so I'll take a look before the discount is gone."
+  "action": "open_only",
+  "diary": "Another 'today only' blast from Haneul Market, and I don't fully trust that 20% claim, but I'll glance in case there's something useful before the wedding next weekend.",
+  "p_exit": 0.072,
+  "exited": false
  },
  {
-  "agent": "a019",
+  "agent": "a011",
   "message": "m2_reminder",
   "annoyance": 5,
-  "action": "open_only",
-  "diary": "Another message from them this week, and it's only a cart reminder, but I was going to shop there anyway, so I'll glance at my cart and not click through to anything else."
+  "action": "ignore",
+  "diary": "I never put anything in a Haneul cart, so this is just a fake-urgency nudge from a brand I don't trust.",
+  "p_exit": 0.002,
+  "exited": false
  },
  {
-  "agent": "a019",
+  "agent": "a011",
+  "message": "m3_moment",
+  "annoyance": 4,
+  "action": "ignore",
+  "diary": "I'm not moving and I'm not shopping for a home, so this is irrelevant, but it's the third message from them this week, so I'll just leave it.",
+  "p_exit": 0.0016,
+  "exited": false
+ },
+ {
+  "agent": "a011",
+  "message": "m4_content",
+  "annoyance": 3,
+  "action": "open_only",
+  "diary": "Recipes with seasonal vegetables are harmless, and I'm not buying anything this week with the wedding coming up, so I'll glance at it and move on.",
+  "p_exit": 0.0018,
+  "exited": false
+ },
+ {
+  "agent": "a011",
+  "message": "m5_third_push",
+  "annoyance": 4,
+  "action": "ignore",
+  "diary": "Another 'sale ends soon' ping from Haneul Market, and I'm not shopping this week anyway since I'm busy with the wedding next weekend.",
+  "p_exit": 0.144,
+  "exited": false
+ },
+ {
+  "agent": "a012",
+  "message": "m1_promo",
+  "annoyance": 4,
+  "action": "ignore",
+  "diary": "Another 'today only' push with a fire emoji, and I just moved so I'm not shopping anyway, but it's the first one this week so I'll let it slide.",
+  "p_exit": 0.096,
+  "exited": false
+ },
+ {
+  "agent": "a012",
+  "message": "m2_reminder",
+  "annoyance": 8,
+  "action": "unsubscribe",
+  "diary": "I never put anything in a Haneul cart, and this is the second message from them this week, so I'm done with them.",
+  "p_exit": 0.0032,
+  "exited": false
+ },
+ {
+  "agent": "a012",
+  "message": "m3_moment",
+  "annoyance": 7,
+  "action": "unsubscribe",
+  "diary": "Third message from them this week, and I still haven't finished unpacking, so I'm done with these pings.",
+  "p_exit": 0.0028,
+  "exited": false
+ },
+ {
+  "agent": "a012",
+  "message": "m4_content",
+  "annoyance": 6,
+  "action": "unsubscribe",
+  "diary": "Another message from Haneul Market already, and I'm still getting over the last three, so I'm unsubscribing before my phone fills up again.",
+  "p_exit": 0.0036,
+  "exited": false
+ },
+ {
+  "agent": "a012",
+  "message": "m5_third_push",
+  "annoyance": 8,
+  "action": "unsubscribe",
+  "diary": "Ugh, this is the fifth message from them this week, and the 'sale ends in 2 hours' thing is just pressure I don't need while I'm still unpacking boxes.",
+  "p_exit": 0.288,
+  "exited": false
+ },
+ {
+  "agent": "a013",
+  "message": "m1_promo",
+  "annoyance": 3,
+  "action": "ignore",
+  "diary": "Another 'today only' push with a fire emoji, but I'm not shopping for anything right now, so I'll swipe it away.",
+  "p_exit": 0.072,
+  "exited": false
+ },
+ {
+  "agent": "a013",
+  "message": "m2_reminder",
+  "annoyance": 8,
+  "action": "unsubscribe",
+  "diary": "I never put anything in a Haneul Market cart, and this is the second time they've pestered me this week, so I'm unsubscribing.",
+  "p_exit": 0.0032,
+  "exited": false
+ },
+ {
+  "agent": "a013",
   "message": "m3_moment",
   "annoyance": 8,
   "action": "unsubscribe",
-  "diary": "I'm not moving, this is the third message from them this week, and I'm tired of being pushed, so I'm unsubscribing even though I like the store."
+  "diary": "I'm not moving anywhere, and this is the third time this week they've bothered me, so I'm done with these messages.",
+  "p_exit": 0.0032,
+  "exited": false
  },
  {
-  "agent": "a019",
+  "agent": "a013",
+  "message": "m4_content",
+  "annoyance": 7,
+  "action": "unsubscribe",
+  "diary": "This is the fourth message from Haneul Market this week, and I'm finally going to stop getting them.",
+  "p_exit": 0.0042,
+  "exited": false
+ },
+ {
+  "agent": "a013",
+  "message": "m5_third_push",
+  "annoyance": 8,
+  "action": "unsubscribe",
+  "diary": "Another 'sale ends soon' ping from Haneul Market, and I already ignored the last one, so I'm finally turning these notifications off for good.",
+  "p_exit": 0.288,
+  "exited": true
+ },
+ {
+  "agent": "a014",
+  "message": "m1_promo",
+  "annoyance": 3,
+  "action": "open_only",
+  "diary": "Oh, 20% off everything today, and I got paid yesterday, so I'll glance at it, but I didn't plan to shop this week and I'm not clicking through just because of a 'today only' push.",
+  "p_exit": 0.072,
+  "exited": false
+ },
+ {
+  "agent": "a014",
+  "message": "m2_reminder",
+  "action": "error",
+  "diary": "",
+  "p_exit": 0.002,
+  "exited": false
+ },
+ {
+  "agent": "a014",
+  "message": "m3_moment",
+  "annoyance": 7,
+  "action": "unsubscribe",
+  "diary": "Third message from them this week, and I'm not moving, so this is just noise; I'm done with their notifications.",
+  "p_exit": 0.0028,
+  "exited": false
+ },
+ {
+  "agent": "a014",
+  "message": "m4_content",
+  "annoyance": 8,
+  "action": "unsubscribe",
+  "diary": "That's their fourth message this week, and I'm not cooking my way through a recipe newsletter, so I'm done with Haneul Market emails.",
+  "p_exit": 0.0048,
+  "exited": false
+ },
+ {
+  "agent": "a014",
+  "message": "m5_third_push",
+  "annoyance": 9,
+  "action": "unsubscribe",
+  "diary": "Another push about a sale ending, after the 20% off one and all those emails, so I'm done and I'm finally unsubscribing from Haneul Market.",
+  "p_exit": 0.324,
+  "exited": true
+ },
+ {
+  "agent": "a015",
+  "message": "m1_promo",
+  "annoyance": 5,
+  "action": "ignore",
+  "diary": "Another 'today only' discount alert from a brand I barely trust, and I have no reason to shop there this week.",
+  "p_exit": 0.12,
+  "exited": false
+ },
+ {
+  "agent": "a015",
+  "message": "m2_reminder",
+  "annoyance": 8,
+  "action": "unsubscribe",
+  "diary": "I never put anything in a cart, and this is the second message from them this week, so I'm done with them.",
+  "p_exit": 0.0032,
+  "exited": false
+ },
+ {
+  "agent": "a015",
+  "message": "m3_moment",
+  "annoyance": 8,
+  "action": "unsubscribe",
+  "diary": "I'm not moving house, and this is the third message from them this week, so I'm done with Haneul Market.",
+  "p_exit": 0.0032,
+  "exited": false
+ },
+ {
+  "agent": "a015",
+  "message": "m4_content",
+  "annoyance": 7,
+  "action": "unsubscribe",
+  "diary": "This is the fourth message from Haneul Market this week, and I already meant to unsubscribe from the last one, so I'm finally doing it now.",
+  "p_exit": 0.0042,
+  "exited": false
+ },
+ {
+  "agent": "a015",
+  "message": "m5_third_push",
+  "annoyance": 8,
+  "action": "unsubscribe",
+  "diary": "Another 'sale ends soon' push, and this is the fifth message from them this week, so I'm finally done with Haneul Market.",
+  "p_exit": 0.288,
+  "exited": true
+ },
+ {
+  "agent": "a016",
+  "message": "m1_promo",
+  "annoyance": 2,
+  "action": "open_only",
+  "diary": "Haneul Market is one of the stores I already trust, and this is only their first message this week, so a 20% sale is worth a quick look even though I wasn't planning to shop, since I just moved and still need things for the new place.",
+  "p_exit": 0.048,
+  "exited": true
+ },
+ {
+  "agent": "a016",
+  "message": "m2_reminder",
+  "action": "not_sent",
+  "diary": ""
+ },
+ {
+  "agent": "a016",
+  "message": "m3_moment",
+  "action": "not_sent",
+  "diary": ""
+ },
+ {
+  "agent": "a016",
   "message": "m4_content",
   "action": "not_sent",
   "diary": ""
  },
  {
-  "agent": "a019",
+  "agent": "a016",
   "message": "m5_third_push",
   "action": "not_sent",
   "diary": ""
+ },
+ {
+  "agent": "a017",
+  "message": "m1_promo",
+  "annoyance": 2,
+  "action": "open_only",
+  "diary": "Twenty percent off everything today, but I'm stuck on the couch with a cold and have no plans to shop, so I'll glance at it and probably forget about it.",
+  "p_exit": 0.048,
+  "exited": false
+ },
+ {
+  "agent": "a017",
+  "message": "m2_reminder",
+  "annoyance": 4,
+  "action": "ignore",
+  "diary": "I don't remember putting anything in a Haneul Market cart, and I'm not shopping this week anyway, so this feels like a nudge that doesn't apply to me.",
+  "p_exit": 0.0016,
+  "exited": false
+ },
+ {
+  "agent": "a017",
+  "message": "m3_moment",
+  "annoyance": 4,
+  "action": "ignore",
+  "diary": "Why would they assume I'm moving? I'm just stuck in bed with a cold, not packing boxes.",
+  "p_exit": 0.0016,
+  "exited": false
+ },
+ {
+  "agent": "a017",
+  "message": "m4_content",
+  "annoyance": 2,
+  "action": "open_only",
+  "diary": "Quick dinner ideas with seasonal vegetables sound fine, and I'm recovering from a cold, so I'll glance at them but probably won't buy anything.",
+  "p_exit": 0.0012,
+  "exited": false
+ },
+ {
+  "agent": "a017",
+  "message": "m5_third_push",
+  "annoyance": 4,
+  "action": "ignore",
+  "diary": "Another push about the same 20% sale, and I'm stuck in bed with a cold, so I'll let this one go by.",
+  "p_exit": 0.144,
+  "exited": false
+ },
+ {
+  "agent": "a018",
+  "message": "m1_promo",
+  "annoyance": 2,
+  "action": "open_and_click",
+  "diary": "Oh, 20% off today, perfect timing since I was already planning to pick up groceries this week, so I'll check it before the exam stress takes over.",
+  "p_exit": 0.048,
+  "exited": false
+ },
+ {
+  "agent": "a018",
+  "message": "m2_reminder",
+  "annoyance": 4,
+  "action": "open_only",
+  "diary": "Oh, my cart items might sell out, so I'll glance at it, but I'm busy with exam prep and don't want more pings from this app this week.",
+  "p_exit": 0.0016,
+  "exited": false
+ },
+ {
+  "agent": "a018",
+  "message": "m3_moment",
+  "annoyance": 7,
+  "action": "unsubscribe",
+  "diary": "I haven't moved, this is the third thing from them this week, and I'm trying to study, so I'm done getting their messages.",
+  "p_exit": 0.0028,
+  "exited": false
+ },
+ {
+  "agent": "a018",
+  "message": "m4_content",
+  "annoyance": 4,
+  "action": "open_only",
+  "diary": "Another Haneul message this week, but seasonal dinner recipes are actually useful while I'm studying, so I'll glance at it without clicking anything.",
+  "p_exit": 0.0024,
+  "exited": false
+ },
+ {
+  "agent": "a018",
+  "message": "m5_third_push",
+  "annoyance": 8,
+  "action": "unsubscribe",
+  "diary": "This is the fifth message from them this week, and I already saw the 20% sale, so I'm done with these pings and I'm unsubscribing before they send another.",
+  "p_exit": 0.288,
+  "exited": false
+ },
+ {
+  "agent": "a019",
+  "message": "m1_promo",
+  "annoyance": 2,
+  "action": "open_and_click",
+  "diary": "Haneul Market is having a sale today and I was already planning to shop there this week, so I'll take a look before the wedding.",
+  "p_exit": 0.048,
+  "exited": false
+ },
+ {
+  "agent": "a019",
+  "message": "m2_reminder",
+  "annoyance": 4,
+  "action": "open_only",
+  "diary": "Another message from Haneul Market already, but if the things in my cart really might sell out, I'll glance at it since I was planning to shop there anyway.",
+  "p_exit": 0.0016,
+  "exited": false
+ },
+ {
+  "agent": "a019",
+  "message": "m3_moment",
+  "annoyance": 7,
+  "action": "unsubscribe",
+  "diary": "I'm not moving, and this is the third message from them this week, so I'm done getting their notifications.",
+  "p_exit": 0.0028,
+  "exited": false
+ },
+ {
+  "agent": "a019",
+  "message": "m4_content",
+  "annoyance": 4,
+  "action": "open_only",
+  "diary": "Another message from them already this week, but at least seasonal vegetable dinners are something I might actually cook, so I'll glance at it and skip the rest.",
+  "p_exit": 0.0024,
+  "exited": false
+ },
+ {
+  "agent": "a019",
+  "message": "m5_third_push",
+  "action": "error",
+  "diary": "Expecting value: line 1 column 1 (char 0)",
+  "p_exit": 0.18,
+  "exited": false
  },
  {
   "agent": "a020",
   "message": "m1_promo",
   "annoyance": 3,
   "action": "ignore",
-  "diary": "Haneul Market again, but at least it's only the first ping this week and I'm too busy with exam prep to look at sales right now."
+  "diary": "Twenty percent off everything today, but I'm buried in exam prep and have no reason to go shopping, so I'll just let this one slide.",
+  "p_exit": 0.072,
+  "exited": false
  },
  {
   "agent": "a020",
   "message": "m2_reminder",
   "annoyance": 7,
   "action": "unsubscribe",
-  "diary": "I never put anything in a Haneul Market cart, and this is the second message from them this week, so I'm unsubscribing."
+  "diary": "I never put anything in my cart, and this is the second Haneul message today, so I'm done with these alerts.",
+  "p_exit": 0.0028,
+  "exited": false
  },
  {
   "agent": "a020",
   "message": "m3_moment",
-  "action": "not_sent",
-  "diary": ""
+  "annoyance": 7,
+  "action": "unsubscribe",
+  "diary": "I'm not moving and I have an exam to study for, so this is irrelevant, and it's the third message from them this week, so I'm done with them.",
+  "p_exit": 0.0028,
+  "exited": false
  },
  {
   "agent": "a020",
   "message": "m4_content",
-  "action": "not_sent",
-  "diary": ""
- },
- {
-  "agent": "a020",
-  "message": "m5_third_push",
-  "action": "not_sent",
-  "diary": ""
- },
- {
-  "agent": "a021",
-  "message": "m1_promo",
-  "annoyance": 1,
-  "action": "open_and_click",
-  "diary": "Oh, 20% off everything today only, and I was already planning to shop at Haneul Market this week, so I'll check it out now."
- },
- {
-  "agent": "a021",
-  "message": "m2_reminder",
-  "annoyance": 2,
-  "action": "open_and_click",
-  "diary": "Oh, I did leave a few things in my cart, so I'll go check them before they sell out."
- },
- {
-  "agent": "a021",
-  "message": "m3_moment",
-  "annoyance": 3,
-  "action": "ignore",
-  "diary": "I'm not moving, so this moving-essentials message doesn't apply to me, but it's harmless enough that I'll just skip it."
- },
- {
-  "agent": "a021",
-  "message": "m4_content",
-  "annoyance": 2,
-  "action": "open_and_click",
-  "diary": "Seasonal vegetable recipes sound useful since I was going to shop this week anyway, so I'll open it and see if the 15-minute dinners work for my parents."
- },
- {
-  "agent": "a021",
-  "message": "m5_third_push",
-  "annoyance": 3,
-  "action": "open_and_click",
-  "diary": "Another reminder about the sale, but I was already planning to buy groceries this week, so I'll check what's still on offer before it ends."
- },
- {
-  "agent": "a022",
-  "message": "m1_promo",
-  "annoyance": 2,
-  "action": "open_and_click",
-  "diary": "Twenty percent off today only, and I was already planning to shop there this week, so I'll take a look at what's on sale."
- },
- {
-  "agent": "a022",
-  "message": "m2_reminder",
-  "annoyance": 4,
-  "action": "open_only",
-  "diary": "Another urgency push from Haneul Market, and I'm not even sure I have anything in my cart, so I'll glance at it but I'm not clicking through."
- },
- {
-  "agent": "a022",
-  "message": "m3_moment",
-  "action": "error",
-  "diary": "Expecting value: line 1 column 1 (char 0)"
- },
- {
-  "agent": "a022",
-  "message": "m4_content",
-  "annoyance": 4,
-  "action": "open_only",
-  "diary": "Another Haneul message this week, but seasonal dinner recipes are actually useful, so I'll glance at them without clicking through."
- },
- {
-  "agent": "a022",
-  "message": "m5_third_push",
   "annoyance": 6,
-  "action": "ignore",
-  "diary": "Another 'last chance' push about the same sale, and this is already my fifth message from them this week, so I'm just going to ignore it."
+  "action": "unsubscribe",
+  "diary": "This is the fourth message from Haneul Market this week and I'm busy with exam prep, so I'm finally going to unsubscribe.",
+  "p_exit": 0.0036,
+  "exited": false
  },
  {
-  "agent": "a023",
-  "message": "m1_promo",
-  "annoyance": 2,
-  "action": "open_and_click",
-  "diary": "Haneul Market's 20% off today only, and I was already planning to shop there this week, so I'll check it out before the sale ends."
- },
- {
-  "agent": "a023",
-  "message": "m2_reminder",
-  "annoyance": 2,
-  "action": "open_and_click",
-  "diary": "Oh, the stuff in my cart might sell out, so I'll check it now before I lose the deal I was already planning on this week."
- },
- {
-  "agent": "a023",
-  "message": "m3_moment",
-  "annoyance": 2,
-  "action": "open_only",
-  "diary": "I'm not moving, but I'm already shopping there this week, so I'll glance at it anyway."
- },
- {
-  "agent": "a023",
-  "message": "m4_content",
-  "annoyance": 2,
-  "action": "open_and_click",
-  "diary": "Seasonal veg recipes sound handy this week, so I'll check which vegetables are on sale before I plan dinners."
- },
- {
-  "agent": "a023",
+  "agent": "a020",
   "message": "m5_third_push",
-  "annoyance": 2,
-  "action": "open_and_click",
-  "diary": "Two hours left on the sale, and I was already planning to buy groceries this week, so I'll check the cart before it closes."
+  "annoyance": 8,
+  "action": "unsubscribe",
+  "diary": "Another countdown ping when I already said I'm not shopping this week and I'm busy with exams, so I'm done with all these messages.",
+  "p_exit": 0.288,
+  "exited": false
  },
  {
-  "agent": "a024",
+  "agent": "a021",
   "message": "m1_promo",
-  "annoyance": 2,
+  "annoyance": 1,
   "action": "open_and_click",
-  "diary": "Twenty percent off everything today, and I was already planning to shop this week, so I'll take a look before the sale ends."
+  "diary": "Oh, 20% off today only, and I was already planning to stock up at Haneul Market this week, so I'll check it now.",
+  "p_exit": 0.024,
+  "exited": false
  },
  {
-  "agent": "a024",
+  "agent": "a021",
   "message": "m2_reminder",
   "annoyance": 2,
   "action": "open_and_click",
-  "diary": "Oh, I did leave some things in my cart, and I was planning to buy them this week anyway, so I'll take a quick look before I get back to studying."
+  "diary": "Oh, I did leave some things in my cart, so I'll go check whether they're really about to sell out.",
+  "p_exit": 0.0008,
+  "exited": false
  },
  {
-  "agent": "a024",
+  "agent": "a021",
   "message": "m3_moment",
   "annoyance": 3,
   "action": "ignore",
-  "diary": "I'm not moving, so this moving-essentials message doesn't apply to me, and I'm too busy with exam prep to care right now."
+  "diary": "I'm not moving, so this moving-essentials message doesn't apply to me, but it's harmless enough that I'll just skip it.",
+  "p_exit": 0.0012,
+  "exited": false
  },
  {
-  "agent": "a024",
+  "agent": "a021",
   "message": "m4_content",
   "annoyance": 1,
-  "action": "open_only",
-  "diary": "Seasonal recipes sound useful for quick dinners during exam week, so I'll skim them later, but I'm not clicking through right now."
+  "action": "open_and_click",
+  "diary": "Seasonal veggie dinner ideas in 15 minutes sounds useful, and I was going to shop there this week anyway, so I'll check the recipes.",
+  "p_exit": 0.0006,
+  "exited": false
  },
  {
-  "agent": "a024",
+  "agent": "a021",
   "message": "m5_third_push",
   "annoyance": 3,
-  "action": "ignore",
-  "diary": "Another sale reminder from Haneul Market, but I already saw the 20% off and I'm busy with exam prep, so I'll get to it later if I remember."
+  "action": "open_and_click",
+  "diary": "Another sale ping, a bit pushy, but I was going to shop this week anyway, so I'll take a look.",
+  "p_exit": 0.108,
+  "exited": false
  },
  {
-  "agent": "a025",
+  "agent": "a022",
   "message": "m1_promo",
   "annoyance": 3,
-  "action": "ignore",
-  "diary": "Twenty percent off everything today, but I just moved and don't need anything from Haneul Market this week, so I'm skipping it."
+  "action": "open_and_click",
+  "diary": "Oh, 20% off today only, and I was already planning to go to Haneul Market this week, so I'll take a look.",
+  "p_exit": 0.072,
+  "exited": false
  },
  {
-  "agent": "a025",
+  "agent": "a022",
   "message": "m2_reminder",
+  "annoyance": 3,
+  "action": "open_only",
+  "diary": "Another message from Haneul Market already, and I don't remember putting anything in a cart, so I'll glance at it but I'm not clicking through.",
+  "p_exit": 0.0012,
+  "exited": false
+ },
+ {
+  "agent": "a022",
+  "message": "m3_moment",
   "action": "error",
-  "diary": "Expecting value: line 1 column 1 (char 0)"
+  "diary": "Expecting value: line 1 column 1 (char 0)",
+  "p_exit": 0.002,
+  "exited": false
  },
  {
-  "agent": "a025",
-  "message": "m3_moment",
-  "annoyance": 5,
-  "action": "ignore",
-  "diary": "Ah, they're tracking my move now, and this is the third message from them this week, so I'll skip it for now even though the moving stuff is kind of relevant."
- },
- {
-  "agent": "a025",
+  "agent": "a022",
   "message": "m4_content",
   "annoyance": 4,
-  "action": "ignore",
-  "diary": "Another Haneul Market message this week, and recipes don't make me want to shop, so I'll skip it."
- },
- {
-  "agent": "a025",
-  "message": "m5_third_push",
-  "annoyance": 7,
-  "action": "unsubscribe",
-  "diary": "This is the fifth message from Haneul Market this week and they keep pushing the same sale, so I'm just going to turn off their messages."
- },
- {
-  "agent": "a026",
-  "message": "m1_promo",
-  "annoyance": 2,
-  "action": "ignore",
-  "diary": "Another 20% off banner, and I don't trust Haneul Market's prices enough to bother checking, so I'll just let it sit."
- },
- {
-  "agent": "a026",
-  "message": "m2_reminder",
-  "annoyance": 5,
-  "action": "ignore",
-  "diary": "I don't remember putting anything in a cart, and this sounds like a pushy sales line, so I'll skip it."
- },
- {
-  "agent": "a026",
-  "message": "m3_moment",
-  "annoyance": 3,
-  "action": "ignore",
-  "diary": "Moving essentials? I'm not moving, so this doesn't apply to me, and I'll just leave it alone."
- },
- {
-  "agent": "a026",
-  "message": "m4_content",
-  "annoyance": 2,
   "action": "open_only",
-  "diary": "Seasonal recipes for dinner might help with my parents' meals, but I don't really trust this shop, so I'll just glance at them and move on."
+  "diary": "Seasonal recipes are useful since I was already planning to shop this week, but this is the fourth message from them, so I'll just glance at it and move on.",
+  "p_exit": 0.0024,
+  "exited": false
  },
  {
-  "agent": "a026",
+  "agent": "a022",
   "message": "m5_third_push",
-  "annoyance": 5,
-  "action": "ignore",
-  "diary": "Another 'sale ends soon' push, and I already ignored the last one, so I'm not going to start caring now."
+  "action": "error",
+  "diary": "",
+  "p_exit": 0.18,
+  "exited": false
  },
  {
-  "agent": "a027",
+  "agent": "a023",
   "message": "m1_promo",
-  "annoyance": 2,
-  "action": "open_and_click",
-  "diary": "Twenty percent off today only, and I was going to buy groceries this week anyway, so I'll take a look."
- },
- {
-  "agent": "a027",
-  "message": "m2_reminder",
-  "annoyance": 4,
-  "action": "open_only",
-  "diary": "Another nudge from Haneul Market, and I don't even remember putting anything in a cart, so I'll just glance at it and move on."
- },
- {
-  "agent": "a027",
-  "message": "m3_moment",
-  "annoyance": 7,
-  "action": "unsubscribe",
-  "diary": "I'm not moving house, and this is the third message from them this week, so I'm done with these texts."
- },
- {
-  "agent": "a027",
-  "message": "m4_content",
-  "action": "not_sent",
-  "diary": ""
- },
- {
-  "agent": "a027",
-  "message": "m5_third_push",
-  "action": "not_sent",
-  "diary": ""
- },
- {
-  "agent": "a028",
-  "message": "m1_promo",
-  "annoyance": 2,
-  "action": "open_and_click",
-  "diary": "I was already planning to shop at Haneul Market this week, so a 20% off today-only deal is worth checking out right now."
- },
- {
-  "agent": "a028",
-  "message": "m2_reminder",
-  "annoyance": 2,
-  "action": "open_and_click",
-  "diary": "Oh, I did leave a few things in my cart, so I'll open this and see if I should check out before they sell out."
- },
- {
-  "agent": "a028",
-  "message": "m3_moment",
-  "annoyance": 3,
-  "action": "open_only",
-  "diary": "We're not moving, so this isn't for us, but it's a friendly message from a store I already trust, so I'll glance at it and move on."
- },
- {
-  "agent": "a028",
-  "message": "m4_content",
   "annoyance": 1,
   "action": "open_and_click",
-  "diary": "Seasonal recipes that use vegetables I was already going to buy this week, so I'll open it and see what's easy to make tonight."
+  "diary": "Twenty percent off everything today, and I was already planning to shop at Haneul Market this week, so I'll check it now before the wedding gift and groceries.",
+  "p_exit": 0.024,
+  "exited": false
+ },
+ {
+  "agent": "a023",
+  "message": "m2_reminder",
+  "annoyance": 2,
+  "action": "open_and_click",
+  "diary": "Oh, I did leave a few things in my cart for the wedding trip, so I'll check whether they're really running low before I buy.",
+  "p_exit": 0.0008,
+  "exited": false
+ },
+ {
+  "agent": "a023",
+  "message": "m3_moment",
+  "annoyance": 3,
+  "action": "open_only",
+  "diary": "I'm not moving, so this isn't for me, but it's Haneul Market and I'm already planning to shop there this week, so I'll glance at it.",
+  "p_exit": 0.0012,
+  "exited": false
+ },
+ {
+  "agent": "a023",
+  "message": "m4_content",
+  "annoyance": 2,
+  "action": "open_and_click",
+  "diary": "Three 15-minute recipes with seasonal vegetables fits my plan to shop this week, so I'll check which ingredients are on sale.",
+  "p_exit": 0.0012,
+  "exited": false
+ },
+ {
+  "agent": "a023",
+  "message": "m5_third_push",
+  "annoyance": 1,
+  "action": "open_and_click",
+  "diary": "Oh, the sale ends in two hours, and I was already planning to buy groceries this week for the wedding, so I'll check it now.",
+  "p_exit": 0.036,
+  "exited": false
+ },
+ {
+  "agent": "a024",
+  "message": "m1_promo",
+  "annoyance": 2,
+  "action": "open_and_click",
+  "diary": "Oh, 20% off today only, and I was already planning to shop at Haneul Market this week, so I'll take a look before the exam break.",
+  "p_exit": 0.048,
+  "exited": false
+ },
+ {
+  "agent": "a024",
+  "message": "m2_reminder",
+  "annoyance": 2,
+  "action": "open_and_click",
+  "diary": "I did have a few things in my cart and was planning to buy them this week anyway, so I'll open it and check before they sell out.",
+  "p_exit": 0.0008,
+  "exited": false
+ },
+ {
+  "agent": "a024",
+  "message": "m3_moment",
+  "annoyance": 3,
+  "action": "ignore",
+  "diary": "I live with my parents and I'm not moving, so this moving-essentials message doesn't apply to me, but it's harmless enough that I'll just skip it.",
+  "p_exit": 0.0012,
+  "exited": false
+ },
+ {
+  "agent": "a024",
+  "message": "m4_content",
+  "annoyance": 2,
+  "action": "open_only",
+  "diary": "Quick dinner ideas sound handy during exam week, so I'll glance at them later, but I'm not clicking through right now.",
+  "p_exit": 0.0012,
+  "exited": false
+ },
+ {
+  "agent": "a024",
+  "message": "m5_third_push",
+  "annoyance": 3,
+  "action": "open_and_click",
+  "diary": "Two hours left on the sale, and I was already planning to shop this week, so I'll take a quick look before it ends.",
+  "p_exit": 0.108,
+  "exited": false
+ },
+ {
+  "agent": "a025",
+  "message": "m1_promo",
+  "annoyance": 3,
+  "action": "ignore",
+  "diary": "Twenty percent off everything sounds nice, but I'm still unpacking boxes and have no reason to shop there today, so I'll let it go.",
+  "p_exit": 0.072,
+  "exited": false
+ },
+ {
+  "agent": "a025",
+  "message": "m2_reminder",
+  "annoyance": 7,
+  "action": "unsubscribe",
+  "diary": "I never put anything in a cart, so this is a pushy, irrelevant nudge after I already ignored their sale text, and I'm done with them.",
+  "p_exit": 0.0028,
+  "exited": false
+ },
+ {
+  "agent": "a025",
+  "message": "m3_moment",
+  "action": "error",
+  "diary": "",
+  "p_exit": 0.002,
+  "exited": false
+ },
+ {
+  "agent": "a025",
+  "message": "m4_content",
+  "annoyance": 7,
+  "action": "unsubscribe",
+  "diary": "That's the fourth message from Haneul Market this week, and I already meant to unsubscribe after the cart email, so I'm finally doing it.",
+  "p_exit": 0.0042,
+  "exited": false
+ },
+ {
+  "agent": "a025",
+  "message": "m5_third_push",
+  "annoyance": 8,
+  "action": "unsubscribe",
+  "diary": "Another 'sale ends soon' push after the same discount alert I already ignored, so I'm done with these messages.",
+  "p_exit": 0.288,
+  "exited": false
+ },
+ {
+  "agent": "a026",
+  "message": "m1_promo",
+  "annoyance": 3,
+  "action": "open_only",
+  "diary": "A 20% sale sounds nice, but I don't trust Haneul Market much, so I'll just glance at it and see what's actually discounted.",
+  "p_exit": 0.072,
+  "exited": true
+ },
+ {
+  "agent": "a026",
+  "message": "m2_reminder",
+  "action": "not_sent",
+  "diary": ""
+ },
+ {
+  "agent": "a026",
+  "message": "m3_moment",
+  "action": "not_sent",
+  "diary": ""
+ },
+ {
+  "agent": "a026",
+  "message": "m4_content",
+  "action": "not_sent",
+  "diary": ""
+ },
+ {
+  "agent": "a026",
+  "message": "m5_third_push",
+  "action": "not_sent",
+  "diary": ""
+ },
+ {
+  "agent": "a027",
+  "message": "m1_promo",
+  "annoyance": 2,
+  "action": "open_and_click",
+  "diary": "Twenty percent off everything today, and I was going to shop there this week anyway, so I'll take a look at what's on sale.",
+  "p_exit": 0.048,
+  "exited": true
+ },
+ {
+  "agent": "a027",
+  "message": "m2_reminder",
+  "action": "not_sent",
+  "diary": ""
+ },
+ {
+  "agent": "a027",
+  "message": "m3_moment",
+  "action": "not_sent",
+  "diary": ""
+ },
+ {
+  "agent": "a027",
+  "message": "m4_content",
+  "action": "not_sent",
+  "diary": ""
+ },
+ {
+  "agent": "a027",
+  "message": "m5_third_push",
+  "action": "not_sent",
+  "diary": ""
+ },
+ {
+  "agent": "a028",
+  "message": "m1_promo",
+  "annoyance": 2,
+  "action": "open_and_click",
+  "diary": "Oh, 20% off today at Haneul Market, and I was already planning to shop there this week, so I'll take a look right now.",
+  "p_exit": 0.048,
+  "exited": false
+ },
+ {
+  "agent": "a028",
+  "message": "m2_reminder",
+  "annoyance": 2,
+  "action": "open_and_click",
+  "diary": "Oh, I did leave some things in my cart, so I'll go check them before they sell out.",
+  "p_exit": 0.0008,
+  "exited": false
+ },
+ {
+  "agent": "a028",
+  "message": "m3_moment",
+  "annoyance": 3,
+  "action": "open_only",
+  "diary": "I'm not moving anywhere, so this doesn't apply to me, but it's harmless enough that I'll glance at it and move on.",
+  "p_exit": 0.0012,
+  "exited": false
+ },
+ {
+  "agent": "a028",
+  "message": "m4_content",
+  "annoyance": 2,
+  "action": "open_and_click",
+  "diary": "Quick seasonal recipes are useful since I was already planning a grocery run this week, so I'll take a look.",
+  "p_exit": 0.0012,
+  "exited": false
  },
  {
   "agent": "a028",
   "message": "m5_third_push",
   "annoyance": 3,
   "action": "open_and_click",
-  "diary": "Another push, but I was already planning to shop this week, so I'll check what's on sale before the deadline."
+  "diary": "Oh, the 20% sale is ending soon, and I was already planning to buy from Haneul Market this week anyway, so I'll take a look.",
+  "p_exit": 0.108,
+  "exited": false
  },
  {
   "agent": "a029",
   "message": "m1_promo",
-  "annoyance": 3,
+  "annoyance": 4,
   "action": "ignore",
-  "diary": "Another 'today only' discount ping from a brand I barely trust, and I'm too busy at work to care right now."
+  "diary": "Another 'today only' sale ping, and I'm slammed at work with no plans to shop, so I'll swipe it away.",
+  "p_exit": 0.096,
+  "exited": false
  },
  {
   "agent": "a029",
   "message": "m2_reminder",
   "annoyance": 7,
   "action": "unsubscribe",
-  "diary": "I never put anything in a cart, so this 'sell out soon' warning is just pressure from a brand I already ignored once this week."
+  "diary": "I don't even remember putting anything in a cart, and this is the second pushy message from them this week, so I'm done with these emails.",
+  "p_exit": 0.0028,
+  "exited": false
  },
  {
   "agent": "a029",
   "message": "m3_moment",
-  "action": "not_sent",
-  "diary": ""
+  "annoyance": 8,
+  "action": "unsubscribe",
+  "diary": "I live with my parents and I'm not moving anywhere, so this is irrelevant, and I already wanted to unsubscribe from these guys, so this is the last straw.",
+  "p_exit": 0.0032,
+  "exited": false
  },
  {
   "agent": "a029",
   "message": "m4_content",
-  "action": "not_sent",
-  "diary": ""
+  "annoyance": 7,
+  "action": "unsubscribe",
+  "diary": "Fourth message from them this week and I still haven't dealt with the last one, so I'm just unsubscribing from all of it now.",
+  "p_exit": 0.0042,
+  "exited": false
  },
  {
   "agent": "a029",
   "message": "m5_third_push",
-  "action": "not_sent",
-  "diary": ""
+  "annoyance": 9,
+  "action": "unsubscribe",
+  "diary": "This is the fifth message from Haneul Market this week and the 'sale ends soon' line is the same pressure I already ignored, so I'm done with them.",
+  "p_exit": 0.324,
+  "exited": false
  }
 ]
