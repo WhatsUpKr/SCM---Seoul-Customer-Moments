@@ -158,6 +158,8 @@ def main():
             try:
                 out = fake_reaction(rng, a, m) if args.dry_run else call_model(client, a.brief(), m)
             except Exception as e:  # one failed call must not kill the run
+                if "401" in str(e) or "authentication" in str(e).lower():
+                    sys.exit(f"Authentication refused, run stopped: {str(e)[:200]}")
                 out = {"action": "error", "diary": str(e)[:120]}
             reactions.append({"agent": a.id, "message": m["id"], **out})
 
