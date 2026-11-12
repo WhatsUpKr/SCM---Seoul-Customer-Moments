@@ -38,6 +38,7 @@ class Agent:
     message_fatigue: float     # 0 = enjoys messages, 1 = hates being contacted
     would_buy_anyway: bool     # hidden ground truth for the Silence Test
     life_moment: str
+    holdout: bool = False      # silent control group: receives no message at all
 
     def brief(self) -> str:
         """Persona text given to the model. Numbers become plain words."""
@@ -60,8 +61,10 @@ class Agent:
         )
 
 
-def make_population(n: int, seed: int) -> list[Agent]:
+def make_population(n: int, seed: int, holdout_share: float = 0.0) -> list[Agent]:
     rng = random.Random(seed)
+    # Separate stream: adding a control group never changes anyone's traits.
+    holdout_rng = random.Random(seed + 7)
     agents = []
     for i in range(n):
         capital = rng.random()
@@ -76,6 +79,7 @@ def make_population(n: int, seed: int) -> list[Agent]:
             # loyal agents are more likely to buy without being pushed
             would_buy_anyway=rng.random() < 0.15 + 0.5 * capital,
             life_moment=rng.choice(LIFE_MOMENTS),
+            holdout=holdout_rng.random() < holdout_share,
         ))
     return agents
 

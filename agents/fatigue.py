@@ -7,15 +7,25 @@ The model's own decisions are then compared against it.
 Sources (stated, not observed on this population):
 - Email: 0.20% unsubscribe rate per send (Omnisend 2026 email benchmarks).
 - Push: 12% of app users say they would disable notifications after one push
-  a week (Helplama survey, quoted by GrabOn). Stated intent, so an upper bound.
+  a week (Helplama survey, quoted by GrabOn). This is stated intent, not
+  observed behaviour. Used as a per-message rate it removed 37% of agents in
+  five messages (run of 2026-11-12), which no real programme shows.
+  The default is therefore a tenth of it. ASSUMPTION, flagged: no observed
+  per-send push opt-out benchmark was found. Replace it with a real figure.
 - KakaoTalk: no public benchmark found. Assumption: same as email, flagged.
+
+Two scenarios, so the effect of the assumption stays visible:
+  SCM_OPTOUT=conservative (default) or SCM_OPTOUT=stated
 """
 
-BASE_RATE = {
-    "email": 0.002,
-    "push": 0.12,
-    "kakao": 0.002,  # ASSUMPTION, no benchmark found
+import os
+
+SCENARIOS = {
+    "conservative": {"email": 0.002, "push": 0.012, "kakao": 0.002},
+    "stated": {"email": 0.002, "push": 0.12, "kakao": 0.002},
 }
+SCENARIO = os.environ.get("SCM_OPTOUT", "conservative")
+BASE_RATE = SCENARIOS[SCENARIO]
 
 
 def opt_out_probability(channel: str, fatigue: float, prior_same_channel: int) -> float:

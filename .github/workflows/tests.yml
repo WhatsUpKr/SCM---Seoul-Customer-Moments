@@ -1,0 +1,22 @@
+name: Tests
+
+# No secret, no API call, no cost: only the rules of the world.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m unittest discover tests -v
+      - run: python join1/run.py --dry-run --agents 300 --holdout 0.2 --max-calls 1500

@@ -1,0 +1,11 @@
+{
+ "messaged_agents": 30,
+ "silent_agents": 0,
+ "purchases_messaged": 14,
+ "click_attributed": 12,
+ "truth_caused": 0,
+ "truth_destroyed": 0,
+ "truth_net": 0,
+ "holdout_estimate": null,
+ "run": "live"
+}

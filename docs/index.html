@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seoul Customer Moments — replay</title>
+<style>
+  :root { --bg:#f6f4ef; --ink:#1d1d1b; --mute:#6b6a65; --line:#dcd8cf; --card:#fff;
+          --click:#1f7a5c; --open:#8fb8a8; --ignore:#c9c5bb; --out:#b3402e; --accent:#2b4a8b; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#151514; --ink:#eeece6; --mute:#9a988f; --line:#33322e; --card:#1e1e1c;
+            --click:#4fc39a; --open:#3f7564; --ignore:#4a4944; --out:#e0705d; --accent:#8fb0ee; } }
+  * { box-sizing:border-box } body { margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.5 system-ui,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif }
+  main { max-width:760px; margin:0 auto; padding:20px 16px 48px }
+  h1 { font-size:1.35rem; margin:0 0 4px } .sub { color:var(--mute); margin:0 0 16px; font-size:.92rem }
+  .flag { display:inline-block; border:1px solid var(--line); border-radius:999px; padding:2px 10px;
+    font-size:.78rem; color:var(--mute); margin-bottom:14px }
+  .msg { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px 14px; min-height:92px }
+  .msg b { font-size:.78rem; letter-spacing:.04em; text-transform:uppercase; color:var(--accent) }
+  .msg p { margin:4px 0 0 } .msg .en { color:var(--mute); font-size:.9rem }
+  .days { display:flex; gap:6px; margin:12px 0 } .days button { flex:1; padding:10px 0; border-radius:10px;
+    border:1px solid var(--line); background:var(--card); color:var(--ink); font:inherit; font-size:.85rem; cursor:pointer }
+  .days button[aria-pressed=true] { background:var(--ink); color:var(--bg); border-color:var(--ink) }
+  .city { display:grid; grid-template-columns:repeat(3,1fr); gap:8px } @media (max-width:480px){ .city{grid-template-columns:repeat(2,1fr)} }
+  .gu { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:10px; min-height:96px }
+  .gu h2 { font-size:.78rem; margin:0 0 8px; color:var(--mute); font-weight:600 }
+  .dots { display:flex; flex-wrap:wrap; gap:7px }
+  .dot { width:22px; height:22px; border-radius:50%; border:0; padding:0; cursor:pointer; background:var(--ignore);
+    transition:background .35s, transform .35s, opacity .35s }
+  .dot.open_only { background:var(--open) } .dot.open_and_click { background:var(--click); transform:scale(1.15) }
+  .dot.gone { background:transparent; outline:2px dashed var(--out); outline-offset:-2px; opacity:.75 }
+  .dot.leaving { background:var(--out) } .dot.sel { box-shadow:0 0 0 3px var(--accent) }
+  .dot.truth.planner { box-shadow:inset 0 0 0 4px var(--accent) }
+  .legend { display:flex; flex-wrap:wrap; gap:12px; font-size:.8rem; color:var(--mute); margin:12px 0 }
+  .legend i { display:inline-block; width:11px; height:11px; border-radius:50%; margin-right:5px; vertical-align:-1px }
+  .row { display:flex; gap:8px; align-items:center; margin:8px 0 } .row label { font-size:.88rem }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px 14px; margin-top:12px }
+  .card h3 { margin:0 0 6px; font-size:.95rem } .card p { margin:4px 0; font-size:.92rem }
+  .nums { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; text-align:center }
+  .nums div { border:1px solid var(--line); border-radius:10px; padding:10px 4px }
+  .nums strong { display:block; font-size:1.6rem; font-variant-numeric:tabular-nums } .nums span { font-size:.76rem; color:var(--mute) }
+  footer { color:var(--mute); font-size:.8rem; margin-top:20px }
+</style>
+</head>
+<body>
+<main>
+  <h1>Seoul Customer Moments</h1>
+  <p class="sub">One simulated week. Five messages from a fictional grocer, Haneul Market. Every dot is an AI agent.</p>
+  <span class="flag">Simulation · no real customer data</span>
+  <div class="msg" id="msg" aria-live="polite"></div>
+  <div class="days" id="days" role="group" aria-label="Day of the week"></div>
+  <div class="city" id="city"></div>
+  <div class="legend">
+    <span><i style="background:var(--click)"></i>clicked</span>
+    <span><i style="background:var(--open)"></i>opened</span>
+    <span><i style="background:var(--ignore)"></i>ignored</span>
+    <span><i style="background:var(--out)"></i>unsubscribed today</span>
+    <span><i style="outline:2px dashed var(--out);outline-offset:-2px"></i>gone</span>
+  </div>
+  <div class="row"><input type="checkbox" id="truth"><label for="truth">Reveal the hidden truth: ring = was going to shop anyway</label></div>
+  <div class="card" id="who"><h3>Tap a dot</h3><p>Each agent keeps a one-line diary of what it thought.</p></div>
+  <div class="card" id="measure" hidden></div>
+  <footer>Agents react through separate model calls. Who actually unsubscribes is decided by dice anchored on a benchmark, not by the model. The purchase rule behind the last card is a hand-written assumption.</footer>
+</main>
+<script>
+const DAYS = ["Mon","Tue","Wed","Thu","Fri"];
+let D, day = 0, sel = null;
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function stateOf(agentId, d) {
+  const mine = D.reactions.filter(r => r.agent === agentId);
+  const r = mine.find(x => x.message === D.messages[d].id);
+  const goneBefore = D.messages.slice(0, d).some(m => mine.find(x => x.message === m.id && x.exited));
+  if (goneBefore || !r || r.action === "not_sent") return { cls: "gone", r };
+  return { cls: r.exited ? "leaving" : r.action, r };
+}
+function draw() {
+  const m = D.messages[day];
+  $("msg").innerHTML = `<b>${DAYS[day]} · ${esc(m.channel)}</b><p lang="ko">${esc(m.text)}</p><p class="en">${esc(m.en)}</p>`;
+  [...$("days").children].forEach((b, i) => b.setAttribute("aria-pressed", i === day));
+  const truth = $("truth").checked;
+  document.querySelectorAll(".dot").forEach(el => {
+    const a = D.agents.find(x => x.id === el.dataset.id), s = stateOf(a.id, day);
+    el.className = "dot " + s.cls + (truth ? " truth" + (a.would_buy_anyway ? " planner" : "") : "") + (sel === a.id ? " sel" : "");
+    el.setAttribute("aria-label", `${a.id}, ${a.age_band}, ${s.cls.replace(/_/g, " ")}`);
+  });
+  if (sel) {
+    const a = D.agents.find(x => x.id === sel), s = stateOf(sel, day);
+    $("who").innerHTML = `<h3>${esc(a.id)} · ${esc(a.district)} · ${esc(a.age_band)} · ${esc(a.household)}</h3>` +
+      `<p>${s.cls === "gone" ? "No longer receives messages." : "“" + esc(s.r.diary) + "”"}</p>` +
+      (truth ? `<p><small>Hidden: trust ${a.relationship_capital}, fatigue ${a.message_fatigue}, ${a.would_buy_anyway ? "was going to shop anyway" : "had no plan to shop"}. This week: ${esc(a.life_moment)}.</small></p>` : "");
+  }
+}
+fetch("data.json").then(r => r.json()).then(d => {
+  D = d;
+  $("days").innerHTML = DAYS.slice(0, D.messages.length).map((x, i) => `<button data-i="${i}">${x}</button>`).join("");
+  $("days").onclick = e => { if (e.target.dataset.i) { day = +e.target.dataset.i; draw(); } };
+  const gus = [...new Set(D.agents.map(a => a.district))];
+  $("city").innerHTML = gus.map(g => `<section class="gu"><h2>${esc(g)}</h2><div class="dots">` +
+    D.agents.filter(a => a.district === g && !a.holdout).map(a => `<button class="dot" data-id="${a.id}"></button>`).join("") + `</div></section>`).join("");
+  $("city").onclick = e => { if (e.target.dataset.id) { sel = e.target.dataset.id; draw(); } };
+  $("truth").onchange = draw;
+  if (D.measure) {
+    const m = D.measure; $("measure").hidden = false;
+    $("measure").innerHTML = `<h3>Did the messages sell anything?</h3><div class="nums">` +
+      `<div><strong>${m.click_attributed}</strong><span>purchases credited by clicks</span></div>` +
+      `<div><strong>${m.truth_caused}</strong><span>purchases truly caused</span></div>` +
+      `<div><strong>${m.truth_destroyed}</strong><span>purchases destroyed</span></div></div>` +
+      `<p>In this run every clicker was already going to shop. With ${m.messaged_agents} agents this is an illustration of the method, not a result.</p>`;
+  }
+  draw();
+}).catch(() => { $("msg").textContent = "Could not load data.json."; });
+</script>
+</body>
+</html>

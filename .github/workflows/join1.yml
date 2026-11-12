@@ -8,6 +8,16 @@ on:
         description: "Dry run (no API call, no cost)"
         type: boolean
         default: true
+      agents:
+        description: "Number of agents (30 = about 150 calls, 300 = about 1,200 calls)"
+        type: choice
+        options: ["30", "300"]
+        default: "30"
+      holdout:
+        description: "Share kept silent as a control group"
+        type: choice
+        options: ["0", "0.2"]
+        default: "0"
 
 permissions:
   contents: write   # commit the results
@@ -16,7 +26,7 @@ permissions:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 45
     # Only the main branch matches the Anthropic federation rule.
     if: github.ref == 'refs/heads/main'
     env:
@@ -45,11 +55,13 @@ jobs:
         if: ${{ !inputs.dry_run }}
         run: |
           pip install --quiet anthropic
-          python join1/run.py
+          python join1/run.py --agents ${{ inputs.agents }} --holdout ${{ inputs.holdout }} --max-calls 1500
+          python join1/measure.py | tee -a "$GITHUB_STEP_SUMMARY"
+          python viewer/build.py
       - name: Commit results
         run: |
           git config user.name "scm-bot"
           git config user.email "scm-bot@users.noreply.github.com"
-          git add results/
+          git add results/ docs/data.json
           git diff --cached --quiet || git commit -m "Join 1 results"
           git push

@@ -32,7 +32,8 @@ from agents.population import make_population  # noqa: E402
 from agents.fatigue import expected_exit, opt_out_probability  # noqa: E402
 
 MODEL = "claude-haiku-5-5"
-MAX_CALLS = 160
+MAX_CALLS = 160        # default cap per run
+HARD_CEILING = 2000    # --max-calls can never go above this
 MAX_TOKENS = 300
 ACTIONS = ["open_and_click", "open_only", "ignore", "unsubscribe"]
 
@@ -93,7 +94,9 @@ def words(s: str) -> set:
 
 
 def analyse(agents, messages, reactions) -> dict:
+    agents = [a for a in agents if not a.holdout]  # the control group gets nothing
     by_id = {a.id: a for a in agents}
+    reactions = [r for r in reactions if r["agent"] in by_id]
     report = {"spread": {}, "sensitivity": {}, "diversity": None, "verdict": []}
 
     for m in messages:
@@ -164,12 +167,19 @@ def main():
     p.add_argument("--agents", type=int, default=30)
     p.add_argument("--seed", type=int, default=42)
     p.add_argument("--dry-run", action="store_true")
+    p.add_argument("--holdout", type=float, default=0.0,
+                   help="share of agents kept silent as a control group (0 to 0.5)")
+    p.add_argument("--max-calls", type=int, default=MAX_CALLS)
     args = p.parse_args()
+    if not 0 <= args.holdout <= 0.5:
+        sys.exit("Refused: --holdout must be between 0 and 0.5.")
+    cap = min(args.max_calls, HARD_CEILING)
 
-    agents = make_population(args.agents, args.seed)
+    agents = make_population(args.agents, args.seed, args.holdout)
     messages = json.loads((ROOT / "join1" / "messages.json").read_text())
-    if len(agents) * len(messages) > MAX_CALLS:
-        sys.exit(f"Refused: {len(agents) * len(messages)} calls is above the cap of {MAX_CALLS}.")
+    planned = sum(not a.holdout for a in agents) * len(messages)
+    if planned > cap:
+        sys.exit(f"Refused: {planned} calls is above the cap of {cap}.")
 
     client = None
     if not args.dry_run:
@@ -188,6 +198,10 @@ def main():
             last_refresh = time.time()
         history = []
         for m in messages:
+            if a.holdout:
+                reactions.append({"agent": a.id, "message": m["id"], "action": "not_sent",
+                                  "diary": "", "holdout": True})
+                continue
             if any(h.get("exited") for h in history):
                 reactions.append({"agent": a.id, "message": m["id"], "action": "not_sent",
                                   "diary": ""})
@@ -222,6 +236,9 @@ def main():
     out_dir = ROOT / "results"
     out_dir.mkdir(exist_ok=True)
     tag = "dry" if args.dry_run else "live"
+    (out_dir / f"join1_{tag}_meta.json").write_text(json.dumps(
+        {"agents": args.agents, "seed": args.seed, "holdout": args.holdout,
+         "optout_scenario": os.environ.get("SCM_OPTOUT", "conservative")}))
     (out_dir / f"join1_{tag}_reactions.json").write_text(json.dumps(reactions, indent=1, ensure_ascii=False))
     (out_dir / f"join1_{tag}_report.json").write_text(json.dumps(report, indent=1))
 
