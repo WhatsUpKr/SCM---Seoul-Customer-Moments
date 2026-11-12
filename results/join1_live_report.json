@@ -2,46 +2,61 @@
  "spread": {
   "m1_promo": {
    "counts": {
-    "error": 30
+    "ignore": 9,
+    "error": 7,
+    "open_only": 3,
+    "open_and_click": 11
    },
-   "top_share": 1.0
+   "top_share": 0.37
   },
   "m2_reminder": {
    "counts": {
-    "error": 30
+    "error": 12,
+    "open_only": 2,
+    "open_and_click": 11,
+    "ignore": 5
    },
-   "top_share": 1.0
+   "top_share": 0.4
   },
   "m3_moment": {
    "counts": {
-    "error": 30
+    "ignore": 11,
+    "error": 6,
+    "open_only": 5,
+    "open_and_click": 8
    },
-   "top_share": 1.0
+   "top_share": 0.37
   },
   "m4_content": {
    "counts": {
-    "error": 30
+    "open_only": 5,
+    "open_and_click": 13,
+    "error": 8,
+    "ignore": 4
    },
-   "top_share": 1.0
+   "top_share": 0.43
   },
   "m5_third_push": {
    "counts": {
-    "error": 30
+    "ignore": 12,
+    "error": 7,
+    "open_only": 1,
+    "open_and_click": 10
    },
-   "top_share": 1.0
+   "top_share": 0.4
   }
  },
  "sensitivity": {
   "unsubscribe_high_fatigue": 0.0,
   "unsubscribe_low_fatigue": 0.0,
-  "click_high_capital": 0.0,
+  "click_high_capital": 0.51,
   "click_low_capital": 0.0
  },
- "diversity": 1.0,
+ "diversity": 0.15,
  "verdict": [
   {
    "check": "spread: no message above 80% same reaction",
-   "pass": false
+   "pass": true
   },
   {
    "check": "sensitivity: tired agents unsubscribe more",
@@ -49,12 +64,12 @@
   },
   {
    "check": "sensitivity: loyal agents click more",
-   "pass": false
+   "pass": true
   },
   {
    "check": "diversity: average diary overlap below 0.35",
-   "pass": false
+   "pass": true
   }
  ],
- "passed": 0
+ "passed": 3
 }

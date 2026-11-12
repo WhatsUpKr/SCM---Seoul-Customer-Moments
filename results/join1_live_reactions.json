@@ -2,901 +2,901 @@
  {
   "agent": "a000",
   "message": "m1_promo",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "Another 'today only' push from Haneul Market, and I'm busy with my friend's wedding prep next weekend, so I'm not going to bother opening it."
  },
  {
   "agent": "a000",
   "message": "m2_reminder",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": ""
  },
  {
   "agent": "a000",
   "message": "m3_moment",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "We're not moving, so this doesn't apply to me, and I'm busy getting ready for a friend's wedding next weekend."
  },
  {
   "agent": "a000",
   "message": "m4_content",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_only",
+  "diary": "Quick dinner recipes could help on a busy weeknight with the kids, but I'm busy with the wedding next weekend, so I'll just glance at it and move on."
  },
  {
   "agent": "a000",
   "message": "m5_third_push",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "Another 'sale ends soon' push from Haneul Market, and I'm busy sorting out my friend's wedding gift this week, so I'm not going to rush into shopping now."
  },
  {
   "agent": "a001",
   "message": "m1_promo",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "Another 'today only' push from Haneul Market; I don't trust their discounts and I'm not shopping there this week, so I'll let it pass."
  },
  {
   "agent": "a001",
   "message": "m2_reminder",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a001",
   "message": "m3_moment",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "I'm not moving, so this moving-essentials message doesn't apply to me, and I don't trust Haneul Market enough to bother looking, though I'm fine leaving it in the chat."
  },
  {
   "agent": "a001",
   "message": "m4_content",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_only",
+  "diary": "Recipes for dinner sound useful, but I don't really trust Haneul Market, so I'll glance at it and not go shopping this week with a wedding coming up."
  },
  {
   "agent": "a001",
   "message": "m5_third_push",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a002",
   "message": "m1_promo",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a002",
   "message": "m2_reminder",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_only",
+  "diary": "I don't remember putting anything in my cart, and with this cold I'm not going shopping, but I'll glance at it anyway."
  },
  {
   "agent": "a002",
   "message": "m3_moment",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "I'm not moving and I'm still recovering from this cold, so this doesn't apply to me, and I don't really trust Haneul Market anyway."
  },
  {
   "agent": "a002",
   "message": "m4_content",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_only",
+  "diary": "Three quick dinner recipes sound handy while I'm still recovering from this cold, but I don't trust Haneul Market enough to shop there, so I'll just glance at them."
  },
  {
   "agent": "a002",
   "message": "m5_third_push",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "Another ad saying the sale ends soon, but I'm still stuffed up from this cold and have no plans to shop, so I'll let it go."
  },
  {
   "agent": "a003",
   "message": "m1_promo",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a003",
   "message": "m2_reminder",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a003",
   "message": "m3_moment",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a003",
   "message": "m4_content",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_only",
+  "diary": "Recipes with this week's seasonal vegetables sound handy for weeknight dinners, so I'll skim it, but I'm not in the mood to click through to anything right now."
  },
  {
   "agent": "a003",
   "message": "m5_third_push",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "Another push alert with a countdown, but I'm already planning to shop at Haneul Market anyway, so I'll just leave it alone."
  },
  {
   "agent": "a004",
   "message": "m1_promo",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_only",
+  "diary": "Twenty percent off everything today sounds nice, but I wasn't planning to shop this week, so I'll just glance at it and see if anything the kids need is on sale."
  },
  {
   "agent": "a004",
   "message": "m2_reminder",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_only",
+  "diary": "Oh, I didn't think I had anything in my cart, so I'll open it to see what they mean, but I'm not planning to buy anything this week anyway."
  },
  {
   "agent": "a004",
   "message": "m3_moment",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_only",
+  "diary": "Moving essentials, huh, we're not moving, but I'll glance at it since I don't mind their messages."
  },
  {
   "agent": "a004",
   "message": "m4_content",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Three quick dinner recipes with seasonal vegetables sounds useful for a weeknight with the kids, so I'll take a look even though I wasn't planning to shop."
  },
  {
   "agent": "a004",
   "message": "m5_third_push",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_only",
+  "diary": "Another 'sale ends soon' push from Haneul Market, and I have no plans to shop this week, but I'll glance at it since I don't mind these messages."
  },
  {
   "agent": "a005",
   "message": "m1_promo",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a005",
   "message": "m2_reminder",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a005",
   "message": "m3_moment",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_only",
+  "diary": "Haneul Market is sending moving stuff, but I'm not moving, so I'll glance at it and not buy anything this week."
  },
  {
   "agent": "a005",
   "message": "m4_content",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Fifteen-minute dinners with seasonal vegetables sound useful for cooking alone, so I'll look at the recipes even though I wasn't planning to shop this week."
  },
  {
   "agent": "a005",
   "message": "m5_third_push",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a006",
   "message": "m1_promo",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Oh nice, 20% off everything today only, and I was already planning to stock up at Haneul Market this week since I just moved in, so I'll tap through and see what's worth buying."
  },
  {
   "agent": "a006",
   "message": "m2_reminder",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "I was already planning to order from Haneul Market this week, and since I just moved and haven't finished stocking up, a heads-up about my cart is useful, so I'll open it and check."
  },
  {
   "agent": "a006",
   "message": "m3_moment",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "I just moved into my new place and I still need basics like storage bins and cleaning supplies, so this moving essentials roundup is perfect timing and I was going to shop at Haneul Market this week anyway."
  },
  {
   "agent": "a006",
   "message": "m4_content",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Ooh, 15-minute dinner recipes sound perfect since I just moved and don't have much energy to cook yet, and I was already planning to stop by Haneul Market this week anyway, so I'll check out the recipes and see which vegetables I need to pick up."
  },
  {
   "agent": "a006",
   "message": "m5_third_push",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Oh, I was already planning to order groceries this week since I just moved, so I'll check what's on sale before the deadline."
  },
  {
   "agent": "a007",
   "message": "m1_promo",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Oh, 20% off everything today at Haneul Market, and I was already planning to stock up this week since we just moved into the new apartment, so I'll check it out right now."
  },
  {
   "agent": "a007",
   "message": "m2_reminder",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Oh, I did leave a few things in my cart since we moved, and I was going to buy them this week anyway, so I'll check them out now before they sell out."
  },
  {
   "agent": "a007",
   "message": "m3_moment",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "We just moved, so this timing is perfect, and since I already planned to shop at Haneul Market this week, I'll check out the moving essentials list."
  },
  {
   "agent": "a007",
   "message": "m4_content",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "With the kids and this week's move, a 15-minute dinner with seasonal vegetables sounds perfect, so I'll look at the recipes and maybe pick up the ingredients at Haneul Market."
  },
  {
   "agent": "a007",
   "message": "m5_third_push",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Oh, the Haneul Market sale ends in two hours, and I was already planning to shop there this week, so I'll take a quick look before I lose the discount."
  },
  {
   "agent": "a008",
   "message": "m1_promo",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Twenty percent off everything today only, and I was already planning to shop at Haneul Market this week, so I'll check it out now before I forget."
  },
  {
   "agent": "a008",
   "message": "m2_reminder",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Oh, my cart items might sell out, and I was planning to buy them this week anyway, so I'll open it and check before I lose the deal."
  },
  {
   "agent": "a008",
   "message": "m3_moment",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a008",
   "message": "m4_content",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Fifteen-minute dinner recipes with seasonal vegetables are exactly what I need this busy week, and I was already planning to shop at Haneul Market anyway, so I'll open it and check which ingredients are on sale."
  },
  {
   "agent": "a008",
   "message": "m5_third_push",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "I was already planning to shop at Haneul Market this week, and a sale ending in 2 hours is worth a quick look even though I'm busy."
  },
  {
   "agent": "a009",
   "message": "m1_promo",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Oh nice, 20% off everything today only, and I was already planning to stock up at Haneul Market this week anyway, so I'll open it right now before the deal disappears."
  },
  {
   "agent": "a009",
   "message": "m2_reminder",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Oh, my cart items might sell out, and I was planning to order this week anyway, so I'll go finish checking out now."
  },
  {
   "agent": "a009",
   "message": "m3_moment",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Oh, we just moved and I still need storage bins and cleaning supplies, and I was going to shop at Haneul Market this week anyway, so I'll open this and see what's in the moving essentials list."
  },
  {
   "agent": "a009",
   "message": "m4_content",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Oh nice, quick dinner ideas with seasonal veggies are exactly what I need this week, and I was already planning to stop by Haneul Market anyway, so I'll open it and check out the recipes."
  },
  {
   "agent": "a009",
   "message": "m5_third_push",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Oh, I was planning to shop at Haneul Market this week anyway, and with payday yesterday, I'll take a look before the sale ends."
  },
  {
   "agent": "a010",
   "message": "m1_promo",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "Another 'today only' 20% sale push from Haneul Market; I don't trust these flashy deadlines and I'm busy getting ready for the exam this week, so I'll skip it."
  },
  {
   "agent": "a010",
   "message": "m2_reminder",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a010",
   "message": "m3_moment",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "I'm not moving and I'm busy preparing for an exam this week, so this Haneul Market message doesn't interest me at all."
  },
  {
   "agent": "a010",
   "message": "m4_content",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a010",
   "message": "m5_third_push",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "Another 'sale ends soon' alert from Haneul Market, and I'm busy studying for my exam, so I'll skip it."
  },
  {
   "agent": "a011",
   "message": "m1_promo",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "Another 'today only' 20% off ping from Haneul Market, and I don't trust their discounts since the prices always seem to bounce back, and I'm busy getting ready for my friend's wedding next weekend anyway."
  },
  {
   "agent": "a011",
   "message": "m2_reminder",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": ""
  },
  {
   "agent": "a011",
   "message": "m3_moment",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "I'm not moving, so this moving-essentials message doesn't apply to me, and I don't trust Haneul Market enough to care about it right now."
  },
  {
   "agent": "a011",
   "message": "m4_content",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_only",
+  "diary": "Three quick dinner recipes sound handy, but I don't trust Haneul Market much, so I'll glance at them and skip the shopping."
  },
  {
   "agent": "a011",
   "message": "m5_third_push",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "Another 'sale ends in 2 hours' push from Haneul Market; I don't trust that urgency, and I'm busy sorting out what to wear to my friend's wedding next weekend, so I'll let it go."
  },
  {
   "agent": "a012",
   "message": "m1_promo",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "Ugh, another promo push while I'm still unpacking boxes in the new place, so I'm just swiping it away."
  },
  {
   "agent": "a012",
   "message": "m2_reminder",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "I don't remember putting anything in a Haneul Market cart, and with the move this week I'm not shopping, so I'll just leave this one alone."
  },
  {
   "agent": "a012",
   "message": "m3_moment",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_only",
+  "diary": "Oh, they know I just moved, which is a little creepy, but I'll glance at the list since I might need some things for the new place."
  },
  {
   "agent": "a012",
   "message": "m4_content",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "Recipes sound nice, but I'm busy unpacking boxes this week, so I'll skip this one."
  },
  {
   "agent": "a012",
   "message": "m5_third_push",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "Another 'sale ends in 2 hours' push from Haneul Market, and we just moved, so I'm not in shopping mode and I'm not falling for the fake urgency."
  },
  {
   "agent": "a013",
   "message": "m1_promo",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "Another 'today only' push notification from Haneul Market; I'm busy with my friend's wedding prep next weekend and wasn't planning to shop anyway, so I'll just swipe it away."
  },
  {
   "agent": "a013",
   "message": "m2_reminder",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "I don't remember putting anything in a Haneul Market cart, and I'm busy with my friend's wedding next weekend, so I'll just skip this email."
  },
  {
   "agent": "a013",
   "message": "m3_moment",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "I'm not moving and I have a friend's wedding to think about this week, so this moving-essentials message doesn't interest me and I'll just leave it unread."
  },
  {
   "agent": "a013",
   "message": "m4_content",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "Another grocery newsletter with recipes I probably won't cook, and I have a friend's wedding to think about this weekend, so I'll skip it."
  },
  {
   "agent": "a013",
   "message": "m5_third_push",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "Another 'sale ends soon' ping; I'm not shopping this week and I don't need the wedding-week hassle of rushing to buy something, so I'll let it go."
  },
  {
   "agent": "a014",
   "message": "m1_promo",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a014",
   "message": "m2_reminder",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a014",
   "message": "m3_moment",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a014",
   "message": "m4_content",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": ""
  },
  {
   "agent": "a014",
   "message": "m5_third_push",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a015",
   "message": "m1_promo",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "Another 'today only' push from Haneul Market, and I don't trust these discounts, so I'm not going to bother opening it while I'm busy getting ready for my friend's wedding next weekend."
  },
  {
   "agent": "a015",
   "message": "m2_reminder",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "I never put anything in a Haneul Market cart, so this is probably just a pressure tactic, and I'm busy with my friend's wedding next weekend."
  },
  {
   "agent": "a015",
   "message": "m3_moment",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "We're not moving, and I don't trust this store's marketing, so I'll skip it and keep thinking about the wedding gift for next weekend."
  },
  {
   "agent": "a015",
   "message": "m4_content",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "Haneul Market is emailing recipes again, and I don't trust them enough to bother opening it, especially with the wedding next weekend on my mind."
  },
  {
   "agent": "a015",
   "message": "m5_third_push",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "Another 'sale ends soon' push from Haneul Market; I don't trust these urgency tactics and I have a friend's wedding to think about, so I'm skipping it."
  },
  {
   "agent": "a016",
   "message": "m1_promo",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a016",
   "message": "m2_reminder",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a016",
   "message": "m3_moment",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "I just moved into this new place and still have boxes everywhere, so a list of moving essentials from Haneul Market is useful, and I trust them, so I'll take a look."
  },
  {
   "agent": "a016",
   "message": "m4_content",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a016",
   "message": "m5_third_push",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "A sale ending in two hours, but I'm still unpacking boxes in the new place and wasn't planning to shop this week anyway."
  },
  {
   "agent": "a017",
   "message": "m1_promo",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "Haneul Market is shouting about 20% off today, but I'm stuck in bed with this cold and have no plans to shop, so I'll just let it go."
  },
  {
   "agent": "a017",
   "message": "m2_reminder",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a017",
   "message": "m3_moment",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "I'm not moving and I'm stuck in bed with a cold, so this moving-essentials message doesn't really apply to me right now."
  },
  {
   "agent": "a017",
   "message": "m4_content",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a017",
   "message": "m5_third_push",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": ""
  },
  {
   "agent": "a018",
   "message": "m1_promo",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Oh, 20% off everything today only, and I was already planning to buy groceries from Haneul Market this week, so I'll check it out right away before it ends."
  },
  {
   "agent": "a018",
   "message": "m2_reminder",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "I was already planning to order from Haneul Market this week, so this reminder about my cart is useful, and I'll check the items and prices before I'm too busy with exam prep."
  },
  {
   "agent": "a018",
   "message": "m3_moment",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a018",
   "message": "m4_content",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a018",
   "message": "m5_third_push",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a019",
   "message": "m1_promo",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Twenty percent off everything today, and I was going to shop there this week anyway, so I'll take a look before the wedding trip."
  },
  {
   "agent": "a019",
   "message": "m2_reminder",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": ""
  },
  {
   "agent": "a019",
   "message": "m3_moment",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "We aren't moving, so this moving-essentials message doesn't apply to us, but I'll still pick up what we need at Haneul Market this week for the wedding."
  },
  {
   "agent": "a019",
   "message": "m4_content",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Seasonal vegetables and quick dinner ideas sound useful since I was already going to Haneul Market this week, so I'll take a look at the recipes."
  },
  {
   "agent": "a019",
   "message": "m5_third_push",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a020",
   "message": "m1_promo",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a020",
   "message": "m2_reminder",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": ""
  },
  {
   "agent": "a020",
   "message": "m3_moment",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a020",
   "message": "m4_content",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a020",
   "message": "m5_third_push",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a021",
   "message": "m1_promo",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Twenty percent off everything today at Haneul Market, and I was already planning to shop there this week, so I'll take a look before my parents' groceries run out."
  },
  {
   "agent": "a021",
   "message": "m2_reminder",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "I was already planning to shop at Haneul Market this week, so this cart reminder is a useful nudge to go check my items."
  },
  {
   "agent": "a021",
   "message": "m3_moment",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_only",
+  "diary": "I'm not moving, so this moving-essentials bundle doesn't really apply to me, but I'll glance at it since I trust Haneul Market and was going to shop there this week anyway."
  },
  {
   "agent": "a021",
   "message": "m4_content",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Fifteen-minute dinner recipes using seasonal vegetables sound useful, and since I was already planning to shop at Haneul Market this week, I'll open it and see what I can make for my parents."
  },
  {
   "agent": "a021",
   "message": "m5_third_push",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "I was already planning to shop at Haneul Market this week, so a sale ending in two hours is worth a look before I go."
  },
  {
   "agent": "a022",
   "message": "m1_promo",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_only",
+  "diary": "Another 'today only' push from Haneul Market, and since I wasn't buying anything special this week anyway, I'll just glance at it and move on."
  },
  {
   "agent": "a022",
   "message": "m2_reminder",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "I was already planning to order from Haneul Market this week, so this cart reminder is useful, and I'll check whether the items are really running low."
  },
  {
   "agent": "a022",
   "message": "m3_moment",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Oh, we did just move, and I was already planning to stop by Haneul Market this week, so this moving-essentials list is convenient timing and I'll take a look."
  },
  {
   "agent": "a022",
   "message": "m4_content",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Fifteen-minute recipes using seasonal vegetables sound useful since we were already planning a grocery run this week, so I'll take a look."
  },
  {
   "agent": "a022",
   "message": "m5_third_push",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Oh, a sale ending in two hours and I was already planning to shop at Haneul Market this week anyway, so I'll take a quick look before it expires."
  },
  {
   "agent": "a023",
   "message": "m1_promo",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Oh nice, 20% off everything today only, and I was already planning to stock up at Haneul Market this week anyway, so I'll open it and see what's worth grabbing before the wedding next weekend."
  },
  {
   "agent": "a023",
   "message": "m2_reminder",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Oh, my cart items might sell out, and I was already planning to buy from Haneul Market this week anyway, so I'll go check them out before the wedding weekend."
  },
  {
   "agent": "a023",
   "message": "m3_moment",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a023",
   "message": "m4_content",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Seasonal vegetable recipes that take fifteen minutes sound perfect, and I was already planning to shop at Haneul Market this week, so I'll open this and check the prices."
  },
  {
   "agent": "a023",
   "message": "m5_third_push",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Oh, the sale ends in two hours and I was already planning to stop by Haneul Market this week for the wedding stuff, so I'll check it out now before it's gone."
  },
  {
   "agent": "a024",
   "message": "m1_promo",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Oh, 20% off today only, and I was already planning to stock up at Haneul Market this week anyway, so I'll take a look before the exam prep eats my afternoon."
  },
  {
   "agent": "a024",
   "message": "m2_reminder",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "I was already planning to order from Haneul Market this week, so this reminder about my cart is useful, and I'll check out before the items sell out while I'm busy studying for the exam."
  },
  {
   "agent": "a024",
   "message": "m3_moment",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Oh, moving essentials, I was already planning to stop by Haneul Market this week anyway, so I'll take a look at the list while I'm studying for my exam."
  },
  {
   "agent": "a024",
   "message": "m4_content",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Fifteen-minute dinner recipes sound useful this week while I'm buried in exam prep, and I was going to shop at Haneul Market anyway, so I'll check it out."
  },
  {
   "agent": "a024",
   "message": "m5_third_push",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "I was already planning to order from Haneul Market this week, so this reminder about the sale ending in two hours is a useful nudge even while I'm buried in exam prep."
  },
  {
   "agent": "a025",
   "message": "m1_promo",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a025",
   "message": "m2_reminder",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "I don't remember putting anything in a cart, and I'm too busy unpacking boxes in my new place to think about shopping right now."
  },
  {
   "agent": "a025",
   "message": "m3_moment",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Oh, this is timely since I just moved and still need some basics, so I'll take a quick look at what they put together."
  },
  {
   "agent": "a025",
   "message": "m4_content",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "I just moved into this place and still haven't figured out what to cook, so quick seasonal recipes sound useful, and I'll take a look at them."
  },
  {
   "agent": "a025",
   "message": "m5_third_push",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "Ugh, another 'sale ends soon' ping, and I'm still unpacking boxes, so I'm not going to rush into shopping right now."
  },
  {
   "agent": "a026",
   "message": "m1_promo",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_only",
+  "diary": "Twenty percent off everything today, huh; I have no plans to shop this week, but I'll glance at it since I'm not bothered by these messages, though I don't really trust this market."
  },
  {
   "agent": "a026",
   "message": "m2_reminder",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a026",
   "message": "m3_moment",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "I'm not moving anywhere, and I don't really trust Haneul Market, so I'll just let this kakao message sit unread."
  },
  {
   "agent": "a026",
   "message": "m4_content",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a026",
   "message": "m5_third_push",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "Another 'sale ends soon' ping from Haneul Market, and I don't trust those countdowns, so I'll let it go."
  },
  {
   "agent": "a027",
   "message": "m1_promo",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Twenty percent off everything today, and I was going to buy groceries this week anyway, so I'll take a look before I go."
  },
  {
   "agent": "a027",
   "message": "m2_reminder",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Oh, I did leave some things in my cart, so I'll open this and see if they're really running low before I order."
  },
  {
   "agent": "a027",
   "message": "m3_moment",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_only",
+  "diary": "Moving essentials, hm, I'm not moving anywhere, but I was going to stop by Haneul Market this week anyway, so I'll glance at it and see if anything's useful for the kitchen."
  },
  {
   "agent": "a027",
   "message": "m4_content",
   "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "diary": "Expecting value: line 1 column 1 (char 0)"
  },
  {
   "agent": "a027",
   "message": "m5_third_push",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "A sale ending in two hours makes me a bit anxious, but I was going to shop this week anyway, so I'll take a quick look."
  },
  {
   "agent": "a028",
   "message": "m1_promo",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Oh, 20% off everything today at Haneul Market, and I was already planning to stop by this week anyway, so I'll check what's on sale before we go."
  },
  {
   "agent": "a028",
   "message": "m2_reminder",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Oh, I did leave some things in my cart, so I'll open this and check before they sell out."
  },
  {
   "agent": "a028",
   "message": "m3_moment",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Oh nice, we just moved into our place in Seongdong-gu and still have boxes everywhere, so I'm curious what's in the moving essentials list from Haneul Market, since I trust them and was going to shop there this week anyway."
  },
  {
   "agent": "a028",
   "message": "m4_content",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "Three quick recipes using this week's seasonal vegetables sound useful, and I was already planning to shop at Haneul Market, so I'll check them out."
  },
  {
   "agent": "a028",
   "message": "m5_third_push",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "open_and_click",
+  "diary": "A 2-hour sale deadline is a bit pushy, but I was going to shop at Haneul Market this week anyway, so I'll take a quick look."
  },
  {
   "agent": "a029",
   "message": "m1_promo",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "Another 'today only' push from Haneul Market, and I'm too busy at work to even look, so I'm skipping it."
  },
  {
   "agent": "a029",
   "message": "m2_reminder",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "Another 'hurry, it'll sell out' ping from Haneul Market; I barely remember what I put in that cart, and I'm too swamped at work to care right now."
  },
  {
   "agent": "a029",
   "message": "m3_moment",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "Moving essentials? I'm not moving, and I'm too busy at work this week to care about some market's ad anyway."
  },
  {
   "agent": "a029",
   "message": "m4_content",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "Haneul Market is emailing me recipes again, and I'm too busy at work to cook anything, so I'll skip it."
  },
  {
   "agent": "a029",
   "message": "m5_third_push",
-  "action": "error",
-  "diary": "Token exchange failed (HTTP 401): {'error': {'type': 'authentication_error', 'message': 'Authentication failed'}} Ensure"
+  "action": "ignore",
+  "diary": "Another 'sale ends soon' push from Haneul Market, and I'm too busy at work to care, so I'm swiping it away."
  }
 ]
