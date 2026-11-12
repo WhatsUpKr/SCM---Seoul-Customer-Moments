@@ -1,5 +1,6 @@
 name: Join 1 - agent variety test
 
+# Manual trigger only: no push or pull_request event can start a paid run.
 on:
   workflow_dispatch:
     inputs:
@@ -9,26 +10,42 @@ on:
         default: true
 
 permissions:
-  contents: write
+  contents: write   # commit the results
+  id-token: write   # request GitHub's OIDC token for Workload Identity Federation
 
 jobs:
   run:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    # Only the main branch matches the Anthropic federation rule.
+    if: github.ref == 'refs/heads/main'
+    env:
+      # Identifiers only, not secrets: they are useless without a token
+      # that GitHub signs for this exact repository and branch.
+      ANTHROPIC_FEDERATION_RULE_ID: TO_FILL
+      ANTHROPIC_ORGANIZATION_ID: TO_FILL
+      ANTHROPIC_SERVICE_ACCOUNT_ID: TO_FILL
+      ANTHROPIC_WORKSPACE_ID: TO_FILL
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Run join 1
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      - name: Dry run
+        if: ${{ inputs.dry_run }}
+        run: python join1/run.py --dry-run
+      - name: Fetch GitHub OIDC token
+        if: ${{ !inputs.dry_run }}
         run: |
-          if [ "${{ inputs.dry_run }}" = "true" ]; then
-            python join1/run.py --dry-run
-          else
-            python join1/run.py
-          fi
+          curl -sS -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=https://api.anthropic.com" \
+            | jq -r .value > /tmp/gha-jwt
+          echo "ANTHROPIC_IDENTITY_TOKEN_FILE=/tmp/gha-jwt" >> "$GITHUB_ENV"
+      - name: Live run
+        if: ${{ !inputs.dry_run }}
+        run: |
+          pip install --quiet anthropic
+          python join1/run.py
       - name: Commit results
         run: |
           git config user.name "scm-bot"

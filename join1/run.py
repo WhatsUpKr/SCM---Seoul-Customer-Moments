@@ -8,7 +8,9 @@ another one's answer. The script then checks three things:
 
 Usage:
   python join1/run.py --dry-run          # no API call, random fake reactions
-  ANTHROPIC_API_KEY=... python join1/run.py
+  Live runs happen only in GitHub Actions, through Workload Identity
+  Federation: GitHub's short-lived OIDC token is exchanged for a short-lived
+  Anthropic token. No API key exists anywhere.
 
 Hard caps: at most MAX_CALLS calls per run, Haiku only, short answers.
 """
@@ -18,7 +20,6 @@ import json
 import os
 import random
 import sys
-import urllib.request
 from collections import Counter
 from itertools import combinations
 from pathlib import Path
@@ -41,23 +42,16 @@ SYSTEM = (
 )
 
 
-def call_model(api_key: str, persona: str, message: dict) -> dict:
-    body = {
-        "model": MODEL,
-        "max_tokens": MAX_TOKENS,
-        "system": SYSTEM + "\n\nYour persona: " + persona,
-        "messages": [{"role": "user", "content":
-                      f"You receive this {message['channel']} message:\n{message['text']}\n"
-                      f"(English: {message['en']})"}],
-    }
-    req = urllib.request.Request(
-        "https://api.anthropic.com/v1/messages",
-        data=json.dumps(body).encode(),
-        headers={"x-api-key": api_key, "anthropic-version": "2023-06-01",
-                 "content-type": "application/json"},
+def call_model(client, persona: str, message: dict) -> dict:
+    resp = client.messages.create(
+        model=MODEL,
+        max_tokens=MAX_TOKENS,
+        system=SYSTEM + "\n\nYour persona: " + persona,
+        messages=[{"role": "user", "content":
+                   f"You receive this {message['channel']} message:\n{message['text']}\n"
+                   f"(English: {message['en']})"}],
     )
-    with urllib.request.urlopen(req, timeout=60) as r:
-        text = json.load(r)["content"][0]["text"]
+    text = next(b.text for b in resp.content if b.type == "text")
     start, end = text.find("{"), text.rfind("}") + 1
     out = json.loads(text[start:end])
     if out.get("action") not in ACTIONS:
@@ -129,16 +123,19 @@ def main():
     if len(agents) * len(messages) > MAX_CALLS:
         sys.exit(f"Refused: {len(agents) * len(messages)} calls is above the cap of {MAX_CALLS}.")
 
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if not args.dry_run and not api_key:
-        sys.exit("ANTHROPIC_API_KEY is missing. Use --dry-run to test without it.")
+    client = None
+    if not args.dry_run:
+        if not os.environ.get("ANTHROPIC_IDENTITY_TOKEN_FILE"):
+            sys.exit("No federated identity found. Run through GitHub Actions, or use --dry-run.")
+        import anthropic  # reads the ANTHROPIC_* federation variables, no API key
+        client = anthropic.Anthropic()
 
     rng = random.Random(args.seed)
     reactions = []
     for a in agents:
         for m in messages:
             try:
-                out = fake_reaction(rng, a, m) if args.dry_run else call_model(api_key, a.brief(), m)
+                out = fake_reaction(rng, a, m) if args.dry_run else call_model(client, a.brief(), m)
             except Exception as e:  # one failed call must not kill the run
                 out = {"action": "error", "diary": str(e)[:120]}
             reactions.append({"agent": a.id, "message": m["id"], **out})
