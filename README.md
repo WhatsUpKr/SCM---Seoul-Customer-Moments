@@ -28,4 +28,4 @@ With real customers you never know what would have happened without the message.
 python join1/run.py --dry-run   # free, no API call
 ```
 
-The live run uses Claude Haiku through the Anthropic API, with a hard cap on calls per run. The API key lives in the repository secrets, never in the code.
+The live run uses Claude Haiku through the Anthropic API, with a hard cap on calls per run. It authenticates with Workload Identity Federation: GitHub's short-lived identity token is exchanged for a short-lived Anthropic token, scoped to this repository's `main` branch. There is no API key anywhere.

@@ -20,6 +20,8 @@ import json
 import os
 import random
 import sys
+import time
+import urllib.request
 from collections import Counter
 from itertools import combinations
 from pathlib import Path
@@ -57,6 +59,21 @@ def call_model(client, persona: str, message: dict) -> dict:
     if out.get("action") not in ACTIONS:
         out["action"] = "invalid"
     return out
+
+
+def refresh_github_token() -> None:
+    """GitHub identity tokens expire after about 5 minutes, which also caps
+    the Anthropic token. Rewrite the file so the SDK always finds a fresh one."""
+    url = os.environ.get("ACTIONS_ID_TOKEN_REQUEST_URL")
+    path = os.environ.get("ANTHROPIC_IDENTITY_TOKEN_FILE")
+    if not url or not path:
+        return
+    req = urllib.request.Request(
+        url + "&audience=https://api.anthropic.com",
+        headers={"Authorization": "Bearer " + os.environ["ACTIONS_ID_TOKEN_REQUEST_TOKEN"]},
+    )
+    with urllib.request.urlopen(req, timeout=30) as r:
+        Path(path).write_text(json.load(r)["value"])
 
 
 def fake_reaction(rng: random.Random, agent, message) -> dict:
@@ -132,7 +149,11 @@ def main():
 
     rng = random.Random(args.seed)
     reactions = []
+    last_refresh = 0.0
     for a in agents:
+        if client and time.time() - last_refresh > 120:
+            refresh_github_token()
+            last_refresh = time.time()
         for m in messages:
             try:
                 out = fake_reaction(rng, a, m) if args.dry_run else call_model(client, a.brief(), m)
