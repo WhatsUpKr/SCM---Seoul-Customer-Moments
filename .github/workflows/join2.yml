@@ -1,0 +1,31 @@
+name: Join 2 - agents to Amplitude
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run (print events, send nothing)"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Dry run
+        if: ${{ inputs.dry_run }}
+        run: python join2/send_to_amplitude.py --dry-run
+      - name: Send to Amplitude
+        if: ${{ !inputs.dry_run }}
+        env:
+          AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
+        run: python join2/send_to_amplitude.py
