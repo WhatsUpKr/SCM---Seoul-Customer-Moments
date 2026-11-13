@@ -1,0 +1,38 @@
+name: Join 3 - load BigQuery
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run (count rows, load nothing)"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  id-token: write   # GitHub OIDC token, exchanged with Google (no stored key)
+
+jobs:
+  load:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Dry run
+        if: ${{ inputs.dry_run }}
+        run: python join3/load_bigquery.py --dry-run
+      - name: Authenticate to Google Cloud (Workload Identity Federation)
+        if: ${{ !inputs.dry_run }}
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: projects/648930876760/locations/global/workloadIdentityPools/github/providers/scm-repo
+          service_account: scm-github@scm-seoul.iam.gserviceaccount.com
+      - name: Load
+        if: ${{ !inputs.dry_run }}
+        run: |
+          pip install --quiet google-cloud-bigquery
+          python join3/load_bigquery.py
