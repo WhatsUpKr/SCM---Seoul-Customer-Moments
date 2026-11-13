@@ -3,114 +3,229 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Seoul Customer Moments — replay</title>
+<title>Seoul Customer Moments — the neighbourhood</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#f6f4ef; --ink:#1d1d1b; --mute:#6b6a65; --line:#dcd8cf; --card:#fff;
-          --click:#1f7a5c; --open:#8fb8a8; --ignore:#c9c5bb; --out:#b3402e; --accent:#2b4a8b; }
+  :root { --page:#eef1ea; --ink:#1f2a30; --mute:#5d6b6e; --line:#c9d2c6; --panel:#fbfaf5;
+          --jade:#12806a; --mint:#6fb7a4; --stone:#9aa3a0; --red:#c8372d; --blue:#2f5f8a; }
   @media (prefers-color-scheme: dark) {
-    :root { --bg:#151514; --ink:#eeece6; --mute:#9a988f; --line:#33322e; --card:#1e1e1c;
-            --click:#4fc39a; --open:#3f7564; --ignore:#4a4944; --out:#e0705d; --accent:#8fb0ee; } }
-  * { box-sizing:border-box } body { margin:0; background:var(--bg); color:var(--ink);
+    :root { --page:#141c22; --ink:#e9ede6; --mute:#9aa8a6; --line:#2e3a42; --panel:#1c262d; --blue:#8fb6dd; } }
+  * { box-sizing:border-box }
+  body { margin:0; background:var(--page); color:var(--ink);
     font:16px/1.5 system-ui,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif }
-  main { max-width:760px; margin:0 auto; padding:20px 16px 48px }
-  h1 { font-size:1.35rem; margin:0 0 4px } .sub { color:var(--mute); margin:0 0 16px; font-size:.92rem }
-  .flag { display:inline-block; border:1px solid var(--line); border-radius:999px; padding:2px 10px;
-    font-size:.78rem; color:var(--mute); margin-bottom:14px }
-  .msg { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px 14px; min-height:92px }
-  .msg b { font-size:.78rem; letter-spacing:.04em; text-transform:uppercase; color:var(--accent) }
-  .msg p { margin:4px 0 0 } .msg .en { color:var(--mute); font-size:.9rem }
-  .days { display:flex; gap:6px; margin:12px 0 } .days button { flex:1; padding:10px 0; border-radius:10px;
-    border:1px solid var(--line); background:var(--card); color:var(--ink); font:inherit; font-size:.85rem; cursor:pointer }
-  .days button[aria-pressed=true] { background:var(--ink); color:var(--bg); border-color:var(--ink) }
-  .city { display:grid; grid-template-columns:repeat(3,1fr); gap:8px } @media (max-width:480px){ .city{grid-template-columns:repeat(2,1fr)} }
-  .gu { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:10px; min-height:96px }
-  .gu h2 { font-size:.78rem; margin:0 0 8px; color:var(--mute); font-weight:600 }
-  .dots { display:flex; flex-wrap:wrap; gap:7px }
-  .dot { width:22px; height:22px; border-radius:50%; border:0; padding:0; cursor:pointer; background:var(--ignore);
-    transition:background .35s, transform .35s, opacity .35s }
-  .dot.open_only { background:var(--open) } .dot.open_and_click { background:var(--click); transform:scale(1.15) }
-  .dot.gone { background:transparent; outline:2px dashed var(--out); outline-offset:-2px; opacity:.75 }
-  .dot.leaving { background:var(--out) } .dot.sel { box-shadow:0 0 0 3px var(--accent) }
-  .dot.truth.planner { box-shadow:inset 0 0 0 4px var(--accent) }
-  .legend { display:flex; flex-wrap:wrap; gap:12px; font-size:.8rem; color:var(--mute); margin:12px 0 }
-  .legend i { display:inline-block; width:11px; height:11px; border-radius:50%; margin-right:5px; vertical-align:-1px }
-  .row { display:flex; gap:8px; align-items:center; margin:8px 0 } .row label { font-size:.88rem }
-  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px 14px; margin-top:12px }
-  .card h3 { margin:0 0 6px; font-size:.95rem } .card p { margin:4px 0; font-size:.92rem }
-  .nums { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; text-align:center }
-  .nums div { border:1px solid var(--line); border-radius:10px; padding:10px 4px }
+  main { max-width:1040px; margin:0 auto; padding:18px 14px 48px }
+  h1 { font-family:"Gowun Dodum",system-ui,sans-serif; font-weight:400; font-size:1.7rem; line-height:1.2; margin:0 }
+  .lede { color:var(--mute); margin:4px 0 12px; max-width:62ch }
+  .stage { position:relative; border-radius:14px; overflow:hidden; border:1px solid var(--line); background:#dfe5d8 }
+  canvas { display:block; width:100%; height:auto; touch-action:manipulation; cursor:pointer }
+  .bar { display:flex; gap:6px; margin:10px 0; align-items:stretch }
+  .bar button { font:inherit; font-size:.9rem; padding:9px 0; flex:1; border-radius:9px; border:1px solid var(--line);
+    background:var(--panel); color:var(--ink); cursor:pointer }
+  .bar button[aria-pressed=true] { background:var(--ink); color:var(--page); border-color:var(--ink) }
+  .bar #play { flex:0 0 84px }
+  button:focus-visible, input:focus-visible { outline:3px solid var(--blue); outline-offset:2px }
+  .cols { display:grid; grid-template-columns:1.2fr 1fr; gap:12px } @media (max-width:720px){ .cols{ grid-template-columns:1fr } }
+  .panel { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:12px 14px }
+  .panel h2 { font-family:"Gowun Dodum",system-ui,sans-serif; font-weight:400; font-size:1.05rem; margin:0 0 6px }
+  .panel p { margin:4px 0 } .small { font-size:.86rem; color:var(--mute) }
+  #msg p[lang=ko] { font-size:1.02rem }
+  #thoughts { list-style:none; margin:0; padding:0; min-height:132px }
+  #thoughts li { padding:6px 0; border-top:1px solid var(--line); font-size:.9rem; cursor:pointer }
+  #thoughts li:first-child { border-top:0 }
+  #thoughts b { font-weight:600 } .tag { display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:6px }
+  .legend { display:flex; flex-wrap:wrap; gap:6px 14px; font-size:.82rem; color:var(--mute); margin:8px 0 }
+  .legend i { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:5px }
+  .row { display:flex; gap:8px; align-items:center; margin:6px 0; font-size:.92rem }
+  .nums { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; text-align:center; margin:6px 0 }
+  .nums div { border:1px solid var(--line); border-radius:10px; padding:8px 4px }
   .nums strong { display:block; font-size:1.6rem; font-variant-numeric:tabular-nums } .nums span { font-size:.76rem; color:var(--mute) }
-  footer { color:var(--mute); font-size:.8rem; margin-top:20px }
+  footer { color:var(--mute); font-size:.8rem; margin-top:16px; max-width:75ch }
 </style>
 </head>
 <body>
 <main>
-  <h1>Seoul Customer Moments</h1>
-  <p class="sub">One simulated week. Five messages from a fictional grocer, Haneul Market. Every dot is an AI agent.</p>
-  <span class="flag">Simulation · no real customer data</span>
-  <div class="msg" id="msg" aria-live="polite"></div>
-  <div class="days" id="days" role="group" aria-label="Day of the week"></div>
-  <div class="city" id="city"></div>
+  <h1>하늘동, a week in a simulated Seoul neighbourhood</h1>
+  <p class="lede">Every resident is an AI agent. Each day at noon the local grocer, Haneul Market, sends one message. Watch who reads it, who walks to the shop and who has had enough. Nobody here is a real customer.</p>
+
+  <div class="stage"><canvas id="city" aria-label="Animated map of the neighbourhood. Residents leave home, receive a message at noon, and some walk to the market."></canvas></div>
+
+  <div class="bar" id="bar" role="group" aria-label="Playback"><button id="play">Pause</button></div>
+
   <div class="legend">
-    <span><i style="background:var(--click)"></i>clicked</span>
-    <span><i style="background:var(--open)"></i>opened</span>
-    <span><i style="background:var(--ignore)"></i>ignored</span>
-    <span><i style="background:var(--out)"></i>unsubscribed today</span>
-    <span><i style="outline:2px dashed var(--out);outline-offset:-2px"></i>gone</span>
+    <span><i style="background:var(--jade)"></i>clicked, walks to the market</span>
+    <span><i style="background:var(--mint)"></i>opened</span>
+    <span><i style="background:var(--stone)"></i>ignored</span>
+    <span><i style="background:var(--red)"></i>unsubscribed</span>
+    <span><i style="background:transparent;outline:2px dashed var(--stone);outline-offset:-2px"></i>no longer reachable</span>
   </div>
-  <div class="row"><input type="checkbox" id="truth"><label for="truth">Reveal the hidden truth: ring = was going to shop anyway</label></div>
-  <div class="card" id="who"><h3>Tap a dot</h3><p>Each agent keeps a one-line diary of what it thought.</p></div>
-  <div class="card" id="measure" hidden></div>
-  <footer>Agents react through separate model calls. Who actually unsubscribes is decided by dice anchored on a benchmark, not by the model. The purchase rule behind the last card is a hand-written assumption.</footer>
+  <div class="row"><input type="checkbox" id="truth"><label for="truth">Show what the brand cannot see: a blue ring marks residents who were going to shop anyway</label></div>
+
+  <div class="cols">
+    <section class="panel" id="msg" aria-live="polite"></section>
+    <section class="panel"><h2>What residents are thinking</h2><ul id="thoughts"><li class="small">Thoughts appear when the noon message lands.</li></ul></section>
+    <section class="panel" id="who"><h2>Tap a resident</h2><p class="small">You will see who they are and how their week is going.</p></section>
+    <section class="panel" id="measure" hidden></section>
+  </div>
+  <footer>Each resident reacts through its own model call. Who actually unsubscribes is decided by dice anchored on a benchmark, not by the model. Daily routines on the map are staged for readability. The purchase rule behind the last panel is a hand-written assumption.</footer>
 </main>
 <script>
-const DAYS = ["Mon","Tue","Wed","Thu","Fri"];
-let D, day = 0, sel = null;
+const DAYS = ["Mon","Tue","Wed","Thu","Fri"], DAY_MS = 9000;
+const COL = { open_and_click:"#12806a", open_only:"#6fb7a4", ignore:"#9aa3a0", leaving:"#c8372d", idle:"#33434d" };
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-function stateOf(agentId, d) {
-  const mine = D.reactions.filter(r => r.agent === agentId);
+const cv = $("city"), g = cv.getContext("2d");
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+let D, W, H, L, people = [], day = 0, t = 0, playing = !reduce, last = 0, sel = null, shown = new Set();
+
+function rng(seed) { let h = 2166136261; for (const c of seed) h = Math.imul(h ^ c.charCodeAt(0), 16777619);
+  return () => { h += 0x6D2B79F5; let x = Math.imul(h ^ h >>> 15, 1 | h); x ^= x + Math.imul(x ^ x >>> 7, 61 | x); return ((x ^ x >>> 14) >>> 0) / 4294967296; }; }
+const lerp = (a, b, k) => a + (b - a) * k, clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+const ease = k => k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+const seg = (x, a, b) => clamp((x - a) / (b - a), 0, 1);
+
+function reactionOf(id, d) {
+  const mine = D.byAgent[id] || [];
   const r = mine.find(x => x.message === D.messages[d].id);
   const goneBefore = D.messages.slice(0, d).some(m => mine.find(x => x.message === m.id && x.exited));
-  if (goneBefore || !r || r.action === "not_sent") return { cls: "gone", r };
-  return { cls: r.exited ? "leaving" : r.action, r };
+  if (goneBefore || !r || r.action === "not_sent") return { kind: "gone", r };
+  return { kind: r.exited ? "leaving" : r.action, r };
 }
-function draw() {
-  const m = D.messages[day];
-  $("msg").innerHTML = `<b>${DAYS[day]} · ${esc(m.channel)}</b><p lang="ko">${esc(m.text)}</p><p class="en">${esc(m.en)}</p>`;
-  [...$("days").children].forEach((b, i) => b.setAttribute("aria-pressed", i === day));
-  const truth = $("truth").checked;
-  document.querySelectorAll(".dot").forEach(el => {
-    const a = D.agents.find(x => x.id === el.dataset.id), s = stateOf(a.id, day);
-    el.className = "dot " + s.cls + (truth ? " truth" + (a.would_buy_anyway ? " planner" : "") : "") + (sel === a.id ? " sel" : "");
-    el.setAttribute("aria-label", `${a.id}, ${a.age_band}, ${s.cls.replace(/_/g, " ")}`);
-  });
-  if (sel) {
-    const a = D.agents.find(x => x.id === sel), s = stateOf(sel, day);
-    $("who").innerHTML = `<h3>${esc(a.id)} · ${esc(a.district)} · ${esc(a.age_band)} · ${esc(a.household)}</h3>` +
-      `<p>${s.cls === "gone" ? "No longer receives messages." : "“" + esc(s.r.diary) + "”"}</p>` +
-      (truth ? `<p><small>Hidden: trust ${a.relationship_capital}, fatigue ${a.message_fatigue}, ${a.would_buy_anyway ? "was going to shop anyway" : "had no plan to shop"}. This week: ${esc(a.life_moment)}.</small></p>` : "");
+
+function layout() {
+  const wide = cv.parentElement.clientWidth >= 640;
+  W = wide ? 1000 : 600; H = wide ? 640 : 900;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  cv.width = W * dpr; cv.height = H * dpr; g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const cols = wide ? 3 : 2, rows = wide ? 2 : 3, pad = 22, road = 30, stream = 116;
+  const bw = (W - pad * 2 - road * (cols - 1)) / cols, bh = (H - pad * 2 - road * (rows - 2) - stream) / rows;
+  const gus = [...new Set(D.agents.map(a => a.district))];
+  const blocks = gus.map((name, i) => { const c = i % cols, r = Math.floor(i / cols);
+    const y = pad + r * bh + (r > 0 ? stream + (r - 1) * road : 0);
+    return { name, x: pad + c * (bw + road), y, w: bw, h: bh }; });
+  const sy = pad + bh + stream / 2;
+  L = { blocks, stream: { y: sy, h: 22 }, market: { x: W / 2, y: sy, w: 96, h: 54 }, scale: wide ? 1 : 1.25 };
+  people = [];
+  for (const b of blocks) {
+    const res = D.agents.filter(a => a.district === b.name), n = res.length || 1;
+    const gc = Math.ceil(Math.sqrt(n * b.w / (b.h - 34))), gr = Math.ceil(n / gc);
+    res.forEach((a, i) => { const r = rng(a.id);
+      const hx = b.x + (i % gc + .5) * b.w / gc, hy = b.y + 34 + (Math.floor(i / gc) + .5) * (b.h - 40) / gr;
+      const tb = r() < .6 ? b : blocks[Math.floor(r() * blocks.length)];
+      people.push({ a, hx, hy, sx: tb.x + 14 + r() * (tb.w - 28), sy: tb.y + 30 + r() * (tb.h - 44),
+        mx: L.market.x + (r() - .5) * 110, my: L.market.y + (r() < .5 ? -1 : 1) * (34 + r() * 14),
+        ph: r() * 6.28, hs: Math.min(30, b.w / gc * .55, (b.h - 40) / gr * .6), x: hx, y: hy }); });
   }
 }
+
+function pulseR() { return seg(t, .38, .47) * Math.hypot(W, H) * .62; }
+function place(p) {
+  const st = reactionOf(p.a.id, day), go = ease(seg(t, .15, .33)), back = ease(seg(t, .72, .88));
+  let x = lerp(p.hx, p.sx, go), y = lerp(p.hy, p.sy, go);
+  const hit = pulseR() >= Math.hypot(p.sx - L.market.x, p.sy - L.market.y) && t >= .38;
+  if (st.kind === "open_and_click" && !p.a.holdout) { const k = ease(seg(t, .47, .56)) - ease(seg(t, .63, .72));
+    x = lerp(x, p.mx, k); y = lerp(y, p.my, k); }
+  x = lerp(x, p.hx, back); y = lerp(y, p.hy, back);
+  const moving = (t > .15 && t < .33) || (t > .72 && t < .88) || (st.kind === "open_and_click" && t > .47 && t < .72);
+  if (!moving && t > .33 && t < .72) { x += Math.sin(t * 40 + p.ph) * 3; y += Math.cos(t * 31 + p.ph) * 2; }
+  p.x = x; p.y = y + (moving ? Math.sin(t * 260 + p.ph) * 1.2 : 0);
+  p.st = st; p.hit = hit && st.kind !== "gone" && !p.a.holdout; p.home = t < .15 || t >= .88;
+  if (p.hit && !shown.has(day + p.a.id) && st.r && st.r.diary) { shown.add(day + p.a.id); pushThought(p); }
+}
+
+function rr(x, y, w, h, r) { g.beginPath(); g.roundRect(x, y, w, h, r); }
+function draw() {
+  const night = 1 - seg(t, .02, .16) + seg(t, .84, .97), dusk = clamp(night, 0, 1);
+  g.fillStyle = "#dfe5d8"; g.fillRect(0, 0, W, H);
+  g.fillStyle = "#8fb9c9"; g.fillRect(0, L.stream.y - L.stream.h / 2, W, L.stream.h);
+  g.strokeStyle = "rgba(255,255,255,.55)"; g.lineWidth = 1.5; g.setLineDash([14, 18]); g.lineDashOffset = -t * 300;
+  g.beginPath(); g.moveTo(0, L.stream.y); g.lineTo(W, L.stream.y); g.stroke(); g.setLineDash([]);
+  for (const b of L.blocks) {
+    g.fillStyle = "#f4f1e6"; rr(b.x, b.y, b.w, b.h, 12); g.fill(); g.strokeStyle = "#b9c4b4"; g.lineWidth = 1; g.stroke();
+    g.fillStyle = "#5d6b6e"; g.font = `${13 * L.scale}px "Gowun Dodum",system-ui,sans-serif`; g.textBaseline = "top"; g.fillText(b.name, b.x + 12, b.y + 9);
+  }
+  for (const p of people) { const s = p.hs, x = p.hx - s / 2, y = p.hy - s / 2;
+    g.fillStyle = "#fbfaf5"; g.fillRect(x, y + s * .3, s, s * .7);
+    g.fillStyle = "#4a5a66"; g.beginPath(); g.moveTo(x - s * .12, y + s * .34); g.lineTo(p.hx, y - s * .08); g.lineTo(x + s * 1.12, y + s * .34); g.fill(); }
+  const m = L.market;
+  g.fillStyle = "#e9e3d2"; rr(m.x - 86, m.y - 50, 172, 100, 16); g.fill();
+  g.fillStyle = "#c8372d"; rr(m.x - m.w / 2, m.y - m.h / 2 + 8, m.w, m.h - 8, 5); g.fill();
+  g.fillStyle = "#1f5f4a"; g.beginPath(); g.moveTo(m.x - m.w / 2 - 8, m.y - m.h / 2 + 12); g.lineTo(m.x, m.y - m.h / 2 - 10); g.lineTo(m.x + m.w / 2 + 8, m.y - m.h / 2 + 12); g.fill();
+  g.fillStyle = "#fff"; g.font = `${15}px "Gowun Dodum",system-ui,sans-serif`; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText("하늘마켓", m.x, m.y + 8); g.textAlign = "left";
+  if (dusk > 0) { g.fillStyle = `rgba(15,27,51,${.56 * dusk})`; g.fillRect(0, 0, W, H); }
+  if (dusk > .25) for (const p of people) { const s = p.hs; g.fillStyle = `rgba(255,211,90,${(dusk - .25) * 1.3})`;
+    g.fillRect(p.hx - s * .18, p.hy + s * .02, s * .36, s * .3); }
+  const R = pulseR();
+  if (t >= .38 && t < .5) { g.strokeStyle = `rgba(200,55,45,${1 - seg(t, .38, .5)})`; g.lineWidth = 3;
+    for (const k of [0, 26, 52]) if (R - k > 0) { g.beginPath(); g.arc(m.x, m.y, R - k, 0, 6.3); g.stroke(); } }
+  const truth = $("truth").checked, rad = clamp(7 * L.scale * (people.length > 120 ? .6 : 1), 3.5, 9);
+  for (const p of people) {
+    if (p.home && !(sel === p.a.id)) continue;
+    const k = p.st.kind, reacted = p.hit && t < .9;
+    g.beginPath(); g.arc(p.x, p.y, rad, 0, 6.3);
+    if (k === "gone" || p.a.holdout) { g.fillStyle = "rgba(51,67,77,.25)"; g.fill(); g.setLineDash([3, 3]); g.strokeStyle = "#7d8886"; g.lineWidth = 1.5; g.stroke(); g.setLineDash([]); }
+    else { g.fillStyle = reacted ? COL[k] : COL.idle; g.fill(); g.strokeStyle = "#fff"; g.lineWidth = 1.5; g.stroke(); }
+    if (reacted && k === "leaving" && t < .7) { g.strokeStyle = "#fff"; g.lineWidth = 2; const d = rad * .45;
+      g.beginPath(); g.moveTo(p.x - d, p.y - d); g.lineTo(p.x + d, p.y + d); g.moveTo(p.x + d, p.y - d); g.lineTo(p.x - d, p.y + d); g.stroke(); }
+    if (reacted && t < .47 + .02) { const f = 1 - seg(t, .38, .49); g.strokeStyle = `rgba(255,255,255,${f})`; g.lineWidth = 2; g.beginPath(); g.arc(p.x, p.y, rad + 4 + (1 - f) * 8, 0, 6.3); g.stroke(); }
+    if (truth && p.a.would_buy_anyway) { g.strokeStyle = "#2f5f8a"; g.lineWidth = 2.5; g.beginPath(); g.arc(p.x, p.y, rad + 3.5, 0, 6.3); g.stroke(); }
+    if (sel === p.a.id) { g.strokeStyle = "#ffd35a"; g.lineWidth = 3; g.beginPath(); g.arc(p.x, p.y, rad + 7, 0, 6.3); g.stroke(); }
+  }
+  const hour = 6 + t * 18, hh = String(Math.floor(hour)).padStart(2, "0"), mm = String(Math.floor(hour % 1 * 6) * 10).padStart(2, "0");
+  const act = people.filter(p => !p.a.holdout), c = k => act.filter(p => p.hit && p.st.kind === k).length;
+  const hud = `${DAYS[day]} ${hh}:${mm}`, stat = t >= .38 ? `opened ${c("open_only") + c("open_and_click")}  clicked ${c("open_and_click")}  left ${c("leaving")}` : "message at 12:00";
+  g.font = `600 ${14 * L.scale}px system-ui,sans-serif`; g.textBaseline = "middle";
+  const w1 = g.measureText(hud).width + 20, w2 = g.measureText(stat).width + 20, hy = H - 26 * L.scale;
+  g.fillStyle = "rgba(31,42,48,.86)"; rr(10, hy - 13 * L.scale, w1, 26 * L.scale, 13); g.fill(); rr(W - w2 - 10, hy - 13 * L.scale, w2, 26 * L.scale, 13); g.fill();
+  g.fillStyle = "#fff"; g.fillText(hud, 20, hy); g.fillText(stat, W - w2, hy);
+}
+
+function pushThought(p) {
+  const ul = $("thoughts"); if (ul.firstChild && ul.firstChild.className === "small") ul.innerHTML = "";
+  const li = document.createElement("li"); li.dataset.id = p.a.id;
+  li.innerHTML = `<i class="tag" style="background:${COL[p.st.kind] || COL.idle}"></i><b>${esc(p.a.district)}, ${esc(p.a.age_band)}</b> “${esc(p.st.r.diary)}”`;
+  ul.prepend(li); while (ul.children.length > 5) ul.lastChild.remove();
+}
+function card() {
+  if (!sel) return; const p = people.find(x => x.a.id === sel), a = p.a, truth = $("truth").checked;
+  const week = D.messages.map((m, i) => { const s = reactionOf(a.id, i); return `<span title="${DAYS[i]}"><i class="tag" style="background:${s.kind === "gone" ? "transparent;outline:2px dashed #9aa3a0;outline-offset:-2px" : COL[s.kind]}"></i>${DAYS[i]}</span>`; }).join(" ");
+  const s = reactionOf(a.id, day);
+  $("who").innerHTML = `<h2>${esc(a.district)}, ${esc(a.age_band)}, ${esc(a.household)}</h2><p class="small">${week}</p>` +
+    `<p>${a.holdout ? "In the silent group: receives nothing all week." : s.kind === "gone" ? "No longer receives messages." : "“" + esc(s.r.diary) + "”"}</p>` +
+    `<p class="small">This week: ${esc(a.life_moment)}.` + (truth ? ` Hidden from the brand: trust ${a.relationship_capital}, message fatigue ${a.message_fatigue}, ${a.would_buy_anyway ? "was going to shop anyway" : "had no plan to shop"}.` : "") + `</p>`;
+}
+function setDay(d) { day = d; t = reduce ? .5 : 0; shown = new Set([...shown].filter(k => !k.startsWith(String(d)))); ui(); }
+function ui() {
+  const m = D.messages[day];
+  $("msg").innerHTML = `<h2>${DAYS[day]}, sent by ${esc(m.channel)}</h2><p lang="ko">${esc(m.text)}</p><p class="small">${esc(m.en)}</p>`;
+  document.querySelectorAll("#bar [data-i]").forEach(b => b.setAttribute("aria-pressed", +b.dataset.i === day));
+  $("play").textContent = playing ? "Pause" : "Play"; card();
+}
+function frame(now) {
+  const dt = Math.min(now - last, 80); last = now;
+  if (playing) { t += dt / DAY_MS; if (t >= 1) { setDay((day + 1) % D.messages.length); } }
+  people.forEach(place); draw(); requestAnimationFrame(frame);
+}
+
 fetch("data.json").then(r => r.json()).then(d => {
-  D = d;
-  $("days").innerHTML = DAYS.slice(0, D.messages.length).map((x, i) => `<button data-i="${i}">${x}</button>`).join("");
-  $("days").onclick = e => { if (e.target.dataset.i) { day = +e.target.dataset.i; draw(); } };
-  const gus = [...new Set(D.agents.map(a => a.district))];
-  $("city").innerHTML = gus.map(g => `<section class="gu"><h2>${esc(g)}</h2><div class="dots">` +
-    D.agents.filter(a => a.district === g && !a.holdout).map(a => `<button class="dot" data-id="${a.id}"></button>`).join("") + `</div></section>`).join("");
-  $("city").onclick = e => { if (e.target.dataset.id) { sel = e.target.dataset.id; draw(); } };
-  $("truth").onchange = draw;
-  if (D.measure) {
-    const m = D.measure; $("measure").hidden = false;
-    $("measure").innerHTML = `<h3>Did the messages sell anything?</h3><div class="nums">` +
+  D = d; D.byAgent = {}; for (const r of D.reactions) (D.byAgent[r.agent] ||= []).push(r);
+  $("bar").insertAdjacentHTML("beforeend", DAYS.slice(0, D.messages.length).map((x, i) => `<button data-i="${i}">${x}</button>`).join(""));
+  $("bar").onclick = e => { if (e.target.id === "play") { playing = !playing; ui(); } else if (e.target.dataset.i) setDay(+e.target.dataset.i); };
+  $("thoughts").onclick = e => { const li = e.target.closest("li"); if (li && li.dataset.id) { sel = li.dataset.id; card(); } };
+  $("truth").onchange = card;
+  cv.onclick = e => { const b = cv.getBoundingClientRect(), x = (e.clientX - b.left) * W / b.width, y = (e.clientY - b.top) * H / b.height;
+    let best = null, bd = 34; for (const p of people) { const px = p.home ? p.hx : p.x, py = p.home ? p.hy : p.y, dd = Math.hypot(px - x, py - y); if (dd < bd) { bd = dd; best = p; } }
+    sel = best ? best.a.id : null; if (best) card(); };
+  if (D.measure) { const m = D.measure; $("measure").hidden = false;
+    $("measure").innerHTML = `<h2>Did the messages sell anything?</h2><div class="nums">` +
       `<div><strong>${m.click_attributed}</strong><span>purchases credited by clicks</span></div>` +
       `<div><strong>${m.truth_caused}</strong><span>purchases truly caused</span></div>` +
       `<div><strong>${m.truth_destroyed}</strong><span>purchases destroyed</span></div></div>` +
-      `<p>In this run every clicker was already going to shop. With ${m.messaged_agents} agents this is an illustration of the method, not a result.</p>`;
-  }
-  draw();
-}).catch(() => { $("msg").textContent = "Could not load data.json."; });
+      `<p class="small">${m.holdout_estimate != null ? "The silent group estimates " + m.holdout_estimate + " net purchases. " : ""}With ${m.messaged_agents} residents this illustrates the method. It is not a result.</p>`; }
+  layout(); let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(layout, 150); });
+  setDay(0); requestAnimationFrame(n => { last = n; frame(n); });
+}).catch(() => { $("msg").textContent = "The run data (data.json) did not load. Run viewer/build.py and reload."; });
 </script>
 </body>
 </html>

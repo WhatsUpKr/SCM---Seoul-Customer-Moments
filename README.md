@@ -2,7 +2,7 @@
 
 A small fictional Seoul neighbourhood. Every resident is an AI agent with hidden traits. A fictional grocer sends them messages, and a real martech stack records what they do.
 
-**Watch one week:** the replay page is in [`docs/`](docs/index.html) (GitHub Pages: `https://whatsupkr.github.io/SCM---Seoul-Customer-Moments/` once Pages is switched on).
+**Watch the neighbourhood live:** the animated city (homes, the market, residents walking through their week) is in [`docs/`](docs/index.html) (GitHub Pages: `https://whatsupkr.github.io/SCM---Seoul-Customer-Moments/` once Pages is switched on).
 
 **This is a simulation.** No real customer data. It says nothing about real customers.
 
