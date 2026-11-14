@@ -19,4 +19,8 @@ jobs:
         with:
           python-version: "3.12"
       - run: python -m unittest discover tests -v
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: node --test tests/js/model.test.mjs
       - run: python join1/run.py --dry-run --agents 300 --holdout 0.2 --max-calls 1500

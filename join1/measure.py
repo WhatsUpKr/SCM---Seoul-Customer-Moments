@@ -46,16 +46,30 @@ def outcomes(agent, rs, u):
     return silence, treated, clicked
 
 
-def measure(agents, reactions, seed):
+def per_agent(agents, reactions, seed):
+    """One row per agent: what it buys in a silent week and in the messaged week.
+
+    Single source for measure() and for the replay page (viewer/build.py), so
+    the page can never show a purchase the report does not count.
+    """
     dice = random.Random(seed + 2)
     by_agent = {}
     for r in reactions:
         by_agent.setdefault(r["agent"], []).append(r)
-    treated_n = holdout_n = buy_t = buy_h = click_buy = caused = destroyed = 0
+    rows = []
     for a in agents:
         u = dice.random()
         silence, treated, clicked = outcomes(a, by_agent.get(a.id, []), u)
-        if a.holdout:
+        rows.append({"agent": a.id, "holdout": a.holdout, "silence": bool(silence),
+                     "treated": bool(treated), "clicked": bool(clicked)})
+    return rows
+
+
+def measure(agents, reactions, seed):
+    treated_n = holdout_n = buy_t = buy_h = click_buy = caused = destroyed = 0
+    for row in per_agent(agents, reactions, seed):
+        silence, treated, clicked = row["silence"], row["treated"], row["clicked"]
+        if row["holdout"]:
             holdout_n += 1
             buy_h += silence
             continue
