@@ -2,57 +2,60 @@
  "spread": {
   "m1_promo": {
    "counts": {
-    "ignore": 10,
-    "open_only": 8,
-    "open_and_click": 12
+    "ignore": 88,
+    "open_only": 54,
+    "open_and_click": 95,
+    "error": 3,
+    "unsubscribe": 1
    },
-   "top_share": 0.4
+   "top_share": 0.39
   },
   "m2_reminder": {
    "counts": {
-    "ignore": 7,
-    "open_and_click": 8,
-    "unsubscribe": 7,
-    "error": 1,
-    "open_only": 3
+    "ignore": 42,
+    "open_and_click": 59,
+    "unsubscribe": 96,
+    "error": 19,
+    "open_only": 24
    },
-   "top_share": 0.31
+   "top_share": 0.4
   },
   "m3_moment": {
    "counts": {
-    "ignore": 8,
-    "unsubscribe": 10,
-    "open_and_click": 2,
-    "open_only": 4,
-    "error": 2
+    "ignore": 75,
+    "unsubscribe": 116,
+    "open_and_click": 7,
+    "open_only": 27,
+    "error": 13
    },
-   "top_share": 0.38
+   "top_share": 0.49
   },
   "m4_content": {
    "counts": {
-    "open_only": 10,
-    "unsubscribe": 9,
-    "ignore": 1,
-    "open_and_click": 6
+    "open_only": 73,
+    "ignore": 18,
+    "open_and_click": 39,
+    "unsubscribe": 92,
+    "error": 16
    },
-   "top_share": 0.38
+   "top_share": 0.39
   },
   "m5_third_push": {
    "counts": {
-    "ignore": 5,
-    "unsubscribe": 10,
-    "error": 3,
-    "open_and_click": 7,
-    "open_only": 1
+    "ignore": 65,
+    "unsubscribe": 104,
+    "open_and_click": 31,
+    "error": 28,
+    "open_only": 10
    },
-   "top_share": 0.38
+   "top_share": 0.44
   }
  },
  "sensitivity": {
-  "click_high_capital": 0.38,
-  "click_low_capital": 0.0
+  "click_high_capital": 0.32,
+  "click_low_capital": 0.06
  },
- "diversity": 0.14,
+ "diversity": 0.15,
  "verdict": [
   {
    "check": "spread: no message above 80% same reaction",
@@ -77,28 +80,28 @@
  ],
  "exits": {
   "low": {
-   "agents": 13,
-   "model_exit_rate": 0.0,
-   "hybrid_exit_rate": 0.15,
-   "baseline_exit_rate": 0.11
+   "agents": 81,
+   "model_exit_rate": 0.07,
+   "hybrid_exit_rate": 0.01,
+   "baseline_exit_rate": 0.01
   },
   "medium": {
-   "agents": 7,
-   "model_exit_rate": 0.29,
-   "hybrid_exit_rate": 0.57,
-   "baseline_exit_rate": 0.28
+   "agents": 80,
+   "model_exit_rate": 0.51,
+   "hybrid_exit_rate": 0.09,
+   "baseline_exit_rate": 0.04
   },
   "high": {
-   "agents": 10,
-   "model_exit_rate": 0.9,
-   "hybrid_exit_rate": 0.5,
-   "baseline_exit_rate": 0.44
+   "agents": 80,
+   "model_exit_rate": 1.0,
+   "hybrid_exit_rate": 0.04,
+   "baseline_exit_rate": 0.06
   },
   "all": {
-   "agents": 30,
-   "model_exit_rate": 0.37,
-   "hybrid_exit_rate": 0.37,
-   "baseline_exit_rate": 0.26
+   "agents": 241,
+   "model_exit_rate": 0.53,
+   "hybrid_exit_rate": 0.05,
+   "baseline_exit_rate": 0.04
   }
  },
  "passed": 5
