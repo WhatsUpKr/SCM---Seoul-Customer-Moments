@@ -38,7 +38,7 @@ Every agent who clicked was already going to shop. Thirty agents is an illustrat
 - [x] **Join 2** — reactions replayed as events: script → Segment → Amplitude (`join2/send_to_amplitude.py`)
 - [x] **Measurement check** — clicks vs silent group vs the truth (`join1/measure.py`)
 - [x] **Replay page** (`docs/`) with a playable silence test, and tests for both the world and the page (`tests/`)
-- [ ] Join 3 — events → BigQuery, SQL models
+- [x] **Join 3** — events → BigQuery, two datasets kept apart: what the brand sees (`scm_brand`) and the hidden truth used to grade it (`scm_truth`) (`join3/load_bigquery.py`)
 - [ ] Join 4 — BigQuery → Hightouch → OneSignal
 - [ ] Join 5 — message → agent inbox → reaction
 
