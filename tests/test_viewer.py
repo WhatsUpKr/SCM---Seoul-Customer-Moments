@@ -16,7 +16,8 @@ class Viewer(unittest.TestCase):
             self.assertIn(key, data)
         self.assertEqual(set(data["outcomes"]), {a["id"] for a in data["agents"]})
         self.assertTrue(all("annoyance" in r and "diary" in r for r in data["reactions"]))
-        buyers = sum(v[1] for a, v in data["outcomes"].items())
+        silent = {a["id"] for a in data["agents"] if a.get("holdout")}
+        buyers = sum(v[1] for a, v in data["outcomes"].items() if a not in silent)
         self.assertEqual(buyers, data["measure"]["purchases_messaged"])
 
     def test_bundle_is_one_self_contained_file(self):

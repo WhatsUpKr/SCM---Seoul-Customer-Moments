@@ -23,18 +23,23 @@ In real CRM you never see what would have happened without the message. Here you
 
 So this world is a test bench for **measurement methods**. The truth is known. The question is which method finds it.
 
-First run (30 agents, 5 messages, 12 Nov 2026):
+Run of 15 Nov 2026 (300 agents, 5 messages, 59 kept silent as a control group):
 
 | Method | Purchases credited to the messages |
 |---|---|
-| Click attribution | 12 |
-| The truth | 0 |
+| Click attribution | 87 |
+| Silent control group | 10 |
+| The truth | 1 (2 caused, 1 lost) |
 
-Every agent who clicked was already going to shop. Thirty agents is an illustration, not a result: the next run uses 300 agents and a silent control group.
+Clicks credit the messages with 87 purchases; they really caused one. The control group gets much closer, but with 59 silent agents its margin of error is wider than the gap it measures, so 10 and 1 cannot be told apart. A bigger silent group, or repeated draws (see the page), is what makes it usable.
+
+Unsubscribes: left to the model, 53% of messaged agents would have left in a week (100% of the most tired third). The benchmark-anchored dice gave 5%, against 4% for the baseline. About 7% of model calls returned an error and count as no reaction.
+
+First run (30 agents, 12 Nov 2026): click attribution 12, truth 0.
 
 ## What is built
 
-- [x] **Join 1** — 30 agents react to 5 messages, each through its own model call (`join1/run.py`)
+- [x] **Join 1** — 300 agents react to 5 messages, each through its own model call (`join1/run.py`)
 - [x] **Join 2** — reactions replayed as events: script → Segment → Amplitude (`join2/send_to_amplitude.py`)
 - [x] **Measurement check** — clicks vs silent group vs the truth (`join1/measure.py`)
 - [x] **Replay page** (`docs/`) with a playable silence test, and tests for both the world and the page (`tests/`)
