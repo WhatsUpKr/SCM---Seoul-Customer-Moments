@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Seoul Customer Moments</title>
-<meta name="description" content="A toy Seoul where every resident is an AI agent. A grocer sends five messages in a week. Watch who reacts, who leaves, and test whether the messages sold anything.">
+<meta name="description" content="A toy Seoul of AI residents. A grocer's dashboard credits a week of messages with purchases that were already going to happen. Guess the truth, then run the silence test yourself.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Seoul Customer Moments">
-<meta property="og:description" content="A toy Seoul where every resident is an AI agent. Watch a week of CRM messages land, then test whether they sold anything.">
+<meta property="og:description" content="The dashboard credits the messages with purchases. In this toy Seoul you can check how many they really caused.">
 <meta property="og:image" content="https://whatsupkr.github.io/SCM---Seoul-Customer-Moments/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f7fd0'/%3E%3Ccircle cx='16' cy='12' r='4' fill='%23fff'/%3E%3Ccircle cx='16' cy='21' r='6.5' fill='%23fff'/%3E%3C/svg%3E">
@@ -21,9 +21,11 @@
   <header>
     <div class="top"><p class="eyebrow">Seoul Customer Moments</p><button type="button" class="btn sm" id="lang">한국어</button></div>
     <h1 id="title">One week in a toy Seoul where every resident is an AI agent</h1>
-    <p class="lede" data-i18n="lede">Every day at noon the grocer 하늘마켓 (Haneul Market) sends one message. Watch who clicks and who has had enough, see what the dashboard misses, then test whether the messages sold anything.</p>
+    <p class="lede" id="lede"></p>
     <p class="pills"><span class="pill" data-i18n="sim">Simulation. Nobody here is a real customer.</span><span class="pill" id="runpill" hidden></span></p>
   </header>
+
+  <section class="panel ask" id="saturday" hidden></section>
 
   <div class="layout">
     <div class="col">
@@ -64,6 +66,7 @@
         <label class="small"><span data-i18n="order"></span> <select id="sort"><option value="block"></option><option value="trust"></option><option value="fatigue"></option><option value="plan"></option></select></label></div>
       <div class="matrix"><div class="rl" id="gridRows"></div><canvas id="grid" role="img" tabindex="0" data-i18n-aria="gridAria"></canvas></div>
       <div class="keys" id="gridLegend"></div>
+      <p class="callout" id="gridMiss" hidden></p>
       <p class="small" data-i18n="gridNote"></p>
       <details><summary data-i18n="tableTitle"></summary><div class="scroll"><table class="tbl" id="weekTable"></table></div></details>
     </section>
@@ -84,6 +87,20 @@
         <div id="labSummary"></div>
       </figure>
     </div>
+    <div class="sizer" id="sizer">
+      <h2 data-i18n="sizer.title"></h2>
+      <p class="intro" data-i18n="sizer.intro"></p>
+      <div class="labgrid">
+        <div class="labctl">
+          <label for="szN" id="szNLabel"></label><input type="range" id="szN" min="0" max="9" step="1" value="0">
+          <label for="szShare" id="szShareLabel"></label><input type="range" id="szShare" min="5" max="50" step="5" value="30">
+          <label for="szBase" id="szBaseLabel"></label><input type="range" id="szBase" min="1" max="60" step="1" value="20">
+          <label for="szLift" id="szLiftLabel"></label><input type="range" id="szLift" min="0.5" max="10" step="0.5" value="2">
+        </div>
+        <div id="szOut" aria-live="polite"></div>
+      </div>
+      <p class="small" data-i18n="sizer.note"></p>
+    </div>
   </section>
 
   <section class="panel" id="live-test" hidden>
@@ -101,12 +118,13 @@
 
    </div>
    <div class="col">
-    <section class="panel" id="saturday" hidden></section>
+    <section class="panel" id="short"></section>
+    <section class="panel" id="stack"></section>
   <section class="panel" id="rules-panel">
     <div class="fair">
       <div><h2 data-i18n="rulesTitle"></h2><ul id="rules"></ul></div>
       <div><h2 data-i18n="limitsTitle"></h2><ul id="limits"></ul></div>
-      <div><h2 id="checksTitle"></h2><ul class="checks" id="checks"></ul></div>
+      <details><summary id="checksTitle"></summary><ul class="checks" id="checks"></ul></details>
     </div>
   </section>
    </div>

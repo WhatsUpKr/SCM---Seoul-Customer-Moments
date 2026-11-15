@@ -1,7 +1,7 @@
-// panels.js: everything around the map. Week strip, legend, figures, narrator, the resident's phone, thoughts, week grid, Saturday question.
+// panels.js: everything around the map. The opening question, week strip, legend, figures, narrator, the resident's phone, thoughts, week grid, takeaways.
 
 import { t, day, channel, district, data as val, num, getLang } from "./i18n.js";
-import { clamp, stateOf, dashKey, dayCounts, shopCounts, legendOf, categoryOf, shops, measure, liveCounts } from "./model.js";
+import { clamp, stateOf, dashKey, dayCounts, shopCounts, legendOf, categoryOf, shops, measure, liveCounts, insights, hiddenStory, holdoutPlan } from "./model.js";
 import { COL, NOON, PULSE, LIVE_T, moodColor, trustColor } from "./city.js";
 
 export const $ = id => document.getElementById(id);
@@ -133,7 +133,12 @@ export function renderScene(world, view, sv) {
 
 export function renderCard(world, view, sv) {
   const el = $("who"), p = view.sel == null ? null : world.people[view.sel];
-  if (!p) { el.innerHTML = `<h2>${esc(t("whoEmptyTitle"))}</h2><p class="small">${esc(t("whoEmpty"))}</p>`; return; }
+  if (!p) {
+    const h = sv.kind === "live" ? null : hiddenStory(world);
+    el.innerHTML = `<h2>${esc(t("whoEmptyTitle"))}</h2><p class="small">${esc(t("whoEmpty"))}</p>` +
+      (h ? `<button type="button" class="btn start" data-pick="${h.i}">${esc(t("whoStart", { num: String(h.i + 1).padStart(2, "0"), k: h.k }))}</button>` : "");
+    return;
+  }
   const a = p.a, live = sv.kind === "live", shopIdx = world.hasOutcomes ? world.nDays : -1;
   const item = (cur, attr, icon, meta, text, k, r) => `<li class="${cur ? "now" : ""}"><button type="button" ${attr}><span class="appicon sm" aria-hidden="true" lang="ko">${icon}</span><span class="nb"><span class="meta">${esc(meta)}</span><span class="txt">${esc(text)}</span></span></button>` +
     (k ? `<div class="react">${stateDot(k)}<span>${esc(whatOf({ k, r }, live))}</span>${r && typeof r.annoyance === "number" ? `<span class="num">${esc(t("annoyance", { v: r.annoyance }))}</span>` : ""}</div>` : "") +
@@ -201,35 +206,63 @@ export function renderTable(world) {
   $("weekTable").innerHTML = `<thead><tr>${["day", "channel", "reach", "open", "click", "exit", "fedup"].map(k => `<th scope="col">${esc(t("th." + k))}</th>`).join("")}</tr></thead><tbody>${rows}</tbody>`;
 }
 
-/* ---------- the Saturday question: guess, then reveal ---------- */
+/* ---------- the opening question: guess, then reveal ---------- */
 let guessed;
 export function renderQuestion(world, actions) {
-  const m = world.data.measure, el = $("saturday"); if (!m) { el.hidden = true; return; }
+  const m = world.data.measure, el = $("saturday"); if (!m || !m.click_attributed) { el.hidden = true; return; }
   el.hidden = false;
-  const credited = m.click_attributed, cb = world.people.filter(p => !p.a.holdout && p.rec.some(r => r && r.action === "open_and_click") && p.buy[1]), anyway = cb.filter(p => p.buy[0]).length;
-  const open = guessed !== undefined || credited === 0, max = Math.max(credited, m.truth_caused, m.truth_destroyed, Math.abs(m.holdout_estimate || 0), 1);
-  const bar = (label, v, role, shown) => `<div class="hbar"><span>${esc(label)}</span><span class="track">${shown && v ? `<i style="width:${Math.abs(v) / max * 100}%;background:${ROLE[role]}"></i>` : ""}</span><span class="v">${shown ? num(v) : "?"}</span></div>`;
-  el.innerHTML = `<h2>${esc(t("q.title"))}</h2><div class="guess">` +
-    (open ? "" : `<p>${esc(t("q.ask", { c: credited }))}</p><div class="slider"><input type="range" id="guess" min="0" max="${credited}" value="${Math.round(credited / 2)}" step="1" aria-label="${esc(t("q.sliderAria"))}"><output id="guessOut" for="guess">${Math.round(credited / 2)}</output></div>` +
-      `<button type="button" class="btn primary" id="reveal">${esc(t("q.reveal"))}</button>`) +
-    `<div class="bars">${bar(t("q.credited"), credited, "click", true)}${bar(t("q.caused"), m.truth_caused, "truth", open)}${bar(t("q.destroyed"), m.truth_destroyed, "exit", open)}` +
-    (m.holdout_estimate != null ? bar(t("q.holdout"), m.holdout_estimate, "idle", open) : "") + `</div>` +
-    (open ? `<p class="verdict">${esc(t("q.verdict", { g: guessed, t: m.truth_caused }))}</p>` + (world.hasOutcomes && cb.length ? `<p>${esc(t("q.explain", { a: anyway, n: cb.length }))}</p>` : "") +
-      `<div class="btnrow">${world.hasOutcomes ? `<button type="button" class="btn" id="watchSat">${esc(t("q.watch"))}</button>` : ""}<a class="btn" href="#silence-test">${esc(t("q.next"))}</a></div>` : "") +
-    `<p class="small">${esc((m.holdout_estimate == null ? t("q.noHoldout") : "") + t("q.caveat", { n: m.messaged_agents }))}</p></div>`;
+  const credited = m.click_attributed, i = insights(world), open = guessed !== undefined;
+  const max = Math.max(credited, m.truth_caused, m.truth_destroyed, Math.abs(m.holdout_estimate || 0), 1);
+  const bar = (label, v, role) => `<div class="hbar"><span>${esc(label)}</span><span class="track">${v ? `<i style="width:${Math.abs(v) / max * 100}%;background:${ROLE[role]}"></i>` : ""}</span><span class="v">${num(v)}</span></div>`;
+  el.classList.toggle("open", open);
+  el.innerHTML = open
+    ? `<div><h2>${esc(t("q.verdict", { g: guessed, t: m.truth_caused }))}</h2>` + (i.credited ? `<p>${esc(t("q.explain", { a: i.anyway, n: i.credited }))}</p>` : "") +
+      `<div class="bars">${bar(t("q.credited"), credited, "click")}${bar(t("q.caused"), m.truth_caused, "truth")}${bar(t("q.destroyed"), m.truth_destroyed, "exit")}` +
+      (m.holdout_estimate != null ? bar(t("q.holdout"), m.holdout_estimate, "idle") : "") + `</div></div>` +
+      `<div><div class="btnrow">${world.hasOutcomes ? `<button type="button" class="btn" id="watchSat">${esc(t("q.watch"))}</button>` : ""}<a class="btn" href="#silence-test">${esc(t("q.next"))}</a><a class="btn" href="#short">${esc(t("q.short"))}</a></div>` +
+      `<p class="small">${esc(t("q.caveat", { n: m.messaged_agents }))}</p></div>`
+    : `<div><h2>${esc(t("q.title"))}</h2><p>${esc(t("q.ask", { c: credited }))}</p></div>` +
+      `<div class="guess"><div class="slider"><input type="range" id="guess" min="0" max="${credited}" value="${Math.round(credited / 2)}" step="1" aria-label="${esc(t("q.sliderAria"))}"><output id="guessOut" for="guess">${Math.round(credited / 2)}</output></div>` +
+      `<button type="button" class="btn primary" id="reveal">${esc(t("q.reveal"))}</button></div>`;
   const gi = $("guess");
   if (gi) { gi.oninput = () => { $("guessOut").textContent = gi.value; }; $("reveal").onclick = () => { guessed = +gi.value; renderQuestion(world, actions); }; }
   if ($("watchSat")) $("watchSat").onclick = actions.watchSaturday;
 }
 
+/* ---------- the takeaways, the real-life anchors and the stack: all figures come from the run ---------- */
+const SOURCES = [["Blake, Nosko & Tadelis, Econometrica (2015)", "https://www.nber.org/papers/w20171"],
+  ["Lewis & Rao, Quarterly Journal of Economics (2015)", "https://doi.org/10.1093/qje/qjv023"],
+  ["Braze: Global Control Group", "https://www.braze.com/docs/user_guide/audience/global_control_group"],
+  ["Airship: Holdout Experiments", "https://www.airship.com/docs/guides/experimentation/holdout-experiments/"]];
+const STACK_DONE = 4;     // steps of the stack that are built and checked; the rest is next
+const round2 = x => { const p = 10 ** Math.max(0, Math.floor(Math.log10(x)) - 1); return Math.round(x / p) * p; };
+export function renderShort(world) {
+  const i = insights(world), share = .3, plan = holdoutPlan({ n: i.n, share, base: i.base, lift: 0 }), need = holdoutPlan({ n: i.n, share, base: i.base, lift: .02 }).need;
+  const points = [];
+  if (world.hasOutcomes && i.credited) points.push([t("short.t1", { c: i.credited, a: i.anyway }), "saturday"]);
+  if (i.quietWant) points.push([t("short.t2", { q: i.quiet, f: i.quietWant }), "week-grid"]);
+  if (world.hasOutcomes) points.push([t("short.t3", { n: i.n, p: Math.round(share * 100), m: num(plan.margin * plan.nM, 0), need: num(round2(need), 0) }), "silence-test"]);
+  $("short").innerHTML = `<h2>${esc(t("short.title"))}</h2><ol class="points">${points.map(([[head, text], to]) => `<li><b>${esc(head)}</b> ${esc(text)} <a href="#${to}">${esc(t("short.see"))}</a></li>`).join("")}</ol><p class="small">${esc(t("short.caveat"))}</p>` +
+    `<h3>${esc(t("short.realTitle"))}</h3><ul class="real">${["r1", "r2", "r3"].map(k => `<li>${esc(t("short." + k))}</li>`).join("")}</ul>` +
+    `<p class="small srcs">${esc(t("short.src"))}: ${SOURCES.map(([label, url]) => `<a href="${url}" target="_blank" rel="noopener">${esc(label)}</a>`).join(" · ")}</p>`;
+  $("stack").innerHTML = `<h2>${esc(t("stack.title"))}</h2><p class="intro">${esc(t("stack.intro"))}</p><ol class="steps">` +
+    t("stack.steps").map(([name, text], k) => `<li class="${k < STACK_DONE ? "done" : "next"}"><span class="mark ${k < STACK_DONE ? "ok" : "soon"}" aria-hidden="true">${k < STACK_DONE ? "✓" : "→"}</span><span><b>${esc(name)}</b> <span class="small">(${esc(t(k < STACK_DONE ? "stack.done" : "stack.next"))})</span><br>${esc(text)}</span></li>`).join("") + `</ol>`;
+  const miss = $("gridMiss"); miss.hidden = !i.quietWant; if (i.quietWant) miss.textContent = t("miss", { q: i.quiet, f: i.quietWant });
+}
+
 /* ---------- words that only change with the language or the run ---------- */
 export function renderStatic(world) {
   const D = world.data, n = world.people.length, held = world.people.filter(p => p.a.holdout).length;
-  $("title").textContent = t("title", { n, m: world.nDays });
+  const mm = D.measure, i = insights(world);
+  $("title").textContent = mm && mm.click_attributed ? t("title", { c: mm.click_attributed }) : t("titlePlain", { n, m: world.nDays });
+  $("lede").textContent = t("lede", { n, m: world.nDays });
   $("runpill").hidden = !D.run; if (D.run) $("runpill").textContent = D.run.tag === "live" ? t("runLive", { n, s: held }) : t("runDry");
   $("lang").textContent = t("langButton"); $("lang").setAttribute("lang", getLang() === "ko" ? "en" : "ko");
   const li = a => a.map(s => `<li>${esc(s)}</li>`).join("");
-  $("rules").innerHTML = li(t("rules")); $("limits").innerHTML = li(t("limits"));
+  const limits = [...t("limits")];
+  if (world.hasOutcomes && i.noPlan && !i.noPlanClicked && mm && !mm.truth_caused) limits.splice(1, 0, t("limitNoLift", { n: i.noPlan }));
+  if (!i.labelled) limits.push(t("limitKorea"));
+  $("rules").innerHTML = li(t("rules")); $("limits").innerHTML = li(limits);
   const ck = D.checks && D.checks.verdict;
   $("checksTitle").textContent = ck ? t("checksTitle", { p: D.checks.passed, n: ck.length }) : t("checksTitle", { p: 0, n: 0 });
   $("checks").innerHTML = ck ? ck.map(c => `<li><span class="mark ${c.pass ? "ok" : "ko"}" aria-hidden="true">${c.pass ? "✓" : "✕"}</span><span><b>${esc(t(c.pass ? "pass" : "fail"))}.</b> ${esc(val(c.check))}</span></li>`).join("") : `<li class="small">${esc(t("checksNone"))}</li>`;
@@ -237,5 +270,5 @@ export function renderStatic(world) {
   document.querySelectorAll("#sort option").forEach(o => { o.textContent = t("sort." + o.value); });
   $("gridLegend").innerHTML = ["click", "open", "none", "fedup", "exit", "gone", "truth"].map(k => `<span class="key">${dot(k === "gone" ? "rest" : k)}${esc(t("gl." + k))}</span>`).join("");
   $("gridRows").innerHTML = world.scenes.map((sc, d) => `<span>${day(d)}</span>`).join("");
-  renderTable(world);
+  renderTable(world); renderShort(world);
 }

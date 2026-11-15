@@ -191,6 +191,65 @@ export function silenceTrials(world, share, n, seed) {
   return { n, est, bins, mean: mean(est), p5: q(.05), p95: q(.95), clickMean: mean(clicks), truthMean: mean(truths), closer: closer / n };
 }
 
+/** Standard normal cumulative distribution (Abramowitz and Stegun 7.1.26, error below 2e-7). */
+export function normCdf(z) {
+  const x = Math.abs(z) / Math.SQRT2, k = 1 / (1 + .3275911 * x);
+  const erf = 1 - (((((1.061405429 * k - 1.453152027) * k) + 1.421413741) * k - .284496736) * k + .254829592) * k * Math.exp(-x * x);
+  return z >= 0 ? .5 + erf / 2 : .5 - erf / 2;
+}
+
+const Z90 = 1.6449, Z80 = .8416;
+/**
+ * What a silence test can and cannot see with n customers, before running it.
+ * share: part of the customers kept silent. base: part who buy with no message. lift: what the messages add (0.02 = 2 points).
+ * Normal approximation for the difference of two proportions, one-sided test at 5%.
+ */
+export function holdoutPlan({ n, share, base, lift }) {
+  const nS = clamp(Math.round(n * share), 1, Math.max(1, n - 1)), nM = Math.max(1, n - nS);
+  const p0 = clamp(base, 0, 1), p1 = clamp(base + lift, 0, 1), v0 = p0 * (1 - p0), v1 = p1 * (1 - p1);
+  const se = Math.sqrt(v0 / nS + v1 / nM);
+  return {
+    nS, nM, se,
+    margin: Z90 * se,                                    // nine answers in ten fall within ± margin of the truth
+    power: se > 0 ? normCdf(lift / se - Z90) : 1,        // chance that the test sees a lift of this size
+    cost: nS * lift, gained: nM * lift,                  // purchases given up in the silent group, purchases the messages add
+    need: se > 0 && lift > 0 ? Math.ceil((v0 / share + v1 / (1 - share)) / (lift / (Z90 + Z80)) ** 2) : null,   // customers for 8 chances in 10
+  };
+}
+
+/** The figures behind the page's three takeaways. All of them come from the recorded run, whatever the visitor's silent group. */
+export function insights(world) {
+  const pool = world.people.filter(p => !p.a.holdout), clickBuyers = pool.filter(p => p.recClicked && p.buy[1]), noPlan = pool.filter(p => !p.a.would_buy_anyway);
+  let quiet = 0, quietWant = 0;
+  for (const p of pool) {
+    let gone = false;
+    for (const r of p.rec) {
+      if (gone || !r || r.action === "not_sent") continue;
+      if (r.exited) { gone = true; continue; }
+      if (r.action === "ignore" || r.action === "unsubscribe") { quiet++; if (r.action === "unsubscribe") quietWant++; }
+    }
+  }
+  return {
+    n: pool.length, credited: clickBuyers.length, anyway: clickBuyers.filter(p => p.buy[0]).length,
+    quiet, quietWant,                                                        // "no response" on the dashboard, and how many of those hid a wish to unsubscribe (the grid's red caps)
+    noPlan: noPlan.length, noPlanClicked: noPlan.filter(p => p.recClicked).length,
+    base: pool.length ? pool.filter(p => p.buy[0]).length / pool.length : 0,  // share who shop in a silent week
+    labelled: world.messages.some(m => /^\(광고\)/.test(m.text)),             // do the messages carry the Korean advertising label?
+  };
+}
+
+/** The resident whose week best shows what the dashboard misses: most days of wanting out while recorded as "no response". */
+export function hiddenStory(world) {
+  let best = null, most = 0;
+  for (const p of world.people) {
+    if (p.a.holdout) continue;
+    let k = 0, gone = false;
+    for (const r of p.rec) { if (gone || !r) continue; if (r.exited) { gone = true; continue; } if (r.action === "unsubscribe") k++; }
+    if (k > most) { best = p; most = k; }
+  }
+  return best ? { i: best.i, k: most } : null;
+}
+
 /** Three residents per day whose thought pops up on the map: one of each kind when possible. */
 export function pickFeatured(world, d) {
   const r = rng("feat" + d), out = [];

@@ -80,6 +80,43 @@ test("a live answer is checked before it is shown", () => {
   assert.ok(prompt.includes(data.agents[0].district) && prompt.includes("<message>\nhello\n</message>") && !prompt.includes("undefined"));
 });
 
+test("the normal curve is the normal curve", () => {
+  assert.ok(Math.abs(m.normCdf(0) - .5) < 1e-6);
+  assert.ok(Math.abs(m.normCdf(1.6449) - .95) < 1e-4);
+  assert.ok(Math.abs(m.normCdf(-1.6449) - .05) < 1e-4);
+  assert.ok(Math.abs(m.normCdf(1.96) - .975) < 1e-4);
+});
+
+test("the sample-size formula agrees with the page's own random draws", () => {
+  const w = fresh(), i = m.insights(w), share = .3;
+  const plan = m.holdoutPlan({ n: i.n, share, base: i.base, lift: 0 }), trials = m.silenceTrials(w, share, 4000, 11);
+  const formula = plan.margin * plan.nM, drawn = (trials.p95 - trials.p5) / 2;      // half-width of the middle 90%, in purchases
+  assert.ok(Math.abs(formula - drawn) / drawn < .15, `formula ${formula} vs draws ${drawn}`);
+});
+
+test("a silence test gets sharper with more customers and never free", () => {
+  const at = n => m.holdoutPlan({ n, share: .1, base: .2, lift: .02 });
+  assert.ok(at(1000).margin > at(10000).margin && at(10000).margin > at(100000).margin);
+  assert.ok(at(1000).power < at(10000).power && at(10000).power < at(100000).power);
+  assert.ok(Math.abs(at(at(1000).need).power - .8) < .02, `power at the stated need: ${at(at(1000).need).power}`);
+  assert.equal(at(10000).nS, 1000);
+  assert.ok(Math.abs(at(10000).cost - 20) < 1e-9 && Math.abs(at(10000).gained - 180) < 1e-9);
+  assert.equal(m.holdoutPlan({ n: 1000, share: .1, base: .2, lift: 0 }).need, null);
+});
+
+test("the three takeaways are counted on the recorded run", () => {
+  const w = fresh(), i = m.insights(w), py = data.measure;
+  assert.equal(i.credited, py.click_attributed);
+  assert.ok(i.anyway <= i.credited && i.quietWant <= i.quiet && i.noPlanClicked <= i.noPlan);
+  let quiet = 0, want = 0;                                                     // recount from the page's own states: the grid's grey cells and red caps
+  for (const p of w.people) for (const s of p.S) { if (s.k === "none" || s.k === "fedup") quiet++; if (s.k === "fedup") want++; }
+  assert.equal(i.quiet, quiet); assert.equal(i.quietWant, want);
+  m.assign(w, new Set([w.people[0].id]));                                      // a visitor's silent group must not change the takeaways
+  assert.deepEqual(m.insights(w), i);
+  const h = m.hiddenStory(w);
+  if (h) assert.equal(w.people[h.i].rec.filter(r => r && r.action === "unsubscribe" && !r.exited).length >= h.k, true);
+});
+
 test("English and Korean have the same keys", () => {
   const keys = (o, pre = "") => Object.entries(o).flatMap(([k, v]) => (v && typeof v === "object" && !Array.isArray(v) ? keys(v, pre + k + ".") : [pre + k]));
   assert.deepEqual(keys(STRINGS.ko).sort(), keys(STRINGS.en).sort());

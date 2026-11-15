@@ -71,7 +71,8 @@ function wire() {
   $("bubble").onclick = e => (e.target.id === "bubbleClose" ? actions.select(null) : actions.select(+$("bubble").dataset.i, true));
   $("who").onclick = e => {
     const b = e.target.closest("button"); if (!b) return;
-    if (b.dataset.d != null) { const d = +b.dataset.d; actions.go(d, world.scenes[d].type === "shop" ? .45 : NOON + .2); }
+    if (b.dataset.pick != null) actions.select(+b.dataset.pick, false);
+    else if (b.dataset.d != null) { const d = +b.dataset.d; actions.go(d, world.scenes[d].type === "shop" ? .45 : NOON + .2); }
     else if (b.dataset.nav === "0") actions.select(null);
     else if (b.dataset.nav) actions.select((view.sel + +b.dataset.nav + world.people.length) % world.people.length);
   };

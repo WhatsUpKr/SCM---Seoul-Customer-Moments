@@ -2,10 +2,12 @@
 // then repeats the draw many times to see what the method can and cannot tell with this many residents.
 
 import { t, num, signed } from "./i18n.js";
-import { clamp, rng, measureOf, drawSilent, silenceTrials } from "./model.js";
+import { clamp, rng, measureOf, drawSilent, silenceTrials, holdoutPlan, insights } from "./model.js";
 import { $, esc, tip } from "./panels.js";
 
 const N_TRIALS = 300, NS = "http://www.w3.org/2000/svg";
+const SIZES = [30, 100, 300, 1000, 3000, 10000, 30000, 100000, 300000, 1000000];   // customers, on a log scale
+const sz = { n: 0, share: 30, base: 20, lift: 2 };                                  // slider positions: index, %, %, points
 let world, actions, share = .3, current = null, trials = null, rand = Math.random, seed = 0;
 
 const pool = () => world.people.filter(p => !p.a.holdout);
@@ -18,6 +20,11 @@ export function initLab(w, a) {
   $("labDraw").onclick = () => { current = drawSilent(world, share, rand); renderLab(); };
   $("labRepeat").onclick = () => { if (!current) current = drawSilent(world, share, rand); trials = silenceTrials(world, share, N_TRIALS, ++seed); renderLab(); };
   $("labReplay").onclick = () => (world.experiment && same(world.experiment, current) ? actions.endTest() : actions.startTest(current));
+  // the sizer starts on this world's own numbers, so its first answer matches the random draws above
+  const i = insights(world);
+  sz.n = SIZES.reduce((best, v, k) => (Math.abs(Math.log(v / i.n)) < Math.abs(Math.log(SIZES[best] / i.n)) ? k : best), 0);
+  sz.share = Math.round(share * 100); sz.base = clamp(Math.round(i.base * 100), 1, 60);
+  for (const [id, key] of [["szN", "n"], ["szShare", "share"], ["szBase", "base"], ["szLift", "lift"]]) { $(id).value = sz[key]; $(id).oninput = e => { sz[key] = +e.target.value; renderSizer(); }; }
   renderLab();
 }
 
@@ -42,6 +49,24 @@ export function renderLab() {
     $("labChartTitle").textContent = t("lab.chartTitle", { n: trials.n });
     $("labSummary").innerHTML = [t("lab.s1", { lo: signed(trials.p5), hi: signed(trials.p95), mean: signed(trials.mean), truth: num(trials.truthMean) }),
       t("lab.s2", { click: num(trials.clickMean), pct: Math.round(trials.closer * 100) }), t("lab.s3", { n })].map(s => `<p>${esc(s)}</p>`).join(""); }
+  renderSizer();
+}
+
+/* What a silence test can see before it is run. Plain statistics, the same for any world. */
+const round2 = x => { const p = 10 ** Math.max(0, Math.floor(Math.log10(x)) - 1); return Math.round(x / p) * p; };
+export function renderSizer() {
+  if (!world) return;
+  const n = SIZES[sz.n], plan = holdoutPlan({ n, share: sz.share / 100, base: sz.base / 100, lift: sz.lift / 100 });
+  const pts = plan.margin * 100, m = num(pts, pts < 10 ? 1 : 0), pct = Math.round(plan.power * 100), one = sz.lift === 1;
+  const count = x => num(x, x < 10 ? 1 : 0);
+  $("szNLabel").textContent = t("sizer.n", { n: num(n, 0) });
+  $("szShareLabel").textContent = t("sizer.share", { p: sz.share, k: num(plan.nS, 0) });
+  $("szBaseLabel").textContent = t("sizer.base", { p: sz.base });
+  $("szLiftLabel").textContent = t("sizer.lift", { p: num(sz.lift), one });
+  $("szOut").innerHTML = `<div class="tiles three"><div class="tile"><strong>${esc(t("sizer.pts", { v: m }))}</strong><span>${esc(t("sizer.tMargin"))}</span></div>` +
+    `<div class="tile"><strong>${pct}%</strong><span>${esc(t("sizer.tPower"))}</span></div>` +
+    `<div class="tile"><strong>${esc(count(plan.cost))}</strong><span>${esc(t("sizer.tCost"))}</span></div></div>` +
+    [plan.need ? t("sizer.s3", { need: num(round2(plan.need), 0), low: pct <= 10 }) : "", t("sizer.s4", { cost: count(plan.cost), gained: count(plan.gained) })].filter(Boolean).map(s => `<p>${esc(s)}</p>`).join("");
 }
 
 /* Histogram of the answers. One neutral series; the truth and click attribution are reference lines with direct labels. */
@@ -73,9 +98,8 @@ function chart(svg, mine) {
   el("text", { x: ml + pw / 2, y: H - 6, "text-anchor": "middle", class: "tick" }, t("lab.axis"));
   // reference lines, labelled directly: text in ink, a short stroke of the line's colour as its key
   const refs = [[trials.truthMean, "truth", t("lab.mTruth", { v: num(trials.truthMean) })], [trials.clickMean, "click", t("lab.mClick", { v: num(trials.clickMean) })]];
-  const close = Math.abs(x(refs[0][0]) - x(refs[1][0])) < 120;
   refs.forEach(([v, role, label], i) => {
-    const px = x(v), ly = close && i ? 26 : 12, end = px > W - 130;
+    const px = x(v), ly = i ? 26 : 12, end = px > W - 130;      // one row per label, so the two never collide
     el("line", { x1: px, x2: px, y1: ly + 5, y2: mt + ph, class: "ref", stroke: `var(--s-${role})` });
     el("line", { x1: end ? px - 16 : px + 6, x2: end ? px - 6 : px + 16, y1: ly - 3, y2: ly - 3, class: "ref", stroke: `var(--s-${role})` });
     el("text", { x: end ? px - 20 : px + 20, y: ly, "text-anchor": end ? "end" : "start", class: "lab" }, label);

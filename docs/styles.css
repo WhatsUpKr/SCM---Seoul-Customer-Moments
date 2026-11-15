@@ -41,9 +41,9 @@ header { display:flex; flex-direction:column; gap:6px }
 
 .layout, .wide { display:grid; gap:14px; grid-template-columns:minmax(0,1fr) }
 .col { display:flex; flex-direction:column; gap:10px; min-width:0 }
-/* On a phone the lower panels read in story order: grid, Saturday question, silence test, live test, rules. */
+/* On a phone the lower panels read in story order: takeaways, then the evidence for each (grid, silence test), live test, stack, rules. */
 .wide { display:flex; flex-direction:column } .wide > .col { display:contents }
-#week-grid { order:1 } #saturday { order:2 } #silence-test { order:3 } #live-test { order:4 } #rules-panel { order:5 }
+#short { order:1 } #week-grid { order:2 } #silence-test { order:3 } #live-test { order:4 } #stack { order:5 } #rules-panel { order:6 }
 @media (min-width:980px) {
   .layout, .wide { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr); align-items:start }
   .wide > .col { display:flex; gap:14px }
@@ -187,7 +187,29 @@ input[type=range] { width:100%; accent-color:var(--brand); min-height:30px; marg
 .hbar:has(.wide) { grid-template-columns:minmax(0,5.5em) 1fr 12.5em }
 @media (prefers-reduced-motion: reduce) { .hbar .track i { transition:none } }
 .verdict { font-weight:600 }
+/* The opening question sits under the title: a guess first, the answer after one tap. */
+.ask { display:grid; gap:12px 28px; grid-template-columns:minmax(0,1fr); border-color:var(--ink); scroll-margin-top:12px }
+.ask > div { display:grid; gap:8px; align-content:start; min-width:0 }
+.ask.open h2 { font-size:1.3rem }
+@media (min-width:760px) { .ask { grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); align-items:center } .ask.open { align-items:start } }
+.callout { border-left:3px solid var(--s-exit); padding:2px 0 2px 10px; margin:6px 0; font-weight:500; max-width:74ch }
+.btn.start { margin-top:10px; text-align:left; justify-content:flex-start; white-space:normal; line-height:1.35; min-height:44px }
+.sizer { margin-top:16px; padding-top:14px; border-top:1px solid var(--line); display:grid; gap:4px }
+.sizer .labgrid { margin-bottom:6px }
+#szOut { display:grid; gap:6px; font-size:.9rem; align-content:start }
+#szOut .tiles.three { margin:0 0 4px }
+.points, .real, .steps { margin:6px 0 8px; padding-left:1.25em; display:grid; gap:8px; max-width:74ch }
+.points li::marker { font-weight:700 }
+.real { font-size:.9rem; gap:5px } .real li::marker { color:var(--mute) }
+.srcs a { white-space:nowrap }
+.steps { list-style:none; padding:0; font-size:.9rem }
+.steps li { display:flex; gap:8px; align-items:baseline }
+.steps li.next { color:var(--mute) }
+.mark.soon { background:none; border:1.5px solid var(--mute); color:var(--mute) }
+#short h3 { margin-top:14px }
+section[id] { scroll-margin-top:12px }
 .labgrid { display:grid; gap:18px; grid-template-columns:minmax(0,1fr) }
+@media (min-width:620px) { .sizer .labgrid { grid-template-columns:minmax(0,1fr) minmax(0,1.15fr); align-items:start } }
 
 .labctl { display:grid; gap:10px; justify-items:start }
 .labctl > * { width:100% } .labctl > .btn { width:auto }
@@ -207,10 +229,11 @@ textarea { font:inherit; color:var(--ink); background:var(--page); border:1px so
 .warn { border-left:3px solid var(--s-exit); padding:2px 0 2px 10px; font-weight:500 }
 
 .fair { display:grid; gap:16px; grid-template-columns:minmax(0,1fr) }
-@media (min-width:620px) and (max-width:979px) { .fair { grid-template-columns:repeat(3, minmax(0,1fr)) } }
+@media (min-width:620px) and (max-width:979px) { .fair { grid-template-columns:repeat(2, minmax(0,1fr)) } .fair details { grid-column:1 / -1 } }
 .fair ul { margin:6px 0 0; padding-left:1.1em; font-size:.88rem; display:grid; gap:5px }
 .fair li::marker { color:var(--mute) }
 .fair .checks { list-style:none; padding:0 }
+.fair details { margin-top:0 } .fair summary { font-family:var(--display); font-weight:700; font-size:1.05rem; padding:0 }
 .checks li { display:flex; gap:8px; align-items:baseline }
 .mark { flex:none; width:16px; height:16px; border-radius:50%; display:inline-grid; place-items:center; font-size:10px; font-weight:700; color:#fff; line-height:1; transform:translateY(2px) }
 .mark.ok { background:var(--s-click) } .mark.ko { background:var(--s-exit) }
