@@ -62,12 +62,20 @@
    "pass": true
   },
   {
-   "check": "exits: agents unsubscribe on their own",
+   "check": "exits (wish): tired agents want to leave more than relaxed ones",
    "pass": true
   },
   {
-   "check": "exits: tired agents leave more than relaxed ones",
+   "check": "exits (actual): tired agents leave more than relaxed ones",
    "pass": true
+  },
+  {
+   "check": "exits (actual): weekly opt-outs within 3 times the benchmark",
+   "pass": true
+  },
+  {
+   "check": "data: fewer than 2% unreadable answers",
+   "pass": false
   },
   {
    "check": "sensitivity: loyal agents click more",
@@ -104,5 +112,6 @@
    "baseline_exit_rate": 0.04
   }
  },
- "passed": 5
+ "unreadable_share": 0.066,
+ "passed": 6
 }

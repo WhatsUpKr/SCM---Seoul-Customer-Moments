@@ -37,8 +37,10 @@ def events_for(reactions, agents, messages, run_tag):
     by_msg = {m["id"]: m for m in messages}
     events = []
     for i, r in enumerate(reactions):
-        if r["action"] in ("not_sent", "error", "invalid"):
+        if r["action"] == "not_sent":
             continue
+        # An unreadable model answer is still a message delivered: the brand logs the send
+        # and sees no reaction (15/11/2026, before this they vanished from the brand's view).
         a, m = by_agent[r["agent"]], by_msg[r["message"]]
         t0 = WEEK_START + timedelta(days=DAY_OFFSET[m["id"]])
         base = {
@@ -57,7 +59,15 @@ def events_for(reactions, agents, messages, run_tag):
                     "insert_id": f"{run_tag}-{i}-{kind}"}
 
         events.append(ev("Message Delivered", 0))
-        if r["action"] in ("open_only", "open_and_click"):
+        # What a brand can actually record (15/11/2026):
+        # - push: only a tap is logged ("direct open", Braze docs). Reading the notification
+        #   without tapping leaves no trace, so open_only produces no event.
+        # - email: opens are recorded but inflated by Apple Mail Privacy Protection, which
+        #   pre-fetches the tracking pixel. Not simulated: opens here are human opens only.
+        # - KakaoTalk brand messages: read and click data reach the advertiser (Seoul YMCA
+        #   complaint reported by Kyunghyang, 12/10/2026). Kept as observable.
+        seen_open = r["action"] == "open_and_click" or (r["action"] == "open_only" and m["channel"] != "push")
+        if seen_open:
             events.append(ev("Message Opened", 7))
         if r["action"] == "open_and_click":
             events.append(ev("Message Clicked", 8))

@@ -19,6 +19,7 @@ Usage:
 """
 
 import json
+import math
 import random
 import sys
 from pathlib import Path
@@ -87,7 +88,14 @@ def measure(agents, reactions, seed):
         "holdout_estimate": None,
     }
     if holdout_n >= 20 and treated_n:
-        report["holdout_estimate"] = round((buy_t / treated_n - buy_h / holdout_n) * treated_n, 1)
+        pt, ph = buy_t / treated_n, buy_h / holdout_n
+        est = (pt - ph) * treated_n
+        # 95% margin, normal approximation for two proportions, in purchases.
+        margin = 1.96 * math.sqrt(pt * (1 - pt) / treated_n + ph * (1 - ph) / holdout_n) * treated_n
+        report["holdout_estimate"] = round(est, 1)
+        report["holdout_ci95"] = [round(est - margin, 1), round(est + margin, 1)]
+        # The decision this run can support: is click attribution compatible with the silent group?
+        report["click_outside_ci95"] = not (est - margin <= click_buy <= est + margin)
     return report
 
 
@@ -110,6 +118,11 @@ def main():
         ("- Holdout estimate: **" + str(rep["holdout_estimate"]) + "** net purchases."
          if rep["holdout_estimate"] is not None
          else "- Holdout estimate: not available (this run had no silent group of 20+ agents)."),
+        *([f"- 95% range of the holdout estimate: {rep['holdout_ci95'][0]} to {rep['holdout_ci95'][1]}. "
+           + ("Click attribution falls outside it: the silent group is enough to reject it, "
+              "not to size the lift." if rep["click_outside_ci95"] else
+              "Click attribution falls inside it: this silent group cannot tell them apart.")]
+          if rep.get("holdout_ci95") else []),
         "", "Simulation. The purchase rule is a hand-written assumption (see the top of this file).",
     ]
     print("\n".join(lines))

@@ -169,7 +169,7 @@ export function createCity(cv, stage) {
     if (s.k === "pending") return { fill: COL.idle, wait: 1 };
     if (!gm.rev) return { fill: COL.idle };
     if (s.k === "exit") return sv.kind === "day" && t > gm.hitT + .12 ? { ghost: 1 } : { fill: COL.exit, mark: "cross" };
-    const k = dashKey(s.k);
+    const k = dashKey(s.k, sv.kind === "day" ? world.messages[sv.d].channel : null);
     return { fill: COL[k], mark: k === "click" ? "check" : k === "open" ? "ring" : null };
   }
 

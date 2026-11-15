@@ -49,24 +49,39 @@ SYSTEM = (
 )
 
 
-def call_model(client, persona: str, message: dict, history: list) -> dict:
+def parse_answer(text: str):
+    """The first JSON object in the model's text, or None if there is none or it is broken."""
+    start, end = text.find("{"), text.rfind("}") + 1
+    if start < 0 or end <= start:
+        return None
+    try:
+        out = json.loads(text[start:end])
+    except json.JSONDecodeError:
+        return None
+    return out if isinstance(out, dict) else None
+
+
+def call_model(client, persona: str, message: dict, history: list, attempts: int = 3) -> dict:
     past = "".join(f"- {h['channel']}: {h['en']} -> you chose {h['action']}\n" for h in history)
     context = (f"Messages Haneul Market already sent you this week:\n{past}\n" if past
                else "This is the first message from Haneul Market this week.\n\n")
-    resp = client.messages.create(
-        model=MODEL,
-        max_tokens=MAX_TOKENS,
-        system=SYSTEM + "\n\nYour persona: " + persona,
-        messages=[{"role": "user", "content":
-                   context + f"Now you receive this {message['channel']} message:\n"
-                   f"{message['text']}\n(English: {message['en']})"}],
-    )
-    text = next(b.text for b in resp.content if b.type == "text")
-    start, end = text.find("{"), text.rfind("}") + 1
-    out = json.loads(text[start:end])
-    if out.get("action") not in ACTIONS:
-        out["action"] = "invalid"
-    return out
+    # Run of 15/11/2026: 79 of 1,195 answers (6.6%) were empty or broken JSON after one retry.
+    # Three attempts, and an empty answer counts as unreadable instead of crashing.
+    for _ in range(attempts):
+        resp = client.messages.create(
+            model=MODEL,
+            max_tokens=MAX_TOKENS,
+            system=SYSTEM + "\n\nYour persona: " + persona,
+            messages=[{"role": "user", "content":
+                       context + f"Now you receive this {message['channel']} message:\n"
+                       f"{message['text']}\n(English: {message['en']})"}],
+        )
+        out = parse_answer("".join(b.text for b in resp.content if b.type == "text"))
+        if out is not None:
+            if out.get("action") not in ACTIONS:
+                out["action"] = "invalid"
+            return out
+    return {"action": "error", "diary": f"unreadable answer after {attempts} attempts"}
 
 
 def refresh_github_token() -> None:
@@ -143,15 +158,23 @@ def analyse(agents, messages, reactions) -> dict:
             if x | y:
                 sims.append(len(x & y) / len(x | y))
     report["diversity"] = round(sum(sims) / max(len(sims), 1), 2)
+    answered = [r for r in reactions if r["action"] != "not_sent"]
+    report["unreadable_share"] = round(
+        sum(r["action"] in ("error", "invalid") for r in answered) / max(len(answered), 1), 3)
 
     s, e = report["sensitivity"], report["exits"]
     checks = {
         "spread: no message above 80% same reaction":
             all(v["top_share"] <= 0.8 for v in report["spread"].values()),
-        "exits: agents unsubscribe on their own":
-            e["all"]["model_exit_rate"] > 0,
-        "exits: tired agents leave more than relaxed ones":
+        # 15/11/2026: the old exit checks read the model's wish, not who actually left.
+        "exits (wish): tired agents want to leave more than relaxed ones":
             e["high"]["model_exit_rate"] > e["low"]["model_exit_rate"],
+        "exits (actual): tired agents leave more than relaxed ones":
+            e["high"]["hybrid_exit_rate"] > e["low"]["hybrid_exit_rate"],
+        "exits (actual): weekly opt-outs within 3 times the benchmark":
+            e["all"]["hybrid_exit_rate"] <= 3 * max(e["all"]["baseline_exit_rate"], 0.01),
+        "data: fewer than 2% unreadable answers":
+            report["unreadable_share"] < 0.02,
         "sensitivity: loyal agents click more":
             s["click_high_capital"] > s["click_low_capital"],
         "diversity: average diary overlap below 0.35":
@@ -162,6 +185,19 @@ def analyse(agents, messages, reactions) -> dict:
     return report
 
 
+def reanalyse():
+    out_dir = ROOT / "results"
+    meta = json.loads((out_dir / "join1_live_meta.json").read_text())
+    reactions = json.loads((out_dir / "join1_live_reactions.json").read_text())
+    agents = make_population(meta["agents"], meta["seed"], meta["holdout"])
+    messages = json.loads((ROOT / "join1" / "messages.json").read_text())
+    report = analyse(agents, messages, reactions)
+    (out_dir / "join1_live_report.json").write_text(json.dumps(report, indent=1))
+    print(f"Re-analysed live run: {report['passed']}/{len(report['verdict'])} checks passed")
+    for v in report["verdict"]:
+        print(("PASS " if v["pass"] else "FAIL ") + v["check"])
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--agents", type=int, default=30)
@@ -170,7 +206,11 @@ def main():
     p.add_argument("--holdout", type=float, default=0.0,
                    help="share of agents kept silent as a control group (0 to 0.5)")
     p.add_argument("--max-calls", type=int, default=MAX_CALLS)
+    p.add_argument("--reanalyse", action="store_true",
+                   help="recompute the report of the latest live run from its saved reactions, no API call")
     args = p.parse_args()
+    if args.reanalyse:
+        return reanalyse()
     if not 0 <= args.holdout <= 0.5:
         sys.exit("Refused: --holdout must be between 0 and 0.5.")
     cap = min(args.max_calls, HARD_CEILING)
@@ -210,10 +250,7 @@ def main():
                 if args.dry_run:
                     out = fake_reaction(rng, a, m)
                 else:
-                    try:
-                        out = call_model(client, a.brief(), m, history)
-                    except json.JSONDecodeError:  # malformed answer: one retry
-                        out = call_model(client, a.brief(), m, history)
+                    out = call_model(client, a.brief(), m, history)
             except Exception as e:  # one failed call must not kill the run
                 if "401" in str(e) or "authentication" in str(e).lower():
                     sys.exit(f"Authentication refused, run stopped: {str(e)[:200]}")

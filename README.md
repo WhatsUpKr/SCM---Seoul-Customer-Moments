@@ -23,17 +23,56 @@ In real CRM you never see what would have happened without the message. Here you
 
 So this world is a test bench for **measurement methods**. The truth is known. The question is which method finds it.
 
-Run of 15 Nov 2026 (300 agents, 5 messages, 59 kept silent as a control group):
+## What the run of 15 Nov 2026 shows
 
-| Method | Purchases credited to the messages |
-|---|---|
-| Click attribution | 87 |
-| Silent control group | 10 |
-| The truth | 1 (2 caused, 1 lost) |
+300 agents, 5 messages in one week, 59 of them drawn at random and kept silent. Three questions a CRM lead asks, what the run answers, and what it cannot.
 
-Clicks credit the messages with 87 purchases; they really caused one. The control group gets much closer, but with 59 silent agents its margin of error is wider than the gap it measures, so 10 and 1 cannot be told apart. A bigger silent group, or repeated draws (see the page), is what makes it usable.
+### 1. How many sales did the week of messages create?
 
-Unsubscribes: left to the model, 53% of messaged agents would have left in a week (100% of the most tired third). The benchmark-anchored dice gave 5%, against 4% for the baseline. About 7% of model calls returned an error and count as no reaction.
+| Method | Purchases credited to the messages | Who can compute it |
+|---|---|---|
+| Click attribution | 87 | the brand: orders + clicks |
+| Silent control group | 10 (95% range −24 to +44) | the brand: orders + who was kept silent |
+| The truth | 1 (2 caused, 1 lost to an unsubscribe) | only this simulation |
+
+- **What it supports:** stop reading clicks as sales. 85 of the 87 click-and-buy agents were going to shop anyway.
+- **What 59 silent agents can and cannot do:** they cannot size the lift (the range runs from −24 to +44), but 87 sits outside that range. A small silent group is enough to reject click attribution, not to measure what the messages add.
+- **Why the clickers were already buyers:** agents that plan to shop are more engaged, as customers with intent are in real life. The world shows how each method behaves under that bias. It does not measure how strong the bias is in a real base.
+- **Checked twice:** both brand figures are recomputed in BigQuery from the brand's own tables (`join3/`) and must match `join1/measure.py`, or the load fails.
+
+### 2. Who should get the "moving house" message?
+
+Wednesday, KakaoTalk: "Settling into a new home? We put together moving essentials."
+
+| Recipients | Received | Clicked | Wanted to unsubscribe | Average annoyance |
+|---|---|---|---|---|
+| Had just moved | 30 | 7 | 11 | 4.4 / 10 |
+| Everyone else | 208 | 0 | 105 | 5.7 / 10 |
+
+- **What it supports:** send a life-moment message only on a moment signal. Every click came from the 30 who had just moved. For the other 208 it was pure cost.
+- **Limit:** true by construction, since the persona says "just moved". It shows what targeting is worth, not how to detect the moment. A real brand needs a signal, such as a new delivery address; this world does not give the brand one yet.
+
+### 3. When do customers leave?
+
+- Left to the model, 53% of messaged agents chose "unsubscribe" during the week. The prompt tells agents that unsubscribing is easy, which likely inflates it, and no real programme loses half its base in five messages.
+- So the model's choice is not used as is: dice anchored on a benchmark decide who actually leaves. Result: 5% left, against 4% for the benchmark alone.
+- The model's wish stays as a hidden signal ("wanted out, did not get round to it"). Read it as annoyance, not as a churn forecast.
+
+### What a brand can actually see
+
+| Channel | Open | Click | Unsubscribe |
+|---|---|---|---|
+| Push | only a tap ("direct open"); reading without tapping leaves no trace | the tap | notification setting |
+| Email | recorded, but inflated by Apple Mail Privacy Protection (not simulated) | reliable | unsubscribe link |
+| KakaoTalk brand message | read and click data reach the advertiser | yes | channel block or 080 number |
+
+The events sent to Amplitude and BigQuery follow this table: a push read without a tap produces no "opened" event, and on the page's dashboard view it shows as no response.
+
+Sources: [Braze, influenced opens](https://braze.com/docs/user_guide/analytics/tracking/influenced_opens) · [Twilio SendGrid, Mail Privacy Protection](https://www.twilio.com/en-us/resource-center/apple-mail-privacy-protection-email-senders-adapt) · [Kyunghyang, 12 Oct 2026](https://khan.co.kr/article/202610121456001) · [DI Today, brand message launch](https://ditoday.com/?p=125509)
+
+### Data quality
+
+79 of 1,195 model answers (6.6%) were unreadable: empty or broken JSON. They count as delivered with no reaction, and one of the seven sanity checks fails because of them. From the next run, each call gets three attempts.
 
 First run (30 agents, 12 Nov 2026): click attribution 12, truth 0.
 
@@ -43,7 +82,7 @@ First run (30 agents, 12 Nov 2026): click attribution 12, truth 0.
 - [x] **Join 2** — reactions replayed as events: script → Segment → Amplitude (`join2/send_to_amplitude.py`)
 - [x] **Measurement check** — clicks vs silent group vs the truth (`join1/measure.py`)
 - [x] **Replay page** (`docs/`) with a playable silence test, and tests for both the world and the page (`tests/`)
-- [x] **Join 3** — events → BigQuery, two datasets kept apart: what the brand sees (`scm_brand`) and the hidden truth used to grade it (`scm_truth`) (`join3/load_bigquery.py`)
+- [x] **Join 3** — events and orders → BigQuery, two datasets kept apart: what the brand sees (`scm_brand`: customers with their control-group flag, events, orders) and the hidden truth used to grade it (`scm_truth`). The load recomputes click attribution and the control-group estimate in SQL and stops if they differ from the report (`join3/load_bigquery.py`)
 - [ ] Join 4 — BigQuery → Hightouch → OneSignal
 - [ ] Join 5 — message → agent inbox → reaction
 
@@ -58,7 +97,7 @@ First run (30 agents, 12 Nov 2026): click attribution 12, truth 0.
 ## Known limits
 
 - **Built-in answers.** The persona tells the model about the agent's trust and shopping plan, so "loyal agents click more" is true by construction. The world can test a method. It cannot discover customer behaviour.
-- **Purchases follow a hand-written rule** (top of `join1/measure.py`).
+- **Purchases follow a hand-written rule** (top of `join1/measure.py`). Who "was going to shop anyway" is drawn as 15% plus half the agent's trust: 41% of messaged agents in this run. An assumption, not a benchmark.
 - **Push opt-out rate is an assumption.** The only public figure found is stated intent (12% after one push a week). Used per message it removed 37% of agents in a week. The default is now a tenth of it, flagged in `agents/fatigue.py`, until an observed rate replaces it.
 - **KakaoTalk opt-out rate:** no public benchmark found; set equal to email.
 - Population traits are uniform placeholders. Calibration on KOSIS (age, district, household) comes next.

@@ -2,7 +2,7 @@
 // then repeats the draw many times to see what the method can and cannot tell with this many residents.
 
 import { t, num, signed } from "./i18n.js";
-import { clamp, rng, measureOf, drawSilent, silenceTrials, holdoutPlan, insights } from "./model.js";
+import { clamp, rng, measureOf, drawSilent, silenceTrials, holdoutPlan, insights, experimentPool } from "./model.js";
 import { $, esc, tip } from "./panels.js";
 
 const N_TRIALS = 300, NS = "http://www.w3.org/2000/svg";
@@ -37,7 +37,7 @@ export function renderLab() {
   $("labReplay").hidden = !current; $("labReplay").textContent = t(on ? "lab.end" : "lab.replay");
   if (!current) one.innerHTML = `<p class="small">${esc(t("lab.hint"))}</p>`;
   else {
-    const m = measureOf(world.people, p => !!p.a.holdout || current.has(p.id));
+    const m = measureOf(experimentPool(world), p => current.has(p.id));
     const row = (label, b, tot, role) => `<div class="hbar"><span>${esc(label)}</span><span class="track">${b ? `<i style="width:${b / tot * 100}%;background:var(--s-${role})"></i>` : ""}</span><span class="v wide">${esc(t("lab.row", { b, n: tot, r: tot ? Math.round(b / tot * 100) : 0 }))}</span></div>`;
     one.innerHTML = `<div class="bars">${row(t("lab.messaged"), m.purchases_messaged, m.messaged, "none")}${row(t("lab.silent"), m.purchases_silent, m.silent, "none")}</div>` +
       `<div class="tiles three"><div class="tile"><strong>${signed(m.estimate)}</strong><span>${esc(t("lab.says"))}</span></div>` +
@@ -45,7 +45,7 @@ export function renderLab() {
       `<div class="tile"><strong>${num(m.truth_net)}</strong><span>${esc(t("lab.truth"))}</span></div></div><p class="small">${esc(t("lab.unit"))}</p>`;
   }
   const fig = $("labChart"); fig.hidden = !trials;
-  if (trials) { chart(fig.querySelector("svg"), current ? measureOf(world.people, p => !!p.a.holdout || current.has(p.id)).estimate : null);
+  if (trials) { chart(fig.querySelector("svg"), current ? measureOf(experimentPool(world), p => current.has(p.id)).estimate : null);
     $("labChartTitle").textContent = t("lab.chartTitle", { n: trials.n });
     $("labSummary").innerHTML = [t("lab.s1", { lo: signed(trials.p5), hi: signed(trials.p95), mean: signed(trials.mean), truth: num(trials.truthMean) }),
       t("lab.s2", { click: num(trials.clickMean), pct: Math.round(trials.closer * 100) }), t("lab.s3", { n })].map(s => `<p>${esc(s)}</p>`).join(""); }

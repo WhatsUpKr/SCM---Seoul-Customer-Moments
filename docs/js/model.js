@@ -74,7 +74,9 @@ export function assign(world, silentIds) {
 }
 
 /** What the brand's dashboard can tell apart. */
-export const dashKey = k => (k === "click" || k === "open" || k === "exit" || k === "gone" || k === "holdout" || k === "pending" ? k : "none");
+/** A push read without a tap leaves no trace in CRM tools (Braze counts a "direct open" on tap only), so on push "open" shows as no response. */
+export const dashKey = (k, channel) => (k === "open" && channel === "push" ? "none"
+  : k === "click" || k === "open" || k === "exit" || k === "gone" || k === "holdout" || k === "pending" ? k : "none");
 
 /** Which scene a view is on: { kind: "day" | "shop" | "live", d } where d is the last weekday reached. */
 export function sceneOf(world, view) {
@@ -114,7 +116,7 @@ export function categoryOf(world, sv, p) {
     return v == null ? "nomood" : v >= 7 ? "fed" : v >= 4 ? "irr" : "calm";
   }
   if (sv.kind === "shop") return !shops(p, sv.mode) ? "stay" : sv.mode === "msg" && !p.silent && p.clicked ? "credit" : "shop";
-  return dashKey(s.k);
+  return dashKey(s.k, sv.kind === "day" ? world.messages[sv.d].channel : null);
 }
 
 /** Legend entries for a view, as [category, colour role]. */
@@ -162,7 +164,15 @@ export function measureOf(people, isSilent) {
     estimate: silent && messaged ? (buyT / messaged - buyS / silent) * messaged : null,   // net purchases the silence test credits to the messages
   };
 }
-export const measure = world => measureOf(world.people, p => p.silent);
+/**
+ * The recorded run counts its own silent group. A visitor's silence test is a separate experiment
+ * on the residents who received messages: the run's silent group sits out of it, on both sides,
+ * since nobody knows how its residents would have reacted (15/11/2026, the run of 300 has 59 of them).
+ */
+export const experimentPool = world => world.people.filter(p => !p.a.holdout);
+export const measure = world => (world.experiment
+  ? measureOf(experimentPool(world), p => world.experiment.has(p.id))
+  : measureOf(world.people, p => p.silent));
 
 /** Pick a random silent group among residents who have recorded reactions. Returns a Set of agent ids. */
 export function drawSilent(world, share, rand) {
@@ -176,10 +186,10 @@ export function drawSilent(world, share, rand) {
  * Returns each draw's estimate plus what click attribution and the hidden truth say for the same draw.
  */
 export function silenceTrials(world, share, n, seed) {
-  const rand = rng("trials" + seed + share), people = world.people, est = [], clicks = [], truths = [];
+  const rand = rng("trials" + seed + share), people = experimentPool(world), est = [], clicks = [], truths = [];
   let closer = 0;
   for (let i = 0; i < n; i++) {
-    const set = drawSilent(world, share, rand), m = measureOf(people, p => !!p.a.holdout || set.has(p.id));
+    const set = drawSilent(world, share, rand), m = measureOf(people, p => set.has(p.id));
     est.push(m.estimate); clicks.push(m.click_attributed); truths.push(m.truth_net);
     if (Math.abs(m.estimate - m.truth_net) < Math.abs(m.click_attributed - m.truth_net)) closer++;
   }

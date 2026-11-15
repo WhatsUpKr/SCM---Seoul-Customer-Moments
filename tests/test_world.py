@@ -56,6 +56,33 @@ class World(unittest.TestCase):
         self.assertEqual(sum(r["treated"] and not r["silence"] for r in rows), rep["truth_caused"])
         self.assertEqual(sum(r["silence"] and not r["treated"] for r in rows), rep["truth_destroyed"])
 
+    def test_brand_sees_only_what_crm_tools_record(self):
+        agents = make_population(4, 42)
+        messages = [{"id": "m1_promo", "channel": "push"}, {"id": "m2_reminder", "channel": "email"}]
+        reactions = [{"agent": agents[0].id, "message": "m1_promo", "action": "open_only"},
+                     {"agent": agents[1].id, "message": "m2_reminder", "action": "open_only"},
+                     {"agent": agents[2].id, "message": "m1_promo", "action": "error"}]
+        kinds = [(e["user_id"][-4:], e["event_type"]) for e in events_for(reactions, agents, messages, "t")]
+        self.assertNotIn((agents[0].id, "Message Opened"), kinds)   # push read without a tap: no trace
+        self.assertIn((agents[1].id, "Message Opened"), kinds)      # email open: recorded
+        self.assertIn((agents[2].id, "Message Delivered"), kinds)   # unreadable answer: still delivered
+
+    def test_warehouse_gives_the_report_figures(self):
+        sys.path.insert(0, str(ROOT / "join3"))
+        from load_bigquery import build_rows, score_from_brand, check_against_report
+        tables = build_rows()
+        ctx = tables.pop("_ctx")
+        brand = score_from_brand(tables[("scm_brand", "customers")], tables[("scm_brand", "events")],
+                                 tables[("scm_brand", "orders")])
+        check_against_report(brand, ctx)   # exits on any disagreement
+        self.assertNotIn("buys_in_silent_week", json.dumps(tables[("scm_brand", "customers")]))
+
+    def test_unreadable_answers_are_caught(self):
+        from join1.run import parse_answer
+        self.assertIsNone(parse_answer(""))
+        self.assertIsNone(parse_answer("{broken"))
+        self.assertEqual(parse_answer('ok {"action": "ignore"}')["action"], "ignore")
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -7,5 +7,10 @@
  "truth_destroyed": 1,
  "truth_net": 1,
  "holdout_estimate": 10.0,
+ "holdout_ci95": [
+  -23.8,
+  43.8
+ ],
+ "click_outside_ci95": true,
  "run": "live"
 }
