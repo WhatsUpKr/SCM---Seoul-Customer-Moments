@@ -33,7 +33,11 @@ LOCATION = "EU"
 def build_rows(seed=42):
     reactions = json.loads((ROOT / "results" / "join1_live_reactions.json").read_text())
     messages = json.loads((ROOT / "join1" / "messages.json").read_text())
-    agents = make_population(len({r["agent"] for r in reactions}), seed)
+    meta_path = ROOT / "results" / "join1_live_meta.json"
+    meta = (json.loads(meta_path.read_text()) if meta_path.exists() else
+            {"agents": len({r["agent"] for r in reactions}), "seed": seed, "holdout": 0.0})
+    # Same population as the run, silent group included (same call as join1/measure.py).
+    agents = make_population(meta["agents"], meta["seed"], meta["holdout"])
     run_tag = "w1"  # one canonical id per simulated week
 
     events = []
